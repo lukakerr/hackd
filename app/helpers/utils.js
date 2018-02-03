@@ -1,5 +1,5 @@
-function capitalize (str) {
-  return str[0].toUpperCase() + str.slice(1);
-}
+const capitalize = str => str[0].toUpperCase() + str.slice(1)
 
-export { capitalize };
+export { 
+  capitalize,
+};

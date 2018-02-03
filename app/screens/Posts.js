@@ -8,7 +8,6 @@ import {
   View,
   Image,
   FlatList,
-  TouchableOpacity,
   ActionSheetIOS,
 } from 'react-native';
 import ListItem from "../components/ListItem";
@@ -41,14 +40,6 @@ export default class Posts extends React.Component {
           image={require('../img/list.png')}
         />
       ),
-      headerLeft: (
-        <HeaderButton
-          style={{width: 26, height: 26, marginLeft: 20, tintColor: "#007AFF"}}
-          onPress={() => params.handleSettings()}
-          image={require('../img/settings.png')}
-        />
-        
-      ),
     };
   };
 
@@ -56,13 +47,8 @@ export default class Posts extends React.Component {
     this.makeRequest(this.state.storyType, true);
     this.props.navigation.setParams({ 
       handleSelect: this.selectFeed,
-      handleSettings: this.selectSettings,
       storyTitle: capitalize(this.state.storyType),
     });
-  }
-
-  selectSettings() {
-    alert("Settings");
   }
 
   selectFeed() {

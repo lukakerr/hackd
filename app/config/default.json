@@ -1,3 +1,4 @@
 {
-  "api": "https://hacker-news.firebaseio.com/v0"
+  "api": "https://hacker-news.firebaseio.com/v0",
+  "base": "https://news.ycombinator.com"
 }

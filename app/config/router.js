@@ -3,9 +3,9 @@ import { StyleSheet, Image, Button } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import Posts from '../screens/Posts';
+import Post from '../screens/Post';
 import Settings from '../screens/Settings';
-
-import Post from '../components/Post';
+import Account from '../screens/Account';
 
 export const PostStack = StackNavigator({
   Posts: {
@@ -15,6 +15,24 @@ export const PostStack = StackNavigator({
     screen: Post,
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.params.descendants} comments`,
+    }),
+  },
+});
+
+export const AccountStack = StackNavigator({
+  Account: {
+    screen: Account,
+    navigationOptions: ({ navigation }) => ({
+      title: "Account",
+    }),
+  },
+});
+
+export const SettingsStack = StackNavigator({
+  Settings: {
+    screen: Settings,
+    navigationOptions: ({ navigation }) => ({
+      title: "Settings",
     }),
   },
 });
@@ -32,8 +50,20 @@ export const Tabs = TabNavigator({
       ),
     },
   },
+  Account: {
+    screen: AccountStack,
+    navigationOptions: {
+      tabBarLabel: "Account",
+      tabBarIcon: ({ tintColor }) => (
+        <Image
+          source={require('../img/account.png')}
+          style={[styles.icon, { tintColor }]}
+        />
+      ),
+    },
+  },
   Settings: {
-    screen: Settings,
+    screen: SettingsStack,
     navigationOptions: {
       tabBarLabel: 'Settings',
       tabBarIcon: ({ tintColor }) => (

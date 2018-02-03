@@ -6,7 +6,9 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
+import { upvote } from "../helpers/api";
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -24,11 +26,21 @@ export default class Post extends React.Component {
   componentDidMount() {
   }
 
+  upvoteItem = (id) => {
+    upvote(id).then(response => {
+      // If response is true, upvote successful
+      console.log("RESPONSE: ", response);
+    });
+  };
+
   render() {
     return (
       <View>
         <Text>{this.props.title}</Text>
         <Text>{this.props.url} - {this.props.score}</Text>
+        {/*<TouchableOpacity onPress={() => this.upvoteItem(this.props.id)}>
+          <Text>Upvote</Text>
+        </TouchableOpacity>*/}
       </View>
     );
   }

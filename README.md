@@ -7,6 +7,6 @@ Currently a work in progress.
 ### Screenshots
 
 <div align="center">
-  <img src="https://i.imgur.com/M1elZJb.png" width="400" alt="hackd1">
-  <img src="https://i.imgur.com/phfnxMv.png" width="400" alt="hackd2">
+  <img src="https://i.imgur.com/9GnB4AJ.png" width="400" alt="hackd1">
+  <img src="https://i.imgur.com/ZAQvXCL.png" width="400" alt="hackd2">
 </div>
