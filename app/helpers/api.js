@@ -11,7 +11,6 @@ getItem = (itemId) => {
     fetch(`${config.api}/item/${itemId}.json`)
       .then(response => response.json())
       .then(responseJson => {
-        console.log(responseJson);
         resolve(responseJson);
       }).catch(error => {
         console.error(error);
@@ -150,7 +149,7 @@ comment = (itemId, reply) => {
     .then(responseText => {
       return true;
     }).catch(error => {
-      console.log(error);
+      console.error(error);
       return false;
     });
 };

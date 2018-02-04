@@ -1,0 +1,3 @@
+export const SET_STORY_TYPE = "SET_STORY_TYPE";
+export const SET_POSTS = "SET_POSTS";
+export const SET_POSTS_LOADING = "SET_POSTS_LOADING";

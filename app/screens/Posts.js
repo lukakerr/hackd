@@ -10,21 +10,22 @@ import {
   FlatList,
   ActionSheetIOS,
 } from 'react-native';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { ActionCreators } from "../actions";
+
 import ListItem from "../components/ListItem";
 import HeaderButton from "../components/HeaderButton";
 import { capitalize } from "../helpers/utils";
 import { getItems } from "../helpers/api";
 
-export default class Posts extends React.Component {
+class Posts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoadingInitially: true,
-      isLoading: false,
-      data: [],
       page: 1,
       limit: 20,
-      storyType: "top",
     };
     this.selectFeed = this.selectFeed.bind(this);
   }
@@ -44,14 +45,14 @@ export default class Posts extends React.Component {
   };
 
   componentDidMount() {
-    this.makeRequest(this.state.storyType, true);
+    this.makeRequest(true);
     this.props.navigation.setParams({ 
       handleSelect: this.selectFeed,
-      storyTitle: capitalize(this.state.storyType),
+      storyTitle: capitalize(this.props.storyType),
     });
   }
 
-  selectFeed() {
+  selectFeed = () => {
     OPTIONS = [
       "Cancel", 
       "Top", 
@@ -69,22 +70,21 @@ export default class Posts extends React.Component {
     (buttonIndex) => {
       const selectedFeed = OPTIONS[buttonIndex].toLowerCase();
 
-      // If "Cancel" not pressed and selectedFeed isnt current feed, set state
-      if (buttonIndex !== 0 && selectedFeed !== this.state.storyType) {
-        this.setState({
-          isLoading: true,
-          storyType: selectedFeed,
-        });
-        this.makeRequest(this.state.storyType);
+      // If "Cancel" not pressed and selectedFeed isnt current storyType
+      if (buttonIndex !== 0 && selectedFeed !== this.props.storyType) {
         this.props.navigation.setParams({ 
-          storyTitle: capitalize(this.state.storyType) 
+          storyTitle: capitalize(this.props.storyType) 
         });
+        this.props.setStoryType(selectedFeed);
+        this.makeRequest();
       }
     });
-  }
+  };
 
   // Get top stories
-  makeRequest = (storyType, initial = false) => {
+  makeRequest = (initial = false) => {
+    let storyType = this.props.storyType;
+
     if (storyType === "jobs") {
       storyType = "job";
     }
@@ -101,24 +101,7 @@ export default class Posts extends React.Component {
 
   getData = (initial = false, items) => {
     const { page, limit } = this.state;
-    const posts = getItems(page, limit, items);
-
-    // Wait for all Promises to complete
-    Promise.all(posts)
-      .then(results => {
-        if (initial) {
-          this.setState({
-            isLoadingInitially: false,
-          });
-        }
-        this.setState({
-          isLoading: false,
-          data: page === 1 ? results : [...this.state.data, ...results],
-        });
-      })
-      .catch(e => {
-        console.error(e);
-      })
+    this.props.fetchItems(page, limit, items);
   };
 
   showPost = (post) => this.props.navigation.navigate("Post", post);
@@ -126,7 +109,7 @@ export default class Posts extends React.Component {
   renderSeparator = () => (<View style={styles.rowSeperator} />);
 
   renderFooter = () => {
-    if (!this.state.isLoading) {
+    if (!this.props.isLoadingPosts) {
       return null;
     }
 
@@ -139,7 +122,7 @@ export default class Posts extends React.Component {
 
   render() {
     // If loading, render activity indicator
-    if (this.state.isLoadingInitially || this.state.isLoading) {
+    if (this.props.isLoadingPosts) {
       return (
         <View style={commonStyles.center}>
           <ActivityIndicator />
@@ -150,7 +133,7 @@ export default class Posts extends React.Component {
     return (
       <View>
         <FlatList
-          data={this.state.data}
+          data={this.props.posts}
           keyExtractor={(item, index) => index}
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
@@ -179,3 +162,13 @@ const styles = StyleSheet.create({
     padding: 1,
   },
 });
+
+mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+
+export default connect((state) => { 
+  return {
+    storyType: state.storyType,
+    posts: state.posts,
+    isLoadingPosts: state.isLoadingPosts,
+  }
+}, mapDispatchToProps)(Posts);

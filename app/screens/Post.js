@@ -23,9 +23,6 @@ export default class Post extends React.Component {
     };
   }
 
-  componentDidMount() {
-  }
-
   upvoteItem = (id) => {
     upvote(id).then(response => {
       // If response is true, upvote successful
