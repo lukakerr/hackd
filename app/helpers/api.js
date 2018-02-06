@@ -41,6 +41,16 @@ getItems = (page, limit, itemIds) => {
   return posts;
 };
 
+getUser = (username) => {
+  return fetch(`${config.api}/user/${username}.json`)
+    .then(response => response.json())
+    .then(responseJson => {
+      return responseJson;
+    }).catch(error => {
+      console.error(error);
+    });
+};
+
 /**
  * Get the URL needed to upvote
  * @param  {String} itemId The item ID to upvote
@@ -160,4 +170,5 @@ export {
   upvote,
   login,
   comment, 
+  getUser,
 };

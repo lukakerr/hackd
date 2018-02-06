@@ -27,7 +27,7 @@ export default class Time extends React.Component {
           />
         </View>
         <CustomText>
-          {timeAgo.format(new Date(this.props.time * 1000), 'twitter')}
+          {timeAgo.format(new Date(this.props.time * 1000), { flavour: 'tiny' })}
         </CustomText>
       </Text>
     );

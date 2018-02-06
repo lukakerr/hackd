@@ -6,6 +6,7 @@ import Posts from '../screens/Posts';
 import Post from '../screens/Post';
 import Settings from '../screens/Settings';
 import Account from '../screens/Account';
+import Search from '../screens/Search';
 
 export const PostStack = StackNavigator({
   Posts: {
@@ -37,6 +38,15 @@ export const SettingsStack = StackNavigator({
   },
 });
 
+export const SearchStack = StackNavigator({
+  Settings: {
+    screen: Search,
+    navigationOptions: ({ navigation }) => ({
+      title: "Search",
+    }),
+  },
+});
+
 export const Tabs = TabNavigator({
   Posts: {
     screen: PostStack,
@@ -62,6 +72,18 @@ export const Tabs = TabNavigator({
       ),
     },
   },
+  Search: {
+    screen: SearchStack,
+    navigationOptions: {
+      tabBarLabel: "Search",
+      tabBarIcon: ({ tintColor }) => (
+        <Image
+          source={require('../img/search.png')}
+          style={[styles.icon, { tintColor }]}
+        />
+      ),
+    },
+  },
   Settings: {
     screen: SettingsStack,
     navigationOptions: {
@@ -73,6 +95,13 @@ export const Tabs = TabNavigator({
         />
       ),
     },
+  },
+}, {
+  tabBarOptions: {
+    // showLabel: false,
+    style: {
+      // backgroundColor: '#FFFFFF',
+    }
   },
 });
 

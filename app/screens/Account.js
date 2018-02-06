@@ -1,20 +1,45 @@
 import React from 'react';
-import commonStyles from '../styles/common';
 import {
   Text,
   View,
 } from 'react-native';
 
-export default class Account extends React.Component {
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { ActionCreators } from "../actions";
+
+import UserDetails from "../components/Auth/UserDetails";
+import Login from "../components/Auth/Login";
+
+class Account extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    if (this.props.user.loggedIn) {
+      return (
+        <UserDetails
+          user={this.props.user}
+        />
+      );
+    }
     return (
-      <View>
-        <Text>Account Screen</Text>
-      </View>
+      <Login
+
+      />
     );
   }
 }
+
+mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+
+export default connect((state) => { 
+  return {
+    storyType: state.storyType,
+    posts: state.posts,
+    isLoadingPosts: state.isLoadingPosts,
+    user: state.user,
+    upvotedPosts: state.upvotedPosts,
+  }
+}, mapDispatchToProps)(Account);

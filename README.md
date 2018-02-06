@@ -17,6 +17,7 @@ Currently a work in progress.
 - The user can:
 	- Share posts
 	- View other user profiles
+	- View their own profile
 - If logged in, the user can also:
 	- Upvote
 	- Comment
@@ -41,6 +42,6 @@ $ react-native run-ios
 ### Screenshots
 
 <div align="center">
-  <img src="https://i.imgur.com/9GnB4AJ.png" width="400" alt="hackd1">
-  <img src="https://i.imgur.com/ZAQvXCL.png" width="400" alt="hackd2">
+  <img src="https://i.imgur.com/4fW2MZH.png" width="400" alt="hackd1">
+  <img src="https://i.imgur.com/qO8AiDw.png" width="400" alt="hackd2">
 </div>

@@ -16,5 +16,8 @@ export default StyleSheet.create({
   icon: {
     width: 15,
     height: 15,
-  }
+  },
+  flex: {
+    flex: 1,
+  },
 });

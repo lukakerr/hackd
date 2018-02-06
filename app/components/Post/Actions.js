@@ -15,7 +15,6 @@ import { ActionCreators } from "../../actions";
 
 import config from "../../config/default";
 import { upvote } from "../../helpers/api";
-import CustomText from "../CustomText";
 
 class Actions extends React.Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class Actions extends React.Component {
   }
 
   componentDidMount() {
-    const isUpvoted = this.props.upvotedPosts.indexOf(this.props.id) !== -1;
+    const isUpvoted = this.props.upvotedPosts.indexOf(this.props.id) !== -1 && this.props.user.loggedIn;
     this.setState({
       upvoted: isUpvoted,
     });
@@ -61,7 +60,8 @@ class Actions extends React.Component {
     );
   };
 
-  upvote = id => {
+  upvote = () => {
+    const id = this.props.id
     if (!this.props.user.loggedIn) {
       this.showAlert(
         'Cannot upvote',
@@ -101,9 +101,9 @@ class Actions extends React.Component {
             />
           </TouchableOpacity>
           <TouchableOpacity 
-            onPress={() => this.upvote(this.props.id)} 
+            onPress={this.upvote} 
             activeOpacity={0.8} 
-            style={[styles.iconArrowContainer, {backgroundColor: isUpvoted ? config.orange : "transparent",}]}>
+            style={[styles.iconArrowContainer, {backgroundColor: isUpvoted ? config.colors.orange : "transparent",}]}>
 
             <Image
               style={[styles.iconArrow, { tintColor: isUpvoted ? "white" : "black" }]}
@@ -118,19 +118,17 @@ class Actions extends React.Component {
 
 const styles = StyleSheet.create({
   iconArrowContainer: {
-    height: 30, 
-    width: 30, 
+    height: 28, 
+    width: 28, 
     padding: 2,  
     borderRadius: 5,
     marginLeft: 3,
   },
   iconArrow: {
-    width: 26,
-    height: 26,
+    width: 24,
+    height: 24,
   },
   iconDotsContainer: {
-    height: 30, 
-    width: 30,
     padding: 2,
     marginTop: 2,
     marginRight: 3,

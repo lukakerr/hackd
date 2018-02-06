@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import config from '../config/default';
 import commonStyles from '../styles/common';

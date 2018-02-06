@@ -1,5 +1,7 @@
 {
   "api": "https://hacker-news.firebaseio.com/v0",
   "base": "https://news.ycombinator.com",
-  "orange": "#EE6F2D",
+  "colors": {
+    "orange": "#EE6F2D"
+  }
 }

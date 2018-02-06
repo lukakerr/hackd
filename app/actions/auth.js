@@ -20,11 +20,15 @@ export const logIn = (username, password) => {
         const user = { 
           username, 
           password, 
-          loggedIn: true 
+          loggedIn: true,
+        };
+        dispatch(setLoggedInUser(user));
+      } else {
+        const user = {
+          loggedIn: false,
         };
         dispatch(setLoggedInUser(user));
       }
-      console.log("LOGGED IN?: ", loggedIn);
     });
   };
 };
