@@ -4,9 +4,7 @@ import commonStyles from '../styles/common';
 import {
   ActivityIndicator,
   StyleSheet,
-  Text,
   View,
-  Image,
   FlatList,
   ActionSheetIOS,
 } from 'react-native';
@@ -17,7 +15,6 @@ import { ActionCreators } from "../actions";
 import ListItem from "../components/ListItem";
 import HeaderButton from "../components/HeaderButton";
 import { capitalize } from "../helpers/utils";
-import { getItems } from "../helpers/api";
 
 class Posts extends React.Component {
   constructor(props) {
@@ -45,15 +42,18 @@ class Posts extends React.Component {
   };
 
   componentDidMount() {
-    this.makeRequest(true);
+    this.makeRequest();
     this.props.navigation.setParams({ 
       handleSelect: this.selectFeed,
       storyTitle: capitalize(this.props.storyType),
     });
   }
 
+  // Called when a user clicks the right header button
+  // The storyType is updated in the store
+  // And the posts are reloaded
   selectFeed = () => {
-    OPTIONS = [
+    const OPTIONS = [
       "Cancel", 
       "Top", 
       "New", 
@@ -61,13 +61,12 @@ class Posts extends React.Component {
       "Ask",
       "Show",
       "Jobs",
-    ]
+    ];
     ActionSheetIOS.showActionSheetWithOptions({
       title: "Select a feed",
       options: OPTIONS,
       cancelButtonIndex: 0,
-    },
-    (buttonIndex) => {
+    }, (buttonIndex) => {
       const selectedFeed = OPTIONS[buttonIndex].toLowerCase();
 
       // If "Cancel" not pressed and selectedFeed isnt current storyType
@@ -81,9 +80,10 @@ class Posts extends React.Component {
     });
   };
 
-  // Get top stories
-  makeRequest = (initial = false) => {
+  // Get posts based on storyType
+  makeRequest = () => {
     let storyType = this.props.storyType;
+    const { page, limit } = this.state;
 
     if (storyType === "jobs") {
       storyType = "job";
@@ -92,16 +92,11 @@ class Posts extends React.Component {
     return fetch(`${config.api}/${storyType}stories.json`)
       .then((response) => response.json())
       .then((responseJson) => {
-        this.getData(initial, responseJson);
+        this.props.fetchPosts(page, limit, responseJson);
       })
       .catch((error) => {
         console.error(error);
       });
-  };
-
-  getData = (initial = false, items) => {
-    const { page, limit } = this.state;
-    this.props.fetchItems(page, limit, items);
   };
 
   showPost = (post) => this.props.navigation.navigate("Post", post);
@@ -134,6 +129,7 @@ class Posts extends React.Component {
       <View>
         <FlatList
           data={this.props.posts}
+          keyboardShouldPersistTaps="always"
           keyExtractor={(item, index) => index}
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
@@ -170,5 +166,6 @@ export default connect((state) => {
     storyType: state.storyType,
     posts: state.posts,
     isLoadingPosts: state.isLoadingPosts,
+    user: state.user,
   }
 }, mapDispatchToProps)(Posts);

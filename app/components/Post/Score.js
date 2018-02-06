@@ -43,5 +43,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginLeft: 2,
     marginRight: 4,
+    opacity: 0.6,
   },
 });

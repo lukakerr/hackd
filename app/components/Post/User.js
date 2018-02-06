@@ -34,5 +34,6 @@ const styles = StyleSheet.create({
   textWrapper: {
     fontSize: 14,
     marginRight: 4,
+    opacity: 0.6,
   },
 });

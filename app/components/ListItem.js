@@ -11,20 +11,21 @@ import CustomText from "./CustomText";
 import Score from "./Post/Score";
 import Comments from "./Post/Comments";
 import User from "./Post/User";
-import TimeAgo from "./Post/TimeAgo";
+import Time from "./Post/Time";
+import Actions from "./Post/Actions";
 
 export default class ListItem extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  _onPress = () => {
+  onPress = () => {
     this.props.onPressItem();
   };
 
   render() {
     return (
-      <TouchableOpacity onPress={this._onPress} activeOpacity={0.8}>
+      <TouchableOpacity onPress={this.onPress} activeOpacity={0.8}>
         <View style={styles.listItem}>
           <CustomText styles={styles.listItemSection}>
             <Text style={styles.listItemTitle}>
@@ -42,9 +43,16 @@ export default class ListItem extends React.Component {
               <Comments
                 count={this.props.item.descendants}
               />
-              <TimeAgo
+              <Time
                 time={this.props.item.time}
               />
+              <View style={styles.listItemAction}>
+                <View style={styles.listItemActionText}>
+                  <Actions
+                    id={this.props.item.id}
+                  />
+                </View>
+              </View>
             </View>
           </View>
         </View>
@@ -69,9 +77,16 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   listItemSubTitle: {
+    flex: 1,
     flexDirection: 'row',
     marginLeft: -3,
+    paddingTop: 5,
     paddingBottom: 5,
-    opacity: 0.6,
+  },
+  listItemAction: {
+    flexGrow: 1
+  },
+  listItemActionText: {
+    alignSelf: 'flex-end'
   },
 });

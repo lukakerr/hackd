@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import config from '../config/default';
 import commonStyles from '../styles/common';
@@ -23,12 +24,12 @@ export default class Post extends React.Component {
     };
   }
 
-  upvoteItem = (id) => {
-    upvote(id).then(response => {
-      // If response is true, upvote successful
-      console.log("RESPONSE: ", response);
-    });
-  };
+  // upvoteItem = (id) => {
+  //   upvote(id).then(response => {
+  //     // If response is true, upvote successful
+  //     console.log("RESPONSE: ", response);
+  //   });
+  // };
 
   render() {
     return (

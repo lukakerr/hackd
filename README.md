@@ -1,8 +1,26 @@
 # hackd
 
-A Hacker News React Native powered iOS application. Built to learn React Native.
+A Hacker News React Native powered iOS application. Built to learn React Native and Redux.
 
 Currently a work in progress.
+
+### Features (some are a work in progress)
+
+- Browse anonymously or login
+- 6 feeds to choose from:
+	- Top
+	- New
+	- Best
+	- Ask
+	- Show
+	- Jobs
+- The user can:
+	- Share posts
+	- View other user profiles
+- If logged in, the user can also:
+	- Upvote
+	- Comment
+	- Submit a post
 
 ### Run Locally
 
