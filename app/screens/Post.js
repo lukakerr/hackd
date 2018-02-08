@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { upvote } from "../helpers/api";
+import CustomText from "../components/CustomText";
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -33,10 +34,10 @@ export default class Post extends React.Component {
   render() {
     return (
       <View>
-        <Text>{this.props.title}</Text>
-        <Text>{this.props.url} - {this.props.score}</Text>
+        <CustomText>{this.props.title}</CustomText>
+        <CustomText>{this.props.url} - {this.props.score}</CustomText>
         {/*<TouchableOpacity onPress={() => this.upvoteItem(this.props.id)}>
-          <Text>Upvote</Text>
+          <CustomText>Upvote</CustomText>
         </TouchableOpacity>*/}
       </View>
     );

@@ -21,6 +21,7 @@ class Account extends React.Component {
       return (
         <UserDetails
           user={this.props.user}
+          navigation={this.props.navigation}
         />
       );
     }
@@ -36,10 +37,6 @@ mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 export default connect((state) => { 
   return {
-    storyType: state.storyType,
-    posts: state.posts,
-    isLoadingPosts: state.isLoadingPosts,
     user: state.user,
-    upvotedPosts: state.upvotedPosts,
   }
 }, mapDispatchToProps)(Account);

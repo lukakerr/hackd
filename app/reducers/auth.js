@@ -6,3 +6,9 @@ export const user = createReducer({}, {
     return action.user;
   },
 });
+
+export const accounts = createReducer({}, {
+  [types.SET_ACCOUNTS_DETAILS](state, action) {
+    return action.accounts;
+  },
+});

@@ -28,9 +28,9 @@ export default class ListItem extends React.Component {
       <TouchableOpacity onPress={this.onPress} activeOpacity={0.8}>
         <View style={styles.listItem}>
           <CustomText styles={styles.listItemSection}>
-            <Text style={styles.listItemTitle}>
+            <CustomText style={styles.listItemTitle}>
               {this.props.item.title}
-            </Text>
+            </CustomText>
           </CustomText>
           <View>
             <View style={styles.listItemSubTitle}>

@@ -14,13 +14,13 @@ export default class User extends React.Component {
 
   render() {
     return (
-      <Text style={styles.textWrapper}>
+      <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>
         </View>
         <CustomText>
           {this.props.by}
         </CustomText>
-      </Text>
+      </CustomText>
     );
   }
 }

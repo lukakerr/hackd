@@ -11,7 +11,7 @@ export default class CustomText extends React.Component {
 
   render() {
     return (
-      <Text style={[this.props.styles, commonStyles.text]}>
+      <Text style={[this.props.style, commonStyles.text]}>
         {this.props.children}
       </Text>
     );

@@ -22,14 +22,8 @@ export const isLoadingPosts = createReducer(true, {
   [types.SET_STORY_TYPE](state, action) {
     return true;
   },
-  // When posts are set, no posts are loading anymore 
+  // When posts are set, no posts are loading anymore
   [types.SET_POSTS](state, action) {
     return false;
-  },
-});
-
-export const upvotedPosts = createReducer([], {
-  [types.ADD_UPVOTED_POST](state, action) {
-    return state.concat(action.post);
   },
 });

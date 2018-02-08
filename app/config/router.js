@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image, Button } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import Posts from '../screens/Posts';
@@ -7,8 +7,9 @@ import Post from '../screens/Post';
 import Settings from '../screens/Settings';
 import Account from '../screens/Account';
 import Search from '../screens/Search';
+import Saved from '../components/Auth/Saved';
 
-export const PostStack = StackNavigator({
+const PostStack = StackNavigator({
   Posts: {
     screen: Posts,
   },
@@ -20,30 +21,42 @@ export const PostStack = StackNavigator({
   },
 });
 
-export const AccountStack = StackNavigator({
+const AccountStack = StackNavigator({
   Account: {
     screen: Account,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       title: "Account",
+    },
+  },
+  Saved: {
+    screen: Saved,
+    navigationOptions: {
+      title: 'Saved',
+    },
+  },
+  Post: {
+    screen: Post,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.descendants} comments`,
     }),
   },
 });
 
-export const SettingsStack = StackNavigator({
+const SettingsStack = StackNavigator({
   Settings: {
     screen: Settings,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       title: "Settings",
-    }),
+    },
   },
 });
 
-export const SearchStack = StackNavigator({
-  Settings: {
+const SearchStack = StackNavigator({
+  Search: {
     screen: Search,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       title: "Search",
-    }),
+    },
   },
 });
 

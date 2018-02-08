@@ -19,7 +19,7 @@ export default class Time extends React.Component {
 
   render() {
     return (
-      <Text style={styles.textWrapper}>
+      <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>
           <Image
             style={styles.icon}
@@ -29,7 +29,7 @@ export default class Time extends React.Component {
         <CustomText>
           {timeAgo.format(new Date(this.props.time * 1000), { flavour: 'tiny' })}
         </CustomText>
-      </Text>
+      </CustomText>
     );
   }
 }

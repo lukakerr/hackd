@@ -13,24 +13,6 @@ const setFetchedPosts = posts => {
   };
 };
 
-const setUpvotedPost = post => {
-  return {
-    type: types.ADD_UPVOTED_POST,
-    post,
-  };
-};
-
-export const addUpvotedPost = post => {
-  return (dispatch, getState) => {
-    const upvotedPosts = getState().upvotedPosts;
-
-    // If not already in upvotedPosts
-    if (upvotedPosts.indexOf(post) === -1) {
-      dispatch(setUpvotedPost(post));
-    }
-  };
-};
-
 export const setStoryType = storyType => {
   return {
     type: types.SET_STORY_TYPE,

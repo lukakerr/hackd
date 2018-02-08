@@ -14,7 +14,7 @@ export default class Score extends React.Component {
 
   render() {
     return (
-      <Text style={styles.textWrapper}>
+      <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>
           <Image
             style={styles.icon}
@@ -24,7 +24,7 @@ export default class Score extends React.Component {
         <CustomText>
           {this.props.score}
         </CustomText>
-      </Text>
+      </CustomText>
     );
   }
 }

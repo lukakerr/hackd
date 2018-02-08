@@ -16,6 +16,8 @@ import { ActionCreators } from "../../actions";
 import config from "../../config/default";
 import { upvote } from "../../helpers/api";
 
+import CustomText from "../CustomText";
+
 class Actions extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,14 @@ class Actions extends React.Component {
   }
 
   componentDidMount() {
-    const isUpvoted = this.props.upvotedPosts.indexOf(this.props.id) !== -1 && this.props.user.loggedIn;
+    let isUpvoted = false;
+    if (this.props.user.loggedIn) {
+      if (this.props.accounts[this.props.user.username]) {
+        if (this.props.accounts[this.props.user.username].upvoted.indexOf(this.props.id) !== -1) {
+          isUpvoted = true;
+        }
+      }
+    }
     this.setState({
       upvoted: isUpvoted,
     });
@@ -34,21 +43,45 @@ class Actions extends React.Component {
   showActions = () => {
     const OPTIONS = [
       "Cancel", 
-      "Upvote",
-      "Share",
       "Reply",
+      "Share",
     ];
+
+    if (this.props.user.loggedIn) {
+      if (this.props.accounts[this.props.user.username]) {
+        if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.id) === -1) {
+          OPTIONS.push("Save");
+        } else {
+          OPTIONS.push("Unsave");
+        }
+      } else {
+        OPTIONS.push("Save");
+      }
+    } else {
+      OPTIONS.push("Save");
+    }
+
     ActionSheetIOS.showActionSheetWithOptions({
+      title: "Post actions",
       options: OPTIONS,
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
-      const selectedFeed = OPTIONS[buttonIndex].toLowerCase();
+      const selectedAction = OPTIONS[buttonIndex].toLowerCase();
 
       // If "Cancel" not pressed and selectedFeed isnt current storyType
       if (buttonIndex !== 0) {
         if (buttonIndex === 1) {
-          this.upvote(this.props.id);
-        }
+          if (!this.validateUserLoggedIn("reply")) {
+            return;
+          }
+        } else if (buttonIndex === 2) {
+
+        } else if (buttonIndex === 3) {
+          if (!this.validateUserLoggedIn("save")) {
+            return;
+          }
+          this.props.addSavedPost(this.props.id);
+        };
       }
     });
   };
@@ -60,13 +93,20 @@ class Actions extends React.Component {
     );
   };
 
-  upvote = () => {
-    const id = this.props.id
+  validateUserLoggedIn = (action) => {
     if (!this.props.user.loggedIn) {
       this.showAlert(
-        'Cannot upvote',
+        `Cannot ${action}`,
         'Please login and try again.'
       );
+      return false;
+    }
+    return true;
+  }
+
+  upvote = () => {
+    const id = this.props.id;
+    if (!this.validateUserLoggedIn("upvote")) {
       return;
     }
 
@@ -92,7 +132,7 @@ class Actions extends React.Component {
   render() {
     const isUpvoted = this.state.upvoted;
     return (
-      <Text style={styles.textWrapper}>
+      <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>
           <TouchableOpacity onPress={this.showActions} activeOpacity={0.8} style={styles.iconDotsContainer}>
             <Image
@@ -103,15 +143,14 @@ class Actions extends React.Component {
           <TouchableOpacity 
             onPress={this.upvote} 
             activeOpacity={0.8} 
-            style={[styles.iconArrowContainer, {backgroundColor: isUpvoted ? config.colors.orange : "transparent",}]}>
-
+            style={[styles.iconArrowContainer, { backgroundColor: isUpvoted ? config.colors.orange : "transparent" }]}>
             <Image
               style={[styles.iconArrow, { tintColor: isUpvoted ? "white" : "black" }]}
               source={require('../../img/arrow.png')}
             />
           </TouchableOpacity>
         </View>
-      </Text>
+      </CustomText>
     );
   }
 }
@@ -155,10 +194,7 @@ mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 export default connect((state) => { 
   return {
-    storyType: state.storyType,
-    posts: state.posts,
-    isLoadingPosts: state.isLoadingPosts,
     user: state.user,
-    upvotedPosts: state.upvotedPosts,
+    accounts: state.accounts,
   }
 }, mapDispatchToProps)(Actions);

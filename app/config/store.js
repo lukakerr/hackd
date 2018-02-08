@@ -15,7 +15,10 @@ const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
-  whitelist: ['user', 'upvotedPosts'],
+  whitelist: [
+    'user',
+    'accounts',
+  ],
 }
 
 const persistedReducer = persistReducer(persistConfig, reducer);
