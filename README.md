@@ -4,10 +4,10 @@ A Hacker News React Native powered iOS application. Built to learn React Native 
 
 Currently a work in progress.
 
-### Features (some are a work in progress)
+### Features
 
-- Browse anonymously or login
-- 6 feeds to choose from:
+- [x] Browse anonymously or login
+- [x] 6 feeds to choose from:
 	- Top
 	- New
 	- Best
@@ -15,13 +15,14 @@ Currently a work in progress.
 	- Show
 	- Jobs
 - The user can:
-	- Share posts
-	- View other user profiles
-	- View their own profile
+	- [ ] Share posts
+	- [ ] View other user profiles
+	- [x] View their own profile
+	- [x] Collapse comments
 - If logged in, the user can also:
-	- Upvote
-	- Comment
-	- Submit a post
+	- [x] Upvote
+	- [ ] Comment
+	- [ ] Submit a post
 
 ### Run Locally
 
@@ -39,9 +40,17 @@ $ npm install
 $ react-native run-ios
 ```
 
+### Design
+
+Inspired by [Apollo App](https://apolloapp.io), I tried to design hackd around an iOS centric theme.
+
+The comments design in hackd is based off a stripped down version of Apollo's comments.
+
+Hackd also supports font scaling for readers who want smaller or larger text.
+
 ### Screenshots
 
 <div align="center">
-  <img src="https://i.imgur.com/4fW2MZH.png" width="400" alt="hackd1">
-  <img src="https://i.imgur.com/qO8AiDw.png" width="400" alt="hackd2">
+  <img src="https://i.imgur.com/dI5k9PX.png" width="400" alt="hackd1">
+  <img src="https://i.imgur.com/QFXfpCC.png" width="400" alt="hackd2">
 </div>
