@@ -41,8 +41,8 @@ export default class Comment extends React.Component {
                 borderLeftColor: this.props.level > 0 ? config.borderColors[this.props.level % 5] : 'transparent',
               }]}>
                 <View style={styles.commentInfo}>
-                  <User by={this.props.author} style={styles.userName} textStyle={styles.userNameText} />
-                  <Time time={this.props.time} textStyle={styles.timeText} />
+                  <User by={this.props.author} style={styles.userName} />
+                  <Time time={this.props.time} />
                 </View>
                 {this.props.open && 
                   <HTMLView
@@ -83,11 +83,5 @@ const styles = StyleSheet.create({
   userName: {
     opacity: 0.9,
     fontWeight: 'bold',
-  },
-  userNameText: {
-    fontSize: 15,
-  },
-  timeText: {
-    fontSize: 15,
   },
 });

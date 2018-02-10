@@ -63,6 +63,51 @@ getChildComment = (parentId, level) => {
   });
 };
 
+toggleComments = (comments, id, level) => {
+  comments.forEach(function (comment, index) {
+    if (comment.id === id) {
+      // Toggle content visibility, but still show comment header
+      comment.open = !comment.open;
+
+      let highestLevel = level;
+
+      for (i = index + 1; i < comments.length; i++) {
+        // If comment is a children of comment clicked on
+        if (comments[i].level > level) {
+          // If clicked on comment is being closed
+          if (!comment.open) {
+            // Hide every child comment
+            comments[i].hidden = true;
+          } else if (comment.open) {
+            // Child comment has a parent, check if the parent is closed
+            if (comments[i].parent) {
+              for (k = 0; k < comments.length; k++) {
+                // Found the parent
+                if (comments[k].id === comments[i].parent) {
+                  // If the parent is closed
+                  if (!comments[k].open) {
+                    // Hide the child
+                    comments[i].hidden = true;
+                  } else {
+                    comments[i].hidden = false;
+                  }
+                }
+              }
+            } else {
+              // No parent so unhide it
+              comments[i].hidden = false;
+            }
+          }
+        } else {
+          break;
+        }
+      }
+    }
+  });
+  return comments;
+};
+
 export { 
   getComments,
+  toggleComments
 };

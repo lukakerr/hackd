@@ -9,7 +9,10 @@ import {
 import Comment from './Comment';
 import CustomText from '../CustomText';
 import commonStyles from '../../styles/common';
-import { getComments } from '../../helpers/comments';
+import { 
+  getComments,
+  toggleComments
+} from '../../helpers/comments';
 
 export default class AllComments extends React.Component {
   constructor(props) {
@@ -24,7 +27,12 @@ export default class AllComments extends React.Component {
   }
 
   componentDidMount() {
+    this._mounted = true;
     this.fetchComments();
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   fetchComments = () => {
@@ -32,16 +40,19 @@ export default class AllComments extends React.Component {
     if (kids) {
       getComments(kids)
         .then(comments => {
-          console.log(comments);
-          this.setState({
-            comments,
-            loading: false,
-          });
+          if (this._mounted) {
+            this.setState({
+              comments,
+              loading: false,
+            });
+          }
         })
         .catch(error => {
-          this.setState({
-            error,
-          });
+          if (this._mounted) {
+            this.setState({
+              error,
+            });
+          }
         });
     } else {
       this.setState({
@@ -52,53 +63,9 @@ export default class AllComments extends React.Component {
   };
 
   toggle = (id, level) => {
-    const { comments } = this.state;
+    let { comments } = this.state;
+    comments = toggleComments(comments, id, level);
 
-    comments.forEach(function (comment, index) {
-      if (comment.id === id) {
-        // Toggle content visibility, but still show comment header
-        comment.open = !comment.open;
-
-        let heighestLevel = level; // e.g. 3
-
-        for (i = index + 1; i < comments.length; i++) {
-          // If comment is a children of comment clicked on
-          if (level < comments[i].level) {
-            // If clicked on comment is being closed
-            if (!comment.open) {
-              // Hide every child element
-              comments[i].hidden = true;
-            } else if (comment.open) {
-              // Show all children which:
-              // - Are not !comment[i].open (closed)
-              // - Dont have a greater level than highestLevel
-              
-              // If closed
-              if (!comments[i].open) {
-                heighestLevel = comments[i].level;
-                comments[i].hidden = false;
-                if (comments[i].level < heighestLevel) {
-                  comments[i].hidden = false;
-                }
-                continue;
-              }
-
-              // If child element is greater than highestLevel, continue
-              // if (comments[i].level > highestLevel) {
-              //   continue;
-              // }
-              if (comments[i].level <= heighestLevel) {
-                comments[i].hidden = false;
-              }
-            }
-          } else {
-            break;
-          }
-        }
-      }
-    });
-
-    console.log(comments);
     this.setState({
       comments,
       refreshComments: !this.state.refreshComments,

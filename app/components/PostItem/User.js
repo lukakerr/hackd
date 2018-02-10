@@ -15,7 +15,7 @@ export default class User extends React.Component {
       <CustomText style={[this.props.style, styles.textWrapper]}>
         <View style={styles.iconView}>
         </View>
-        <CustomText style={this.props.textStyle}>
+        <CustomText>
           {this.props.by}
         </CustomText>
       </CustomText>
