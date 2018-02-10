@@ -19,7 +19,7 @@ class Posts extends React.Component {
     this.state = {
       isLoadingInitially: true,
       page: 1,
-      limit: 20,
+      limit: 15,
       refreshing: false,
       loadingMorePosts: false,
     };
@@ -71,7 +71,7 @@ class Posts extends React.Component {
       // If "Cancel" not pressed and selectedFeed isnt current storyType
       if (buttonIndex !== 0 && selectedFeed !== this.props.storyType) {
         this.props.navigation.setParams({ 
-          storyTitle: capitalize(this.props.storyType) 
+          storyTitle: capitalize(selectedFeed) 
         });
         this.props.setStoryType(selectedFeed);
         this.makeRequest();

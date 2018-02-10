@@ -54,6 +54,7 @@ export default class Posts extends React.Component {
         <FlatList
           style={styles.fullHeight}
           data={this.props.data}
+          extraData={this.props.loadingMore}
           keyboardShouldPersistTaps="always"
           keyExtractor={(item, index) => index}
           ItemSeparatorComponent={this.renderSeparator}
@@ -61,7 +62,7 @@ export default class Posts extends React.Component {
           refreshing={this.props.refreshing}
           onRefresh={this.onRefresh}
           onEndReached={this.onEndReached}
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={10}
           renderItem={({ item }) => (
             <ListItem
               item={item}
