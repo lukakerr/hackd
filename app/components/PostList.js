@@ -7,6 +7,7 @@ import {
   FlatList,
 } from 'react-native';
 
+import config from "../config/default";
 import ListItem from "./ListItem";
 
 export default class Posts extends React.Component {
@@ -19,7 +20,7 @@ export default class Posts extends React.Component {
   renderSeparator = () => (<View style={styles.rowSeperator} />);
 
   renderFooter = () => {
-    if (!this.props.isLoadingPosts) {
+    if (!this.props.loadingMore) {
       return null;
     }
 
@@ -28,6 +29,14 @@ export default class Posts extends React.Component {
         <ActivityIndicator animating />
       </View>
     );
+  };
+
+  onRefresh = () => {
+    this.props.onRefresh();
+  };
+
+  onEndReached = () => {
+    this.props.onEndReached();
   };
 
   render() {
@@ -43,11 +52,16 @@ export default class Posts extends React.Component {
     return (
       <View>
         <FlatList
+          style={styles.fullHeight}
           data={this.props.data}
           keyboardShouldPersistTaps="always"
           keyExtractor={(item, index) => index}
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
+          refreshing={this.props.refreshing}
+          onRefresh={this.onRefresh}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={1}
           renderItem={({ item }) => (
             <ListItem
               item={item}
@@ -64,12 +78,15 @@ const styles = StyleSheet.create({
   activityIndicator: {
     paddingVertical: 20,
     borderTopWidth: 1,
-    borderColor: "#FAFAFA"
+    borderColor: config.colors.mediumGray,
   },
   rowSeperator: {
     height: 0.5,
     width: "100%",
     backgroundColor: "#EEEEEE",
     padding: 1,
+  },
+  fullHeight: {
+    height: '100%',
   },
 });

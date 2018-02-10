@@ -1,28 +1,22 @@
 import React from 'react';
 import {
-  Text,
   View,
   StyleSheet,
-  Image,
 } from 'react-native';
 import CustomText from "../CustomText";
 
-export default class Comments extends React.Component {
+export default class User extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <CustomText style={styles.textWrapper}>
+      <CustomText style={[this.props.style, styles.textWrapper]}>
         <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            source={require('../../img/comment.png')}
-          />
         </View>
-        <CustomText>
-          {this.props.count}
+        <CustomText style={this.props.textStyle}>
+          {this.props.by}
         </CustomText>
       </CustomText>
     );
@@ -30,19 +24,13 @@ export default class Comments extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 15,
-    height: 15,
-  },
   iconView: {
-    width: 18,
+    width: 4,
     height: 18,
     paddingTop: 5,
   },
   textWrapper: {
     fontSize: 14,
-    marginLeft: 4,
     marginRight: 4,
-    opacity: 0.6,
   },
 });

@@ -1,12 +1,10 @@
 import * as types from "./types";
-import { 
-  login,
-} from "../helpers/api";
 import { addToUserAccount } from "../helpers/utils";
+import { logout } from "../helpers/api";
 
-const setLoggedInUser = user => {
+const setUser = user => {
   return {
-    type: types.SET_LOGGED_IN_USER,
+    type: types.UPDATE_USER,
     user,
   };
 };
@@ -38,28 +36,36 @@ export const addSavedPost = (post) => {
   };
 };
 
-export const logIn = (username, password) => {
+export const updateUser = (username, password) => {
   return (dispatch, getState) => {
-    login(username, password).then(loggedIn => {
-      if (loggedIn) {
-        const user = {
-          username,
-          password,
-          loggedIn: true,
-        };
-        dispatch(setLoggedInUser(user));
-      } else {
-        const user = {
-          loggedIn: false,
-        };
-        dispatch(setLoggedInUser(user));
-      }
-    });
+    const { loggedIn } = getState().user;
+    const user = {
+      username,
+      password,
+      loggedIn,
+    };
+    dispatch(setUser(user));
+  };
+};
+
+export const login = (user) => {
+  return (dispatch, getState) => {
+    dispatch(setUser(user));
   };
 };
 
 export const logOut = () => {
   return (dispatch, getState) => {
-    dispatch(setLoggedInUser({ loggedIn: false }));
+    const { user } = getState();
+
+    if (!user.loggedIn) {
+      return;
+    }
+
+    logout(user).then(loggedOut => {
+      if (loggedOut) {
+        dispatch(setUser({ loggedIn: false }));
+      }
+    });
   };
 };

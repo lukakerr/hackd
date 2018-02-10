@@ -10,6 +10,7 @@ import { ActionCreators } from "../actions";
 
 import HeaderButton from "../components/HeaderButton";
 import PostList from "../components/PostList";
+import { getItems } from "../helpers/api";
 import { capitalize } from "../helpers/utils";
 
 class Posts extends React.Component {
@@ -19,6 +20,8 @@ class Posts extends React.Component {
       isLoadingInitially: true,
       page: 1,
       limit: 20,
+      refreshing: false,
+      loadingMorePosts: false,
     };
     this.selectFeed = this.selectFeed.bind(this);
   }
@@ -88,11 +91,42 @@ class Posts extends React.Component {
     return fetch(`${config.api}/${storyType}stories.json`)
       .then((response) => response.json())
       .then((responseJson) => {
-        this.props.fetchPosts(page, limit, responseJson);
+        const posts = getItems(page, limit, responseJson);
+
+        // Wait for all Promises to complete
+        Promise.all(posts)
+          .then(results => {
+            this.props.setPosts(page, results);
+            this.setState({
+              refreshing: false,
+              loadingMorePosts: false,
+            });
+          })
+          .catch(e => {
+            console.error(e);
+          });
       })
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  handleRefresh = () => {
+    this.setState({
+      page: 1,
+      refreshing: true,
+    }, () => {
+      this.makeRequest();
+    });
+  };
+
+  handleEndReached = () => {
+    this.setState({
+      page: this.state.page + 1,
+      loadingMorePosts: true,
+    }, () => {
+      this.makeRequest();
+    });
   };
 
   render() {
@@ -100,7 +134,11 @@ class Posts extends React.Component {
       <PostList
         data={this.props.posts}
         isLoadingPosts={this.props.isLoadingPosts}
+        loadingMore={this.state.loadingMorePosts}
         navigation={this.props.navigation}
+        refreshing={this.state.refreshing}
+        onRefresh={() => this.handleRefresh()}
+        onEndReached={() => this.handleEndReached()}
       />
     )
   }

@@ -20,4 +20,12 @@ export default StyleSheet.create({
   flex: {
     flex: 1,
   },
+  textCenter: {
+    textAlign: 'center',
+  },
+  error: {
+    textAlign: 'center',
+    fontSize: 20,
+    opacity: 0.8,
+  }
 });

@@ -1,5 +1,13 @@
 const capitalize = str => str[0].toUpperCase() + str.slice(1);
 
+const truncate = (str, len) => {
+  if (str.length < len) {
+    return str;
+  }
+  let truncatedStr = str.replace(/(^\w+:|^)\/\//, '').replace('www.', '');
+  return `${truncatedStr.substring(0, len)}...`;
+}
+
 const addToUserAccount = (accounts, user, post, type) => {
   const userAccount = accounts[user];
   const newAccounts = {};
@@ -29,5 +37,6 @@ const addToUserAccount = (accounts, user, post, type) => {
 
 export {
   capitalize,
+  truncate,
   addToUserAccount,
 };

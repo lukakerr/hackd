@@ -1,6 +1,9 @@
 import React from 'react';
-import PostList from "../PostList";
+import { View } from 'react-native';
 
+import PostList from "../PostList";
+import CustomText from "../CustomText";
+import commonStyles from "../../styles/common";
 import { getItems } from "../../helpers/api";
 
 export default class Saved extends React.Component {
@@ -9,18 +12,15 @@ export default class Saved extends React.Component {
     this.state = {
       isLoadingPosts: true,
       saved: null,
+      savedIds: null,
+      refreshing: false,
     };
   }
 
   componentWillMount() {
-    const saved = { 
-      saved: this.props.navigation.state.params,
-    };
-
-    this.props = {
-      ...this.props,
-      ...saved,
-    };
+    this.setState({
+      savedIds: this.props.navigation.state.params
+    });
   }
 
   componentDidMount() {
@@ -28,7 +28,7 @@ export default class Saved extends React.Component {
   }
 
   fetchSavedPosts = () => {
-    const saved = getItems(1, 20, this.props.saved);
+    const saved = getItems(null, null, this.state.savedIds);
 
     // Wait for all Promises to complete
     Promise.all(saved)
@@ -36,6 +36,7 @@ export default class Saved extends React.Component {
         this.setState({
           isLoadingPosts: false,
           saved: results,
+          refreshing: false,
         });
       })
       .catch(e => {
@@ -43,12 +44,30 @@ export default class Saved extends React.Component {
       });
   };
 
+  handleRefresh = () => {
+    this.setState({
+      refreshing: true,
+    }, () => {
+      this.fetchSavedPosts();
+    });
+  };
+
   render() {
+    if (this.state.savedIds && this.state.savedIds.length === 0) {
+      return (
+        <View style={commonStyles.center}>
+          <CustomText style={commonStyles.error}>No saved posts.</CustomText>
+        </View>
+      );
+    }
     return (
       <PostList
         data={this.state.saved}
         isLoadingPosts={this.state.isLoadingPosts}
         navigation={this.props.navigation}
+        refreshing={this.state.refreshing}
+        onRefresh={() => this.handleRefresh()}
+        onEndReached={() => {return}}
       />
     )
   }

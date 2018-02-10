@@ -26,9 +26,13 @@ getItem = (itemId) => {
  *                         with Promise.all
  */
 getItems = (page, limit, itemIds) => {
-  const beginning = 0;
-  const end = 20 + 1;
-  const slicedItems = itemIds.slice(beginning, end);
+  let slicedItems = itemIds;
+
+  if (page && limit) {
+    const beginning = (page - 1) * limit;
+    const end = beginning + limit;
+    slicedItems = itemIds.slice(beginning, end);
+  }
 
   // Map each itemId to an Array of Promises
   const posts = slicedItems.map(item => {
@@ -117,6 +121,32 @@ login = (username, password) => {
     });
 };
 
+getLogoutUrl = () => {
+  return fetch(`${config.base}/news`, {
+    mode: "no-cors",
+    credentials: "include",
+  }).then(response => response.text())
+    .then(responseText => {
+      const document = cheerio.load(responseText);
+      return document('#logout').attr("href");
+    });
+};
+
+logout = (user) => {
+  return this.getLogoutUrl()
+    .then(logoutUrl => fetch(`${config.base}/${logoutUrl}`, {
+      mode: "no-cors",
+      credentials: "include",
+    })).then(response => response.text())
+      .then(responseText => {
+        return true;
+      })
+      .catch(error => {
+        console.error(error);
+        return false;
+      });
+};
+
 /**
  * Get the URL needed to comment
  * @param  {String} itemId The item ID to comment on
@@ -166,9 +196,11 @@ comment = (itemId, reply) => {
 };
 
 export { 
+  getItem,
   getItems,
   upvote,
   login,
   comment, 
   getUser,
+  logout
 };

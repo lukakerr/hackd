@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   Image,
@@ -41,25 +40,22 @@ class Actions extends React.Component {
   }
 
   showActions = () => {
+    let saveOption = "Save";
+
+    if (this.props.user.loggedIn) {
+      if (this.props.accounts[this.props.user.username]) {
+        if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.id) !== -1) {
+          saveOption = "Unsave";
+        }
+      }
+    }
+
     const OPTIONS = [
       "Cancel", 
       "Reply",
       "Share",
+      saveOption,
     ];
-
-    if (this.props.user.loggedIn) {
-      if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.id) === -1) {
-          OPTIONS.push("Save");
-        } else {
-          OPTIONS.push("Unsave");
-        }
-      } else {
-        OPTIONS.push("Save");
-      }
-    } else {
-      OPTIONS.push("Save");
-    }
 
     ActionSheetIOS.showActionSheetWithOptions({
       title: "Post actions",

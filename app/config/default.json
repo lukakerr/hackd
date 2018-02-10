@@ -2,6 +2,19 @@
   "api": "https://hacker-news.firebaseio.com/v0",
   "base": "https://news.ycombinator.com",
   "colors": {
-    "orange": "#EE6F2D"
+    "orange": "#EE6F2D",
+    "lightGray": "#FEFEFE",
+    "mediumGray": "#FAFAFA",
+    "gray": "#EFEFEF",
+    "darkGray": "#E6E6E6",
+    "code": "#303030"
+  },
+  "borderColors": {
+    "0": "#8d390c",
+    "1": "#EE6F2D",
+    "2": "#f39f72",
+    "3": "#2f1304",
+    "4": "#f07f42",
+    "5": "#bc4c10",
   }
 }

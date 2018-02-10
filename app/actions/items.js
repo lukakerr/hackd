@@ -20,17 +20,12 @@ export const setStoryType = storyType => {
   };
 };
 
-export const fetchPosts = (page, limit, itemIds) => {
+export const setPosts = (page, posts) => {
   return (dispatch, getState) => {
-    const posts = getItems(page, limit, itemIds);
+    const currentPosts = getState().posts;
 
-    // Wait for all Promises to complete
-    Promise.all(posts)
-      .then(results => {
-        dispatch(setFetchedPosts(results));
-      })
-      .catch(e => {
-        console.error(e);
-      });
+    const newPosts = page === 1 ? posts : [...currentPosts, ...posts];
+
+    dispatch(setFetchedPosts(newPosts));
   };
 };

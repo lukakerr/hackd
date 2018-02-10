@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   Image,
@@ -26,7 +25,7 @@ export default class Time extends React.Component {
             source={require('../../img/clock.png')}
           />
         </View>
-        <CustomText>
+        <CustomText style={this.props.textStyle}>
           {timeAgo.format(new Date(this.props.time * 1000), { flavour: 'tiny' })}
         </CustomText>
       </CustomText>

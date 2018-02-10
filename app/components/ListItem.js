@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import CustomText from "./CustomText";
-import Score from "./Post/Score";
-import Comments from "./Post/Comments";
-import User from "./Post/User";
-import Time from "./Post/Time";
-import Actions from "./Post/Actions";
+import Score from "./PostItem/Score";
+import Comments from "./PostItem/Comments";
+import User from "./PostItem/User";
+import Time from "./PostItem/Time";
+import Actions from "./PostItem/Actions";
 
 export default class ListItem extends React.Component {
   constructor(props) {
@@ -36,6 +36,7 @@ export default class ListItem extends React.Component {
             <View style={styles.listItemSubTitle}>
               <User
                 by={this.props.item.by}
+                style={{opacity: 0.6}}
               />
               <Score
                 score={this.props.item.score}
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: config.colors.mediumGray,
   },
   listItemSection: {
     paddingBottom: 5
@@ -87,6 +88,6 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   listItemActionText: {
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
 });
