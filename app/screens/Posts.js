@@ -88,8 +88,6 @@ class Posts extends React.Component {
       storyType = "job";
     }
 
-    console.log("LOADING: ", storyType)
-
     return fetch(`${config.api}/${storyType}stories.json`)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -98,7 +96,6 @@ class Posts extends React.Component {
         // Wait for all Promises to complete
         Promise.all(posts)
           .then(results => {
-            console.log(results);
             this.props.setPosts(page, results);
             this.setState({
               refreshing: false,
