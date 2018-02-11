@@ -26,18 +26,22 @@ class Actions extends React.Component {
   }
 
   componentDidMount() {
-    let isUpvoted = false;
+    this.setState({
+      upvoted: this.checkIfUpvoted(),
+    });
+  }
+
+  checkIfUpvoted = () => {
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
         if (this.props.accounts[this.props.user.username].upvoted.indexOf(this.props.id) !== -1) {
-          isUpvoted = true;
+          return true;
         }
       }
     }
-    this.setState({
-      upvoted: isUpvoted,
-    });
-  }
+    
+    return false;
+  };
 
   showActions = () => {
     let saveOption = "Save";
@@ -109,11 +113,12 @@ class Actions extends React.Component {
     this.setState({
       upvoted: true,
     });
+
+    this.props.addUpvotedPost(id);
     
     upvote(id).then(upvoted => {
-      if (upvoted) {
-        this.props.addUpvotedPost(id);
-      } else {
+      if (!upvoted) {
+        this.props.removeUpvotedPost(id);
         this.setState({
           upvoted: false,
         });
@@ -126,7 +131,7 @@ class Actions extends React.Component {
   };
 
   render() {
-    const isUpvoted = this.state.upvoted;
+    const isUpvoted = this.checkIfUpvoted();
     return (
       <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>

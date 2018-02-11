@@ -21,7 +21,7 @@ export default class Comments extends React.Component {
           />
         </View>
         <CustomText>
-          {this.props.count}
+          {this.props.count > -1 ? this.props.count : 0}
         </CustomText>
       </CustomText>
     );

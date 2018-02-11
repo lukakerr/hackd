@@ -62,7 +62,7 @@ export default class Posts extends React.Component {
           refreshing={this.props.refreshing}
           onRefresh={this.onRefresh}
           onEndReached={this.onEndReached}
-          onEndReachedThreshold={10}
+          onEndReachedThreshold={0.5}
           renderItem={({ item }) => (
             <ListItem
               item={item}

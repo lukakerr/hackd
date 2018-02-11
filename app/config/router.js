@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
+import { truncate } from '../helpers/utils';
 import Posts from '../screens/Posts';
 import Post from '../screens/Post';
 import Settings from '../screens/Settings';
@@ -16,7 +17,9 @@ const PostStack = StackNavigator({
   Post: {
     screen: Post,
     navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.descendants} comments`,
+      title: navigation.state.params.descendants > -1 
+             ? `${navigation.state.params.descendants} comments` 
+             : truncate(navigation.state.params.title, 20),
     }),
   },
 });

@@ -32,7 +32,7 @@ export default class Comment extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={() => this.toggle(this.props.id, this.props.level)} activeOpacity={0.8}>
+      <TouchableOpacity onPress={() => this.toggle(this.props.id, this.props.level)} activeOpacity={0.5}>
         { !this.props.hidden && 
           <View style={styles.commentBox}>
             <View style={[styles.commentContainer, { marginLeft: (12 * this.props.level) - 10, }]}>
