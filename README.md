@@ -16,13 +16,19 @@ Currently a work in progress.
 	- Jobs
 - The user can:
 	- [ ] Share posts
-	- [ ] View other user profiles
-	- [x] View their own profile
+	- [ ] Search, filter and view posts (stories, show, ask), comments, polls and users
+	- [x] Read articles in app with Safari View Controller
 	- [x] Collapse comments
 - If logged in, the user can also:
-	- [x] Upvote
+	- [x] Upvote posts
+	- [ ] Upvote comments
 	- [ ] Comment
 	- [ ] Submit a post
+	- [x] Save a post
+	- [ ] Add a post to offline reading section
+	- [ ] View their recently viewed articles
+	- [x] View their own profile
+- [x] Users can login/logout of multiple accounts without losing their saved/upvoted/offline/viewed posts
 
 ### Run Locally
 
@@ -35,6 +41,9 @@ $ cd hackd
 
 # Install dependencies
 $ npm install
+
+# Link native libraries
+$ react-native link
 
 # Run the app
 $ react-native run-ios

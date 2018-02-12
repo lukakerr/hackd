@@ -6,7 +6,7 @@ const truncate = (str, len) => {
   }
   let truncatedStr = str.replace(/(^\w+:|^)\/\//, '').replace('www.', '');
   return `${truncatedStr.substring(0, len)}...`;
-}
+};
 
 const addToUserAccount = (accounts, user, post, type) => {
   const userAccount = accounts[user];

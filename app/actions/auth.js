@@ -62,7 +62,7 @@ export const logOut = () => {
       return;
     }
 
-    logout(user).then(loggedOut => {
+    logout().then(loggedOut => {
       if (loggedOut) {
         dispatch(setUser({ loggedIn: false }));
       }

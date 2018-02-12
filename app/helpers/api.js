@@ -21,9 +21,9 @@ getItem = (itemId) => {
 
 /**
  * Given a list of IDs, get each item for that ID
- * @param  {Array} itemIds An array of item IDs
- * @return {Promise[]}     An array of Promises resolved
- *                         with Promise.all
+ * @param  {Number[]}  itemIds An array of item IDs
+ * @return {Promise[]}         An array of Promises resolved
+ *                             with Promise.all
  */
 getItems = (page, limit, itemIds) => {
   let slicedItems = itemIds;
@@ -45,6 +45,11 @@ getItems = (page, limit, itemIds) => {
   return posts;
 };
 
+/**
+ * Gets a users information from their username
+ * @param  {String} username The users username
+ * @return {Object}          The users data
+ */
 getUser = (username) => {
   return fetch(`${config.api}/user/${username}.json`)
     .then(response => response.json())
@@ -121,6 +126,11 @@ login = (username, password) => {
     });
 };
 
+/**
+ * Get the URL needed to logout
+ * @return {Promise}       Returns a promise that
+ *                         resolves with the logout URL
+ */
 getLogoutUrl = () => {
   return fetch(`${config.base}/news`, {
     mode: "no-cors",
@@ -132,7 +142,12 @@ getLogoutUrl = () => {
     });
 };
 
-logout = (user) => {
+/**
+ * Logout a user
+ * @return {Promise}       Returns a promise that
+ *                         resolves true if logged out, else false
+ */
+logout = () => {
   return this.getLogoutUrl()
     .then(logoutUrl => fetch(`${config.base}/${logoutUrl}`, {
       mode: "no-cors",

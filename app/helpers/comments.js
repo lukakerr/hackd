@@ -1,5 +1,13 @@
 import { getItem } from './api';
 
+/**
+ * Convert nested comments into an array of comments
+ * where child comment is simply the next element
+ * in the array. Is recursive
+ * @param  {Object}   comments      An object containing nested comments
+ * @param  {Object[]} commentsArray An array containing flattened comments
+ * @return {Object[]}               An array containing all flattened comments
+ */
 flatten = (comments, commentsArray) => {
   for (var key in comments) {
     const currentComment = comments[key];
@@ -14,6 +22,12 @@ flatten = (comments, commentsArray) => {
   return commentsArray;
 };
 
+/**
+ * Get all comments from an array of comment IDs
+ * @param  {Number[]} commentIds An array of all comment IDs
+ * @return {Promise}             A promise that resolves with
+ *                               all comments
+ */
 getComments = (commentIds) => {
   return new Promise((resolve, reject) => {
     const comments = commentIds.map(id => {
@@ -33,6 +47,13 @@ getComments = (commentIds) => {
   });
 };
 
+/**
+ * A recursive function to get child comments of
+ * a parent comment
+ * @param  {Number} parentId The parent ID to get the child comment
+ * @param  {Number} level    The level of nesting
+ * @return {Promise}         A promise containing all child comments
+ */
 getChildComment = (parentId, level) => {
   return new Promise((resolve, reject) => {
     getItem(parentId)
@@ -63,6 +84,15 @@ getChildComment = (parentId, level) => {
   });
 };
 
+/**
+ * Toggles comment visibility when a comment
+ * is clicked on
+ * @param  {Object[]} comments An array of comment objects
+ * @param  {Number} id         The id of the comment clicked on
+ * @param  {Number} level      The level of the comment clicked on
+ * @return {Object[]}          The new array of comment objects
+ *                             with certain comments hidden/closed
+ */
 toggleComments = (comments, id, level) => {
   comments.forEach(function (comment, index) {
     if (comment.id === id) {
@@ -109,5 +139,5 @@ toggleComments = (comments, id, level) => {
 
 export { 
   getComments,
-  toggleComments
+  toggleComments,
 };
