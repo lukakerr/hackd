@@ -10,7 +10,7 @@
     "cheerio-without-node-native": "^0.20.2",
     "javascript-time-ago": "^1.0.28",
     "react": "16.2.0",
-    "react-native": "0.52.2",
+    "react-native": "^0.53.0",
     "react-native-htmlview": "^0.12.1",
     "react-native-safari-view": "^2.1.0",
     "react-native-tableview": "^2.1.0",
