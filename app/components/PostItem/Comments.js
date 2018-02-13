@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import CustomText from "../CustomText";
+import CustomText from '../CustomText';
 
 export default class Comments extends React.Component {
   constructor(props) {

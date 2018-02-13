@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import PostList from "../PostList";
-import CustomText from "../CustomText";
-import commonStyles from "../../styles/common";
-import { getItems } from "../../helpers/api";
+import PostList from '../PostList';
+import CustomText from '../CustomText';
+import commonStyles from '../../styles/common';
+import { getItems } from '../../helpers/api';
 
 export default class Saved extends React.Component {
   constructor(props) {

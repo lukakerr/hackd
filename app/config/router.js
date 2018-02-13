@@ -28,7 +28,7 @@ const AccountStack = StackNavigator({
   Account: {
     screen: Account,
     navigationOptions: {
-      title: "Account",
+      title: 'Account',
     },
   },
   Saved: {
@@ -49,7 +49,7 @@ const SettingsStack = StackNavigator({
   Settings: {
     screen: Settings,
     navigationOptions: {
-      title: "Settings",
+      title: 'Settings',
     },
   },
 });
@@ -58,12 +58,12 @@ const SearchStack = StackNavigator({
   Search: {
     screen: Search,
     navigationOptions: {
-      title: "Search",
+      title: 'Search',
     },
   },
 });
 
-export const Tabs = TabNavigator({
+export const Hackd = TabNavigator({
   Posts: {
     screen: PostStack,
     navigationOptions: {
@@ -79,7 +79,7 @@ export const Tabs = TabNavigator({
   Account: {
     screen: AccountStack,
     navigationOptions: {
-      tabBarLabel: "Account",
+      tabBarLabel: 'Account',
       tabBarIcon: ({ tintColor }) => (
         <Image
           source={require('../img/account.png')}
@@ -91,7 +91,7 @@ export const Tabs = TabNavigator({
   Search: {
     screen: SearchStack,
     navigationOptions: {
-      tabBarLabel: "Search",
+      tabBarLabel: 'Search',
       tabBarIcon: ({ tintColor }) => (
         <Image
           source={require('../img/search.png')}
@@ -117,7 +117,7 @@ export const Tabs = TabNavigator({
     // showLabel: false,
     style: {
       // backgroundColor: '#FFFFFF',
-    }
+    },
   },
 });
 

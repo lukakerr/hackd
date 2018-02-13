@@ -1,10 +1,4 @@
-import * as types from "./types";
-import { 
-  getItems,
-  upvote,
-  login,
-  comment,
-} from "../helpers/api";
+import * as types from './types';
 
 const setFetchedPosts = posts => {
   return {

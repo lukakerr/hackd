@@ -1,5 +1,5 @@
-import createReducer from "../helpers/createReducer";
-import * as types from "../actions/types";
+import createReducer from '../helpers/createReducer';
+import * as types from '../actions/types';
 
 export const user = createReducer({}, {
   [types.UPDATE_USER](state, action) {
@@ -10,8 +10,5 @@ export const user = createReducer({}, {
 export const accounts = createReducer({}, {
   [types.SET_ACCOUNTS_DETAILS](state, action) {
     return action.accounts;
-  },
-  [types.UPDATE_USER](state, action) {
-    return state;
   },
 });

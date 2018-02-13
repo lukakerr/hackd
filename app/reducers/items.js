@@ -1,7 +1,7 @@
-import createReducer from "../helpers/createReducer";
-import * as types from "../actions/types";
+import createReducer from '../helpers/createReducer';
+import * as types from '../actions/types';
 
-export const storyType = createReducer("top", {
+export const storyType = createReducer('top', {
   [types.SET_STORY_TYPE](state, action) {
     return action.storyType;
   },

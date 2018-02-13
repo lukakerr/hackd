@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import CustomText from "../CustomText";
+import CustomText from '../CustomText';
 
 TimeAgo.locale(en);
 const timeAgo = new TimeAgo('en-US');

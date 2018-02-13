@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import SafariView from "react-native-safari-view";
+import SafariView from 'react-native-safari-view';
 
 import htmlStyles from '../styles/html';
 import { truncate } from '../helpers/utils';

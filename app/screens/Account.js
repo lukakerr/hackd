@@ -1,15 +1,11 @@
 import React from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { ActionCreators } from "../actions";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../actions';
 
-import UserDetails from "../components/Auth/UserDetails";
-import Login from "../components/Auth/Login";
+import UserDetails from '../components/Auth/UserDetails';
+import Login from '../components/Auth/Login';
 
 class Account extends React.Component {
   constructor(props) {
@@ -26,17 +22,18 @@ class Account extends React.Component {
       );
     }
     return (
-      <Login
-
-      />
+      <Login />
     );
   }
 }
 
-mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
-export default connect((state) => { 
-  return {
-    user: state.user,
-  }
-}, mapDispatchToProps)(Account);
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Account);

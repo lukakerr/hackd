@@ -9,12 +9,12 @@ import TableView from 'react-native-tableview';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { ActionCreators } from "../../actions";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../actions';
 
-import { getUser } from "../../helpers/api";
-import CustomText from "../CustomText";
+import { getUser } from '../../helpers/api';
+import CustomText from '../CustomText';
 
 const { Section, Item } = TableView;
 
@@ -39,7 +39,7 @@ class UserDetails extends React.Component {
   }
 
   getUserDetails = () => {
-    const username = this.state.username;
+    const username = this.props.user.username;
     getUser(username).then(userDetails => {
       if (userDetails === null) {
         return;
@@ -55,13 +55,20 @@ class UserDetails extends React.Component {
         userExists: true,
       });
     });
-  }
+  };
+
+  navigateToSaved = () => {
+    this.props.navigation.navigate('Saved',
+      this.props.accounts[this.props.user.username] 
+      ? this.props.accounts[this.props.user.username].saved
+      : []
+    )
+  };
 
   render() {
-    if (this.state.userExists) {
-      return (
-        <View style={commonStyles.flex}>
-
+    return (
+      <View style={commonStyles.flex}>
+        {this.state.userExists &&
           <View style={styles.gridContainer}>
             <View style={commonStyles.flex}>
               <CustomText style={[styles.gridContent, styles.gridContentHeader]}>
@@ -80,69 +87,29 @@ class UserDetails extends React.Component {
               </CustomText>
             </View>
           </View>
+        }
 
-          <TableView 
-            textColor="black"
-            style={[styles.tableFlex, { height: 215 }]}
-            tableViewStyle={TableView.Consts.Style.Grouped} 
-            tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-            <Section label="Account Details">
-              <Item detail={this.state.username}>
-                Username
-              </Item>
-              <Item accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}>
-                Submitted
-              </Item>
-              <Item 
-                accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator} 
-                onPress={() => this.props.navigation.navigate('Saved',
-                  this.props.accounts[this.props.user.username] 
-                  ? this.props.accounts[this.props.user.username].saved
-                  : []
-                )}>
-                Saved
-              </Item>
-            </Section>
-          </TableView>
-          <TableView 
-            textColor="red"
-            style={[styles.tableFlex, { height: 215 }]}
-            tableViewStyle={TableView.Consts.Style.Grouped}>
-            <Section>
-              <Item onPress={() => this.props.logOut()}>Logout</Item>
-            </Section>
-          </TableView>
-        </View>
-      );
-    }
-
-    return (
-      <View style={commonStyles.flex}>
         <TableView 
-          style={[styles.tableFlex, { height: 175 }]}
+          textColor='black'
+          style={[styles.tableFlex, { height: 185 }]}
           tableViewStyle={TableView.Consts.Style.Grouped} 
           tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-          <Section label="Account Details">
+          <Section label='Account Details'>
             <Item detail={this.state.username}>
               Username
             </Item>
             <Item 
-              accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() => this.props.navigation.navigate('Saved',
-                this.props.accounts[this.props.user.username] 
-                ? this.props.accounts[this.props.user.username].saved
-                : []
-              )}>
+              accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator} 
+              onPress={() => this.navigateToSaved()}>
               Saved
             </Item>
           </Section>
         </TableView>
 
         <TableView 
-          textColor="red"
-          style={[styles.tableFlex, { height: 175 }]}
-          tableViewStyle={TableView.Consts.Style.Grouped}
-          tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
+          textColor='red'
+          style={[styles.tableFlex, { height: 185 }]}
+          tableViewStyle={TableView.Consts.Style.Grouped}>
           <Section>
             <Item onPress={() => this.props.logOut()}>Logout</Item>
           </Section>
@@ -175,11 +142,14 @@ const styles = StyleSheet.create({
   }
 });
 
-mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
-export default connect((state) => { 
-  return {
-    user: state.user,
-    accounts: state.accounts,
-  }
-}, mapDispatchToProps)(UserDetails);
+const mapStateToProps = state => ({
+  user: state.user,
+  accounts: state.accounts,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserDetails);

@@ -8,13 +8,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { ActionCreators } from "../../actions";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../actions';
 
-import CustomText from "../CustomText";
-import config from "../../config/default";
-import { login } from "../../helpers/api";
+import CustomText from '../CustomText';
+import config from '../../config/default';
+import { login } from '../../helpers/api';
 
 class Login extends React.Component {
   constructor(props) {
@@ -66,17 +66,17 @@ class Login extends React.Component {
       <View style={styles.container}>
         <CustomText style={[styles.header, commonStyles.textCenter]}>Login to Hacker News</CustomText>
         <TextInput style={styles.input}
-           underlineColorAndroid="transparent"
-           placeholder="Username"
-           autoCapitalize="none"
-           placeholderTextColor="#000"
+           underlineColorAndroid='transparent'
+           placeholder='Username'
+           autoCapitalize='none'
+           placeholderTextColor='#000'
            onChangeText={this.handleUsername}/>
         
         <TextInput style={styles.input}
-           underlineColorAndroid="transparent"
-           placeholder="Password"
-           autoCapitalize="none"
-           placeholderTextColor="#000"
+           underlineColorAndroid='transparent'
+           placeholder='Password'
+           autoCapitalize='none'
+           placeholderTextColor='#000'
            secureTextEntry={true}
            onChangeText={this.handlePassword}/>
            
@@ -132,10 +132,13 @@ const styles = StyleSheet.create({
   },
 });
 
-mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
-export default connect((state) => { 
-  return {
-    user: state.user,
-  }
-}, mapDispatchToProps)(Login);
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

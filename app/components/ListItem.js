@@ -7,12 +7,12 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import CustomText from "./CustomText";
-import Score from "./PostItem/Score";
-import Comments from "./PostItem/Comments";
-import User from "./PostItem/User";
-import Time from "./PostItem/Time";
-import Actions from "./PostItem/Actions";
+import CustomText from './CustomText';
+import Score from './PostItem/Score';
+import Comments from './PostItem/Comments';
+import User from './PostItem/User';
+import Time from './PostItem/Time';
+import Actions from './PostItem/Actions';
 
 export default class ListItem extends React.Component {
   constructor(props) {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   listItemTitle: {
     fontSize: 16,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   listItemSubTitle: {
     flex: 1,

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import SafariView from "react-native-safari-view";
+import SafariView from 'react-native-safari-view';
 
 import htmlStyles from '../../styles/html';
 import config from '../../config/default';
@@ -20,7 +20,7 @@ export default class Comment extends React.Component {
     this.counter = 33;
   }
 
-  openUrl = (url) => {
+  openUrl = url => {
     SafariView.show({
       url,
     });
@@ -38,7 +38,9 @@ export default class Comment extends React.Component {
             <View style={[styles.commentContainer, { marginLeft: (12 * this.props.level) - 10, }]}>
               <View style={[styles.comment, { 
                 borderLeftWidth: this.props.level > 0 ? 2 : 0,
-                borderLeftColor: this.props.level > 0 ? config.borderColors[this.props.level % 5] : 'transparent',
+                borderLeftColor: this.props.level > 0 
+                                 ? config.borderColors[this.props.level % (config.borderColors.length - 1)] 
+                                 : 'transparent',
               }]}>
                 <View style={styles.commentInfo}>
                   <User by={this.props.author} style={styles.userName} />

@@ -7,15 +7,15 @@ import {
   FlatList,
 } from 'react-native';
 
-import config from "../config/default";
-import ListItem from "./ListItem";
+import config from '../config/default';
+import ListItem from './ListItem';
 
 export default class Posts extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  showPost = (post) => this.props.navigation.navigate("Post", post);
+  showPost = (post) => this.props.navigation.navigate('Post', post);
 
   renderSeparator = () => (<View style={styles.rowSeperator} />);
 
@@ -55,7 +55,7 @@ export default class Posts extends React.Component {
           style={styles.fullHeight}
           data={this.props.data}
           extraData={this.props.loadingMore}
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps='always'
           keyExtractor={(item, index) => index}
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
   },
   rowSeperator: {
     height: 0.5,
-    width: "100%",
-    backgroundColor: "#EEEEEE",
+    width: '100%',
+    backgroundColor: '#EEEEEE',
     padding: 1,
   },
   fullHeight: {

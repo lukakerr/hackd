@@ -4,14 +4,14 @@ import commonStyles from '../styles/common';
 import {
   ActionSheetIOS,
 } from 'react-native';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { ActionCreators } from "../actions";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../actions';
 
-import HeaderButton from "../components/HeaderButton";
-import PostList from "../components/PostList";
-import { getItems } from "../helpers/api";
-import { capitalize } from "../helpers/utils";
+import HeaderButton from '../components/HeaderButton';
+import PostList from '../components/PostList';
+import { getItems } from '../helpers/api';
+import { capitalize } from '../helpers/utils';
 
 class Posts extends React.Component {
   constructor(props) {
@@ -29,10 +29,10 @@ class Posts extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: params.storyTitle,
+      title: params.feedTitle,
       headerRight: (
         <HeaderButton
-          style={{width: 26, height: 26, marginRight: 25, tintColor: "#007AFF"}}
+          style={{width: 26, height: 26, marginRight: 25, tintColor: '#007AFF'}}
           onPress={() => params.handleSelect()}
           image={require('../img/list.png')}
         />
@@ -44,7 +44,7 @@ class Posts extends React.Component {
     this.makeRequest();
     this.props.navigation.setParams({ 
       handleSelect: this.selectFeed,
-      storyTitle: capitalize(this.props.storyType),
+      feedTitle: capitalize(this.props.storyType),
     });
   }
 
@@ -53,25 +53,25 @@ class Posts extends React.Component {
   // And the posts are reloaded
   selectFeed = () => {
     const OPTIONS = [
-      "Cancel", 
-      "Top", 
-      "New", 
-      "Best",
-      "Ask",
-      "Show",
-      "Jobs",
+      'Cancel', 
+      'Top', 
+      'New', 
+      'Best',
+      'Ask',
+      'Show',
+      'Jobs',
     ];
     ActionSheetIOS.showActionSheetWithOptions({
-      title: "Select a feed",
+      title: 'Select a feed',
       options: OPTIONS,
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
       const selectedFeed = OPTIONS[buttonIndex].toLowerCase();
 
-      // If "Cancel" not pressed and selectedFeed isnt current storyType
+      // If 'Cancel' not pressed and selectedFeed isnt current storyType
       if (buttonIndex !== 0 && selectedFeed !== this.props.storyType) {
         this.props.navigation.setParams({ 
-          storyTitle: capitalize(selectedFeed) 
+          feedTitle: capitalize(selectedFeed) 
         });
         this.props.setStoryType(selectedFeed);
         this.makeRequest();
@@ -84,8 +84,8 @@ class Posts extends React.Component {
     let storyType = this.props.storyType;
     const { page, limit } = this.state;
 
-    if (storyType === "jobs") {
-      storyType = "job";
+    if (storyType === 'jobs') {
+      storyType = 'job';
     }
 
     return fetch(`${config.api}/${storyType}stories.json`)
@@ -144,12 +144,15 @@ class Posts extends React.Component {
   }
 }
 
-mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
-export default connect((state) => { 
-  return {
-    storyType: state.storyType,
-    posts: state.posts,
-    isLoadingPosts: state.isLoadingPosts,
-  }
-}, mapDispatchToProps)(Posts);
+const mapStateToProps = state => ({
+  storyType: state.storyType,
+  posts: state.posts,
+  isLoadingPosts: state.isLoadingPosts,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Posts);

@@ -4,7 +4,7 @@ const truncate = (str, len) => {
   if (str.length < len) {
     return str;
   }
-  let truncatedStr = str.replace(/(^\w+:|^)\/\//, '').replace('www.', '');
+  const truncatedStr = str.replace(/(^\w+:|^)\/\//, '').replace('www.', '');
   return `${truncatedStr.substring(0, len)}...`;
 };
 

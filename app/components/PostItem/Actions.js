@@ -8,14 +8,14 @@ import {
   AlertIOS,
 } from 'react-native';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { ActionCreators } from "../../actions";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../actions';
 
-import config from "../../config/default";
-import { upvote } from "../../helpers/api";
+import config from '../../config/default';
+import { upvote } from '../../helpers/api';
 
-import CustomText from "../CustomText";
+import CustomText from '../CustomText';
 
 class Actions extends React.Component {
   constructor(props) {
@@ -44,40 +44,40 @@ class Actions extends React.Component {
   };
 
   showActions = () => {
-    let saveOption = "Save";
+    let saveOption = 'Save';
 
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
         if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.id) !== -1) {
-          saveOption = "Unsave";
+          saveOption = 'Unsave';
         }
       }
     }
 
     const OPTIONS = [
-      "Cancel", 
-      "Reply",
-      "Share",
+      'Cancel', 
+      'Reply',
+      'Share',
       saveOption,
     ];
 
     ActionSheetIOS.showActionSheetWithOptions({
-      title: "Post actions",
+      title: 'Post actions',
       options: OPTIONS,
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
       const selectedAction = OPTIONS[buttonIndex].toLowerCase();
 
-      // If "Cancel" not pressed and selectedFeed isnt current storyType
+      // If 'Cancel' not pressed and selectedFeed isnt current storyType
       if (buttonIndex !== 0) {
         if (buttonIndex === 1) {
-          if (!this.validateUserLoggedIn("reply")) {
+          if (!this.validateUserLoggedIn('reply')) {
             return;
           }
         } else if (buttonIndex === 2) {
 
         } else if (buttonIndex === 3) {
-          if (!this.validateUserLoggedIn("save")) {
+          if (!this.validateUserLoggedIn('save')) {
             return;
           }
           this.props.addSavedPost(this.props.id);
@@ -106,7 +106,7 @@ class Actions extends React.Component {
 
   upvote = () => {
     const id = this.props.id;
-    if (!this.validateUserLoggedIn("upvote")) {
+    if (!this.validateUserLoggedIn('upvote')) {
       return;
     }
 
@@ -144,9 +144,9 @@ class Actions extends React.Component {
           <TouchableOpacity 
             onPress={this.upvote} 
             activeOpacity={0.8} 
-            style={[styles.iconArrowContainer, { backgroundColor: isUpvoted ? config.colors.orange : "transparent" }]}>
+            style={[styles.iconArrowContainer, { backgroundColor: isUpvoted ? config.colors.orange : 'transparent' }]}>
             <Image
-              style={[styles.iconArrow, { tintColor: isUpvoted ? "white" : "black" }]}
+              style={[styles.iconArrow, { tintColor: isUpvoted ? 'white' : 'black' }]}
               source={require('../../img/arrow.png')}
             />
           </TouchableOpacity>
@@ -191,11 +191,14 @@ const styles = StyleSheet.create({
   },
 });
 
-mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
-export default connect((state) => { 
-  return {
-    user: state.user,
-    accounts: state.accounts,
-  }
-}, mapDispatchToProps)(Actions);
+const mapStateToProps = state => ({
+  user: state.user,
+  accounts: state.accounts,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Actions);

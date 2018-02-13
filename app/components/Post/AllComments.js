@@ -12,7 +12,7 @@ import commonStyles from '../../styles/common';
 import { 
   getComments,
   toggleComments
-} from '../../helpers/comments';
+} from '../../helpers/api';
 
 export default class AllComments extends React.Component {
   constructor(props) {
@@ -85,7 +85,7 @@ export default class AllComments extends React.Component {
         <FlatList
           data={this.state.comments}
           extraData={this.state.refreshComments}
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps='always'
           keyExtractor={(item, index) => index}
           renderItem={({ item }) => (
             <Comment 
