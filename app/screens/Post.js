@@ -63,7 +63,7 @@ export default class Post extends React.Component {
           }
           {this.state.post.text && 
             <HTMLView
-              value={this.state.post.text}
+              value={`<body>${this.state.post.text}</body>`}
               stylesheet={htmlStyles}
               onLinkPress={(url) => this.openUrl(url)}
             />

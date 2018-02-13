@@ -2,6 +2,9 @@ import { StyleSheet } from 'react-native';
 import config from '../config/default';
 
 export default StyleSheet.create({
+  body: {
+    fontSize: 14,
+  },
   pre: {
     fontSize: 12,
     color: config.colors.code,

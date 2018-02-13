@@ -29,12 +29,10 @@ class Login extends React.Component {
 
   handleUsername = (text) => {
     this.setState({ username: text, error: null, });
-    // this.props.updateUser(text, this.props.user.password);
   };
 
   handlePassword = (text) => {
     this.setState({ password: text, error: null, });
-    // this.props.updateUser(this.props.user.username, text);
   };
 
   logIn = () => {

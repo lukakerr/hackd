@@ -46,7 +46,7 @@ export default class Comment extends React.Component {
                 </View>
                 {this.props.open && 
                   <HTMLView
-                    value={this.props.content}
+                    value={`<body>${this.props.content}</body>`}
                     stylesheet={htmlStyles}
                     onLinkPress={(url) => this.openUrl(url)}
                   />
