@@ -63,6 +63,10 @@ export default class AllComments extends React.Component {
   };
 
   toggle = (id, level) => {
+    if (!this.props.settings.tapToCollapse) {
+      return;
+    };
+    
     let { comments } = this.state;
     comments = toggleComments(comments, id, level);
 

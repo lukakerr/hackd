@@ -11,6 +11,10 @@ import {
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../actions';
+
 import htmlStyles from '../styles/html';
 import { truncate } from '../helpers/utils';
 import CustomText from '../components/CustomText';
@@ -21,7 +25,7 @@ import Time from '../components/PostItem/Time';
 import Actions from '../components/PostItem/Actions';
 import AllComments from '../components/Post/AllComments';
 
-export default class Post extends React.Component {
+class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -96,7 +100,7 @@ export default class Post extends React.Component {
         </View>
 
         <View>
-          <AllComments post={this.state.post} />
+          <AllComments post={this.state.post} settings={this.props.settings} />
         </View>
       </ScrollView>
     );
@@ -167,3 +171,16 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
 });
+
+
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+
+const mapStateToProps = state => ({
+  settings: state.settings,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Post);
+

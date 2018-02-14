@@ -9,6 +9,7 @@ import Settings from '../screens/Settings';
 import Account from '../screens/Account';
 import Search from '../screens/Search';
 import Saved from '../components/Auth/Saved';
+import CommentThemes from '../components/Settings/CommentThemes';
 
 const PostStack = StackNavigator({
   Posts: {
@@ -50,6 +51,12 @@ const SettingsStack = StackNavigator({
     screen: Settings,
     navigationOptions: {
       title: 'Settings',
+    },
+  },
+  CommentThemes: {
+    screen: CommentThemes,
+    navigationOptions: {
+      title: 'Comment Themes',
     },
   },
 });

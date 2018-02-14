@@ -18,6 +18,7 @@ const persistConfig = {
   whitelist: [
     'user',
     'accounts',
+    'settings',
   ],
 }
 

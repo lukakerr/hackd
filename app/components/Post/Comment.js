@@ -17,7 +17,6 @@ export default class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.counter = 33;
   }
 
   openUrl = url => {
@@ -39,7 +38,7 @@ export default class Comment extends React.Component {
               <View style={[styles.comment, { 
                 borderLeftWidth: this.props.level > 0 ? 2 : 0,
                 borderLeftColor: this.props.level > 0 
-                                 ? config.borderColors[this.props.level % (config.borderColors.length - 1)] 
+                                 ? config.commentThemes.raw[this.props.level % (config.commentThemes.raw.length - 1)] 
                                  : 'transparent',
               }]}>
                 <View style={styles.commentInfo}>
