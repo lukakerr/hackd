@@ -13,6 +13,9 @@ import User from '../PostItem/User';
 import Time from '../PostItem/Time';
 import CustomText from '../CustomText';
 
+const NUM_COLORS = 5;
+const COMMENT_BORDER_WIDTH = 2;
+
 export default class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -36,9 +39,9 @@ export default class Comment extends React.Component {
           <View style={styles.commentBox}>
             <View style={[styles.commentContainer, { marginLeft: (12 * this.props.level) - 10, }]}>
               <View style={[styles.comment, { 
-                borderLeftWidth: this.props.level > 0 ? 2 : 0,
+                borderLeftWidth: this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
                 borderLeftColor: this.props.level > 0 
-                                 ? config.commentThemes.raw[this.props.level % (config.commentThemes.raw.length - 1)] 
+                                 ? config.commentThemes[this.props.commentTheme][this.props.level - 1 % NUM_COLORS] 
                                  : 'transparent',
               }]}>
                 <View style={styles.commentInfo}>

@@ -1,36 +1,36 @@
 import React from 'react';
-import config from '../config/default';
-import commonStyles from '../styles/common';
 import {
-  Text,
   View,
   StyleSheet,
-  Switch,
 } from 'react-native';
 import TableView from 'react-native-tableview';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ActionCreators } from '../actions';
+import { ActionCreators } from '../../actions';
 
-import { getUser } from '../helpers/api';
-import CustomText from '../components/CustomText';
+import config from '../../config/default';
+import commonStyles from '../../styles/common';
+import { capitalize } from '../../helpers/utils';
+import CustomText from '../../components/CustomText';
+import Circles from '../../components/Settings/Circles';
 
 const { Section, Item, Cell } = TableView;
 
-class Settings extends React.Component {
+class CommentThemes extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  tapToCollapseChanged = () => {
+  commentThemeChanged = (theme) => {
     this.props.changeSetting(
-      'tapToCollapse',
-      !this.props.settings.tapToCollapse
+      'commentTheme',
+      theme
     )
   };
 
   render() {
+    const selectedTheme = this.props.settings.commentTheme
     return (
       <View style={commonStyles.flex}>
         <TableView 
@@ -38,20 +38,17 @@ class Settings extends React.Component {
           textColor='black'
           tableViewStyle={TableView.Consts.Style.Grouped} 
           tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-          <Section label='Comments'>
-            <Cell style={styles.cell}>
-              <CustomText style={{fontSize: 17}}>Tap to collapse</CustomText>
-              <Switch
-                style={{marginRight: 16}}
-                value={this.props.settings.tapToCollapse}
-                onValueChange={this.tapToCollapseChanged} />
-            </Cell>
-            <Cell 
-              style={styles.cell} 
-              accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() => this.props.navigation.navigate('CommentThemes')}>
-              <CustomText style={{fontSize: 17}}>Comment themes</CustomText>
-            </Cell>
+          <Section label='Themes'>
+            {Object.keys(config.commentThemes).map(key =>
+              <Cell 
+                key={key}
+                style={styles.cell} 
+                accessoryType={selectedTheme == key ? TableView.Consts.AccessoryType.Checkmark : ''}
+                onPress={() => this.commentThemeChanged(key)}>
+                <CustomText style={{fontSize: 17}}>{capitalize(key)}</CustomText>
+                <Circles data={config.commentThemes[key]} />
+              </Cell>
+            )}
           </Section>
         </TableView>
       </View>
@@ -64,6 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 44,
     paddingLeft: 15,
+    marginRight: 28,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -78,4 +76,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Settings);
+)(CommentThemes);

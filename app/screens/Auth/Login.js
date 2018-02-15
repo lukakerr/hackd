@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
-import CustomText from '../CustomText';
+import CustomText from '../../components/CustomText';
 import config from '../../config/default';
 import { login } from '../../helpers/api';
 

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions';
 
-import UserDetails from '../components/Auth/UserDetails';
-import Login from '../components/Auth/Login';
+import AccountDetails from './Auth/AccountDetails';
+import Login from './Auth/Login';
 
 class Account extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class Account extends React.Component {
   render() {
     if (this.props.user.loggedIn) {
       return (
-        <UserDetails
+        <AccountDetails
           user={this.props.user}
           navigation={this.props.navigation}
         />

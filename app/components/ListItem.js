@@ -50,7 +50,7 @@ export default class ListItem extends React.Component {
               <View style={styles.listItemAction}>
                 <View style={styles.listItemActionText}>
                   <Actions
-                    id={this.props.item.id}
+                    item={this.props.item}
                   />
                 </View>
               </View>

@@ -35,6 +35,12 @@ export default class AllComments extends React.Component {
     this._mounted = false;
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      refreshComments: !this.state.refreshComments,
+    });
+  }
+
   fetchComments = () => {
     const { kids } = this.props.post;
     if (kids) {
@@ -90,7 +96,7 @@ export default class AllComments extends React.Component {
           data={this.state.comments}
           extraData={this.state.refreshComments}
           keyboardShouldPersistTaps='always'
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <Comment 
               id={item.id}
@@ -101,6 +107,7 @@ export default class AllComments extends React.Component {
               open={item.open}
               hidden={item.hidden}
               toggle={this.toggle}
+              commentTheme={this.props.settings.commentTheme}
             />
           )}
         />

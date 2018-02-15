@@ -92,7 +92,7 @@ class Post extends React.Component {
             <View style={styles.postInfoAction}>
               <View style={styles.postInfoActionText}>
                 <Actions
-                  id={this.state.post.id}
+                  item={this.state.post}
                 />
               </View>
             </View>
@@ -100,7 +100,9 @@ class Post extends React.Component {
         </View>
 
         <View>
-          <AllComments post={this.state.post} settings={this.props.settings} />
+          <AllComments 
+            post={this.state.post} 
+            settings={this.props.settings}/>
         </View>
       </ScrollView>
     );

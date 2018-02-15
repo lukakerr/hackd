@@ -14,14 +14,14 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
 import { getUser } from '../../helpers/api';
-import CustomText from '../CustomText';
+import CustomText from '../../components/CustomText';
 
 const { Section, Item } = TableView;
 
 TimeAgo.locale(en);
 const timeAgo = new TimeAgo('en-US');
 
-class UserDetails extends React.Component {
+class AccountDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -152,4 +152,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserDetails);
+)(AccountDetails);

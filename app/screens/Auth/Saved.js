@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import PostList from '../PostList';
-import CustomText from '../CustomText';
+import PostList from '../../components/PostList';
+import CustomText from '../../components/CustomText';
 import commonStyles from '../../styles/common';
 import { getItems } from '../../helpers/api';
 

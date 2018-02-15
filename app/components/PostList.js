@@ -56,7 +56,7 @@ export default class Posts extends React.Component {
           data={this.props.data}
           extraData={this.props.loadingMore}
           keyboardShouldPersistTaps='always'
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
           refreshing={this.props.refreshing}

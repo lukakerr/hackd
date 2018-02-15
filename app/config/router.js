@@ -8,8 +8,9 @@ import Post from '../screens/Post';
 import Settings from '../screens/Settings';
 import Account from '../screens/Account';
 import Search from '../screens/Search';
-import Saved from '../components/Auth/Saved';
-import CommentThemes from '../components/Settings/CommentThemes';
+import Saved from '../screens/Auth/Saved';
+import CommentThemes from '../screens/Settings/CommentThemes';
+import Submit from '../screens/Submit';
 
 const PostStack = StackNavigator({
   Posts: {
@@ -43,6 +44,15 @@ const AccountStack = StackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.params.descendants} comments`,
     }),
+  },
+});
+
+const SubmitStack = StackNavigator({
+  Submit: {
+    screen: Submit,
+    navigationOptions: {
+      title: 'Submit',
+    },
   },
 });
 
@@ -90,6 +100,18 @@ export const Hackd = TabNavigator({
       tabBarIcon: ({ tintColor }) => (
         <Image
           source={require('../img/account.png')}
+          style={[styles.icon, { tintColor }]}
+        />
+      ),
+    },
+  },
+  Submit: {
+    screen: SubmitStack,
+    navigationOptions: {
+      tabBarLabel: 'Submit',
+      tabBarIcon: ({ tintColor }) => (
+        <Image
+          source={require('../img/submit.png')}
           style={[styles.icon, { tintColor }]}
         />
       ),

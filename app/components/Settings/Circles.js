@@ -13,11 +13,14 @@ export default class Circles extends React.Component {
     return (
       <View style={styles.circles}>
         {Object.keys(this.props.data).map(key =>
-          <View style={[{ 
-            width: 10,
-            height: 10,
-            backgroundColor: this.props.data[key],
-          }, styles.circle]} />
+          <View 
+            key={key}
+            style={[{ 
+              width: 10,
+              height: 10,
+              backgroundColor: this.props.data[key],
+            }, styles.circle]} 
+          />
         )}
       </View>
     );

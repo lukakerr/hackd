@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActionSheetIOS,
   AlertIOS,
+  Share,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -34,7 +35,7 @@ class Actions extends React.Component {
   checkIfUpvoted = () => {
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].upvoted.indexOf(this.props.id) !== -1) {
+        if (this.props.accounts[this.props.user.username].upvoted.indexOf(this.props.item.id) !== -1) {
           return true;
         }
       }
@@ -48,7 +49,7 @@ class Actions extends React.Component {
 
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.id) !== -1) {
+        if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.item.id) !== -1) {
           saveOption = 'Unsave';
         }
       }
@@ -75,12 +76,15 @@ class Actions extends React.Component {
             return;
           }
         } else if (buttonIndex === 2) {
-
+          this.share(
+            this.props.item.url,
+            this.props.item.title
+          );
         } else if (buttonIndex === 3) {
           if (!this.validateUserLoggedIn('save')) {
             return;
           }
-          this.props.addSavedPost(this.props.id);
+          this.props.addSavedPost(this.props.item.id);
         };
       }
     });
@@ -102,10 +106,10 @@ class Actions extends React.Component {
       return false;
     }
     return true;
-  }
+  };
 
   upvote = () => {
-    const id = this.props.id;
+    const id = this.props.item.id;
     if (!this.validateUserLoggedIn('upvote')) {
       return;
     }
@@ -127,6 +131,14 @@ class Actions extends React.Component {
           'There was an error, please try again later.'
         );
       }
+    });
+  };
+
+  share = (url, title) => {
+    Share.share({
+      message: 'Checkout this Hacker News post!',
+      url,
+      title
     });
   };
 
