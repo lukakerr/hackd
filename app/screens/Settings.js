@@ -30,6 +30,13 @@ class Settings extends React.Component {
     )
   };
 
+  useSafariReaderModeChanged = () => {
+    this.props.changeSetting(
+      'useSafariReaderMode',
+      !this.props.settings.useSafariReaderMode
+    )
+  };
+
   render() {
     return (
       <View style={commonStyles.flex}>
@@ -51,6 +58,15 @@ class Settings extends React.Component {
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
               onPress={() => this.props.navigation.navigate('CommentThemes')}>
               <CustomText style={{fontSize: 17}}>Comment themes</CustomText>
+            </Cell>
+          </Section>
+          <Section label='Posts'>
+            <Cell style={styles.cell}>
+              <CustomText style={{fontSize: 17}}>Use Safari Reader Mode</CustomText>
+              <Switch
+                style={{marginRight: 16}}
+                value={this.props.settings.useSafariReaderMode}
+                onValueChange={this.useSafariReaderModeChanged} />
             </Cell>
           </Section>
         </TableView>

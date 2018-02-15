@@ -40,8 +40,10 @@ class Post extends React.Component {
   }
 
   openUrl = (url) => {
+    const readerMode = this.props.settings.useSafariReaderMode
     SafariView.show({
       url,
+      readerMode
     });
   };
 

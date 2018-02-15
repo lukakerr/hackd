@@ -23,8 +23,10 @@ export default class Comment extends React.Component {
   }
 
   openUrl = url => {
+    const readerMode = this.props.settings.useSafariReaderMode
     SafariView.show({
       url,
+      readerMode
     });
   };
 
@@ -41,7 +43,7 @@ export default class Comment extends React.Component {
               <View style={[styles.comment, { 
                 borderLeftWidth: this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
                 borderLeftColor: this.props.level > 0 
-                                 ? config.commentThemes[this.props.commentTheme][this.props.level - 1 % NUM_COLORS] 
+                                 ? config.commentThemes[this.props.settings.commentTheme][this.props.level - 1 % NUM_COLORS] 
                                  : 'transparent',
               }]}>
                 <View style={styles.commentInfo}>

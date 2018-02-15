@@ -59,7 +59,9 @@ Hackd also supports font scaling for readers who want smaller or larger text.
 
 ### Screenshots
 
-<div align="center">
-  <img src="https://i.imgur.com/E51wWRN.png" width="400" alt="hackd1">
-  <img src="https://i.imgur.com/QFXfpCC.png" width="400" alt="hackd2">
-</div>
+<p align="center">
+  <img src="https://i.imgur.com/Ba94j2C.png" width="200" alt="hackd1">
+  <img src="https://i.imgur.com/DCXKlBk.png" width="200" alt="hackd2">
+  <img src="https://i.imgur.com/Jf8JJnW.png" width="200" alt="hackd2">
+  <img src="https://i.imgur.com/VyQwz1g.png" width="200" alt="hackd2">
+</p>
