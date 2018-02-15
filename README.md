@@ -15,7 +15,7 @@ Currently a work in progress.
 	- Show
 	- Jobs
 - The user can:
-	- [ ] Share posts
+	- [x] Share posts
 	- [ ] Search, filter and view posts (stories, show, ask), comments, polls and users
 	- [x] Read articles in app with Safari View Controller
 	- [x] Collapse comments

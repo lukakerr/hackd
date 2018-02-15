@@ -35,8 +35,10 @@ class Actions extends React.Component {
   checkIfUpvoted = () => {
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].upvoted.indexOf(this.props.item.id) !== -1) {
-          return true;
+        if (this.props.accounts[this.props.user.username].upvoted) {
+          if (this.props.accounts[this.props.user.username].upvoted.indexOf(this.props.item.id) !== -1) {
+            return true;
+          }
         }
       }
     }
@@ -49,8 +51,10 @@ class Actions extends React.Component {
 
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.item.id) !== -1) {
-          saveOption = 'Unsave';
+        if (this.props.accounts[this.props.user.username].saved) {
+          if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.item.id) !== -1) {
+            saveOption = 'Unsave';
+          }
         }
       }
     }
@@ -84,7 +88,7 @@ class Actions extends React.Component {
           if (!this.validateUserLoggedIn('save')) {
             return;
           }
-          this.props.addSavedPost(this.props.item.id);
+          this.props.addIdToUserAccount(this.props.item.id, 'saved');
         };
       }
     });
@@ -118,11 +122,11 @@ class Actions extends React.Component {
       upvoted: true,
     });
 
-    this.props.addUpvotedPost(id);
+    this.props.addIdToUserAccount(id, 'upvoted');
     
     upvote(id).then(upvoted => {
       if (!upvoted) {
-        this.props.removeUpvotedPost(id);
+        this.props.removeIdFromUserAccount(id, 'upvoted');
         this.setState({
           upvoted: false,
         });

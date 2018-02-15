@@ -1,5 +1,8 @@
 import * as types from './types';
-import { addToUserAccount } from '../helpers/utils';
+import { 
+  addToUserAccount, 
+  removeFromUserAccount 
+} from '../helpers/utils';
 import { logout } from '../helpers/api';
 
 const setUser = user => {
@@ -16,22 +19,22 @@ const setUserDetails = accounts => {
   };
 };
 
-export const addUpvotedPost = post => {
+export const addIdToUserAccount = (id, type) => {
   return (dispatch, getState) => {
     const user = getState().user.username;
     const { accounts } = getState();
 
-    const newAccounts = addToUserAccount(accounts, user, post, 'upvoted');
+    const newAccounts = addToUserAccount(accounts, user, id, type);
     dispatch(setUserDetails(newAccounts));
   };
 };
 
-export const addSavedPost = (post) => {
+export const removeIdFromUserAccount = (id, type) => {
   return (dispatch, getState) => {
     const user = getState().user.username;
     const { accounts } = getState();
 
-    const newAccounts = addToUserAccount(accounts, user, post, 'saved');
+    const newAccounts = removeFromUserAccount(accounts, user, id, type);
     dispatch(setUserDetails(newAccounts));
   };
 };

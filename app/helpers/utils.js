@@ -8,27 +8,57 @@ const truncate = (str, len) => {
   return `${truncatedStr.substring(0, len)}...`;
 };
 
-const addToUserAccount = (accounts, user, post, type) => {
+const addToUserAccount = (accounts, user, id, type) => {
   const userAccount = accounts[user];
   const newAccounts = {};
-  const otherType = type === 'upvoted' ? 'saved' : 'upvoted';
 
   // User has an entry
   if (userAccount) {
-    // If user doesnt have the post saved/upvoted
-    if (userAccount[type].indexOf(post) === -1) {
-      userAccount[type].unshift(post);
+    // If user account doesnt have type, add it first
+    if (userAccount[type] === undefined) {
+      userAccount[type] = [];
+    }
+
+    // If user doesnt have the id saved/upvoted
+    if (userAccount[type].indexOf(id) === -1) {
+      userAccount[type].unshift(id);
     } else if (type !== 'upvoted') {
-      // User already has the post saved
-      const index = userAccount[type].indexOf(post);
+      // User already has the id saved
+      const index = userAccount[type].indexOf(id);
       userAccount[type].splice(index, 1);
     }
     newAccounts[user] = userAccount;
   } else {
-    // User has no record, create one and add post
+    // User has no record, create one and add id
     newAccounts[user] = {
-      [type]: [post],
-      [otherType]: [],
+      [type]: [id],
+    };
+  }
+
+  return newAccounts;
+};
+
+const removeFromUserAccount = (accounts, user, id, type) => {
+  const userAccount = accounts[user];
+  const newAccounts = {};
+
+  // User has an entry
+  if (userAccount) {
+    // If user account doesnt have type, add it first
+    if (userAccount[type] === undefined) {
+      userAccount[type] = [];
+    }
+
+    // If user has the id already, remove it
+    if (userAccount[type].indexOf(id) !== -1) {
+      const index = userAccount[type].indexOf(id);
+      userAccount[type].splice(index, 1);
+    }
+    newAccounts[user] = userAccount;
+  } else {
+    // User has no record, create one set to empty
+    newAccounts[user] = {
+      [type]: [],
     };
   }
 
@@ -39,4 +69,5 @@ export {
   capitalize,
   truncate,
   addToUserAccount,
+  removeFromUserAccount,
 };

@@ -3,10 +3,17 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Image,
+  AlertIOS,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../../actions';
+
+import { upvote } from '../../helpers/api';
 import htmlStyles from '../../styles/html';
 import config from '../../config/default';
 import User from '../PostItem/User';
@@ -16,10 +23,19 @@ import CustomText from '../CustomText';
 const NUM_COLORS = 5;
 const COMMENT_BORDER_WIDTH = 2;
 
-export default class Comment extends React.Component {
+class Comment extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      upvoted: false,
+    }
     this.toggle = this.toggle.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      upvoted: this.checkIfUpvoted(),
+    });
   }
 
   openUrl = url => {
@@ -34,7 +50,45 @@ export default class Comment extends React.Component {
     this.props.toggle(id, level);
   };
 
+  checkIfUpvoted = () => {
+    if (this.props.user.loggedIn) {
+      if (this.props.accounts[this.props.user.username]) {
+        if (this.props.accounts[this.props.user.username].upvotedComments) {
+          if (this.props.accounts[this.props.user.username].upvotedComments.indexOf(this.props.id) !== -1) {
+            return true;
+          }
+        }
+      }
+    }
+    
+    return false;
+  };
+
+  upvote = () => {
+    const id = this.props.id;
+
+    this.setState({
+      upvoted: true,
+    });
+
+    this.props.addIdToUserAccount(id, 'upvotedComments');
+    
+    upvote(id).then(upvoted => {
+      if (!upvoted) {
+        this.props.removeIdFromUserAccount(id, 'upvotedComments');
+        this.setState({
+          upvoted: false,
+        });
+        AlertIOS.alert(
+          'Cannot upvote',
+          'There was an error, please try again later.'
+        );
+      }
+    });
+  };
+
   render() {
+    const isUpvoted = this.checkIfUpvoted();
     return (
       <TouchableOpacity onPress={() => this.toggle(this.props.id, this.props.level)} activeOpacity={0.5}>
         { !this.props.hidden && 
@@ -49,6 +103,20 @@ export default class Comment extends React.Component {
                 <View style={styles.commentInfo}>
                   <User by={this.props.author} style={styles.userName} />
                   <Time time={this.props.time} />
+                  { this.props.user.loggedIn && 
+                    <TouchableOpacity 
+                      onPress={this.upvote} 
+                      activeOpacity={0.8} 
+                      style={styles.iconArrowContainer}>
+                      <Image
+                        style={[styles.iconArrow, { 
+                          tintColor: isUpvoted ? config.colors.orange : 'black',
+                          opacity: isUpvoted ? 1 : 0.6,
+                        }]}
+                        source={require('../../img/arrow.png')}
+                      />
+                    </TouchableOpacity>
+                  }
                 </View>
                 {this.props.open && 
                   <HTMLView
@@ -90,4 +158,29 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     fontWeight: 'bold',
   },
+  iconArrowContainer: {
+    height: 20, 
+    width: 20,
+    marginTop: 1,
+    padding: 2,  
+    borderRadius: 5,
+    marginLeft: 3,
+  },
+  iconArrow: {
+    width: 20,
+    height: 20,
+  },
 });
+
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+
+const mapStateToProps = state => ({
+  settings: state.settings,
+  user: state.user,
+  accounts: state.accounts,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Comment);

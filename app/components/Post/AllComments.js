@@ -107,7 +107,6 @@ export default class AllComments extends React.Component {
               open={item.open}
               hidden={item.hidden}
               toggle={this.toggle}
-              settings={this.props.settings}
             />
           )}
         />

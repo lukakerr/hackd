@@ -104,7 +104,8 @@ class Post extends React.Component {
         <View>
           <AllComments 
             post={this.state.post} 
-            settings={this.props.settings}/>
+            settings={this.props.settings}
+          />
         </View>
       </ScrollView>
     );
