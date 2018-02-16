@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
-import { upvote } from '../../helpers/api';
+import { upvote, unvote } from '../../helpers/api';
 import htmlStyles from '../../styles/html';
 import config from '../../config/default';
 import User from '../PostItem/User';
@@ -67,12 +67,40 @@ class Comment extends React.Component {
   upvote = () => {
     const id = this.props.id;
 
-    this.setState({
-      upvoted: true,
-    });
+    // Already upvoted, lets unvote it
+    if (this.checkIfUpvoted()) {
+      this.setState({
+        upvoted: true,
+      });
+      this.props.removeIdFromUserAccount(id, 'upvotedComments');
+      this.unvoteComment(id);
+    } else {
+      // Otherwise lets upvote it
+      this.setState({
+        upvoted: true,
+      });
 
-    this.props.addIdToUserAccount(id, 'upvotedComments');
-    
+      this.props.addIdToUserAccount(id, 'upvotedComments');
+      this.upvoteComment(id);
+    }
+  };
+
+  unvoteComment = (id) => {
+    unvote(id).then(unvoted => {
+      if (!unvoted) {
+        this.props.addIdToUserAccount(id, 'upvotedComments');
+        this.setState({
+          upvoted: true,
+        });
+        AlertIOS.alert(
+          'Cannot unvote',
+          'There was an error, please try again later.'
+        );
+      }
+    });
+  };
+
+  upvoteComment = (id) => {
     upvote(id).then(upvoted => {
       if (!upvoted) {
         this.props.removeIdFromUserAccount(id, 'upvotedComments');

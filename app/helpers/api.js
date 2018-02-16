@@ -72,6 +72,23 @@ getUpvoteUrl = (itemId) => {
 };
 
 /**
+ * Get the URL needed to unvote
+ * @param  {String} itemId The item ID to upvote
+ * @return {Promise}       Returns a promise that
+ *                         resolves with the unvote URL
+ */
+getUnvoteUrl = (itemId) => {
+  return fetch(`${config.base}/item?id=${itemId}`, {
+    mode: 'no-cors',
+    credentials: 'include',
+  }).then(response => response.text())
+    .then(responseText => {
+      const document = cheerio.load(responseText);
+      return document(`#un_${itemId}`).attr('href');
+    });
+};
+
+/**
  * Upvote an item
  * @param  {String} itemId The item ID to upvote
  * @return {Promise}       Returns a promise that
@@ -79,6 +96,23 @@ getUpvoteUrl = (itemId) => {
  */
 upvote = (itemId) => {
   return this.getUpvoteUrl(itemId)
+    .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
+      mode: 'no-cors',
+      credentials: 'include',
+    }))
+    .then(response => response.text())
+    .then(responseText => true)
+    .catch(error => false);
+};
+
+/**
+ * Unvote an item
+ * @param  {String} itemId The item ID to upvote
+ * @return {Promise}       Returns a promise that
+ *                         resolves true if unvoted, else false
+ */
+unvote = (itemId) => {
+  return this.getUnvoteUrl(itemId)
     .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
       mode: 'no-cors',
       credentials: 'include',
@@ -329,6 +363,7 @@ export {
   getItem,
   getItems,
   upvote,
+  unvote,
   login,
   comment, 
   getUser,

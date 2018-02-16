@@ -18,10 +18,11 @@ Currently a work in progress.
 	- [x] Share posts
 	- [ ] Search, filter and view posts (stories, show, ask), comments, polls and users
 	- [x] Read articles in app with Safari View Controller
-	- [x] Collapse comments
+	- [x] Collapse/expand comments
 - If logged in, the user can also:
 	- [x] Upvote posts
-	- [ ] Upvote comments
+	- [x] Upvote comments
+	- [x] Unvote comments
 	- [ ] Comment
 	- [ ] Submit a post
 	- [x] Save a post
