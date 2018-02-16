@@ -6,7 +6,7 @@ import config from '../config/default';
  * @param  {String} itemId The ID of the item to fetch
  * @return {Promise}       Returns a promise
  */
-getItem = (itemId) => {
+getItem = itemId => {
   return new Promise((resolve, reject) => {
     fetch(`${config.api}/item/${itemId}.json`)
       .then(response => response.json())
@@ -47,7 +47,7 @@ getItems = (page, limit, itemIds) => {
  * @param  {String} username The users username
  * @return {Object}          The users data
  */
-getUser = (username) => {
+getUser = username => {
   return fetch(`${config.api}/user/${username}.json`)
     .then(response => response.json())
     .then(responseJson => responseJson)
@@ -60,7 +60,7 @@ getUser = (username) => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the upvote URL
  */
-getUpvoteUrl = (itemId) => {
+getUpvoteUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
@@ -77,7 +77,7 @@ getUpvoteUrl = (itemId) => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the unvote URL
  */
-getUnvoteUrl = (itemId) => {
+getUnvoteUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
@@ -94,7 +94,7 @@ getUnvoteUrl = (itemId) => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if upvoted, else false
  */
-upvote = (itemId) => {
+upvote = itemId => {
   return this.getUpvoteUrl(itemId)
     .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
       mode: 'no-cors',
@@ -111,7 +111,7 @@ upvote = (itemId) => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if unvoted, else false
  */
-unvote = (itemId) => {
+unvote = itemId => {
   return this.getUnvoteUrl(itemId)
     .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
       mode: 'no-cors',
@@ -187,7 +187,7 @@ logout = () => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the comment URL
  */
-getCommentUrl = (itemId) => {
+getCommentUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
@@ -252,7 +252,7 @@ flatten = (comments, commentsArray) => {
  * @return {Promise}             A promise that resolves with
  *                               all comments
  */
-getComments = (commentIds) => {
+getComments = commentIds => {
   return new Promise((resolve, reject) => {
     const comments = commentIds.map(id => {
       return getChildComment(id, 0)

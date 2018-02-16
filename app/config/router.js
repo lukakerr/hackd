@@ -42,7 +42,9 @@ const AccountStack = StackNavigator({
   Post: {
     screen: Post,
     navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.descendants} comments`,
+      title: navigation.state.params.descendants > -1 
+             ? `${navigation.state.params.descendants} comments` 
+             : truncate(navigation.state.params.title, 20),
     }),
   },
 });

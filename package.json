@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "react-native run-ios",
+    "start:x": "react-native run-ios --simulator='iPhone X'",
     "test": "jest"
   },
   "dependencies": {
@@ -28,6 +29,9 @@
     "redux-logger": "^3.0.6"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testMatch": [
+      "**/__tests__/tests/**/*.js"
+    ]
   }
 }

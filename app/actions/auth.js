@@ -21,8 +21,7 @@ const setUserDetails = accounts => {
 
 export const addIdToUserAccount = (id, type) => {
   return (dispatch, getState) => {
-    const user = getState().user.username;
-    const { accounts } = getState();
+    const { user, accounts } = getState();
 
     const newAccounts = addToUserAccount(accounts, user, id, type);
     dispatch(setUserDetails(newAccounts));
@@ -31,8 +30,7 @@ export const addIdToUserAccount = (id, type) => {
 
 export const removeIdFromUserAccount = (id, type) => {
   return (dispatch, getState) => {
-    const user = getState().user.username;
-    const { accounts } = getState();
+    const { user, accounts } = getState();
 
     const newAccounts = removeFromUserAccount(accounts, user, id, type);
     dispatch(setUserDetails(newAccounts));
@@ -51,7 +49,7 @@ export const updateUser = (username, password) => {
   };
 };
 
-export const login = (user) => {
+export const login = user => {
   return (dispatch, getState) => {
     dispatch(setUser(user));
   };

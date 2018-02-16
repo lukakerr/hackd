@@ -50,6 +50,14 @@ $ react-native link
 $ react-native run-ios
 ```
 
+### Test
+
+Jest is used for testing. To test, run:
+
+```bash
+$ npm run test
+```
+
 ### Design
 
 Inspired by [Apollo App](https://apolloapp.io), I tried to design hackd around an iOS centric theme.

@@ -27,5 +27,5 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     opacity: 0.8,
-  }
+  },
 });

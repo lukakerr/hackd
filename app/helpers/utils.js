@@ -9,7 +9,7 @@ const truncate = (str, len) => {
 };
 
 const addToUserAccount = (accounts, user, id, type) => {
-  const userAccount = accounts[user];
+  const userAccount = accounts[user.username];
   const newAccounts = {};
 
   // User has an entry
@@ -27,10 +27,10 @@ const addToUserAccount = (accounts, user, id, type) => {
       const index = userAccount[type].indexOf(id);
       userAccount[type].splice(index, 1);
     }
-    newAccounts[user] = userAccount;
+    newAccounts[user.username] = userAccount;
   } else {
     // User has no record, create one and add id
-    newAccounts[user] = {
+    newAccounts[user.username] = {
       [type]: [id],
     };
   }
@@ -39,7 +39,7 @@ const addToUserAccount = (accounts, user, id, type) => {
 };
 
 const removeFromUserAccount = (accounts, user, id, type) => {
-  const userAccount = accounts[user];
+  const userAccount = accounts[user.username];
   const newAccounts = {};
 
   // User has an entry
@@ -54,10 +54,10 @@ const removeFromUserAccount = (accounts, user, id, type) => {
       const index = userAccount[type].indexOf(id);
       userAccount[type].splice(index, 1);
     }
-    newAccounts[user] = userAccount;
+    newAccounts[user.username] = userAccount;
   } else {
     // User has no record, create one set to empty
-    newAccounts[user] = {
+    newAccounts[user.username] = {
       [type]: [],
     };
   }
