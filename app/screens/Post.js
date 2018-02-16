@@ -35,7 +35,7 @@ class Post extends React.Component {
 
   componentWillMount() {
     this.setState({
-      post: this.props.navigation.state.params,
+      post: this.props.post,
     });
   }
 

@@ -19,7 +19,7 @@ export default class Saved extends React.Component {
 
   componentWillMount() {
     this.setState({
-      savedIds: this.props.navigation.state.params
+      savedIds: this.props.saved
     });
   }
 
@@ -64,7 +64,7 @@ export default class Saved extends React.Component {
       <PostList
         data={this.state.saved}
         isLoadingPosts={this.state.isLoadingPosts}
-        navigation={this.props.navigation}
+        navigator={this.props.navigator}
         refreshing={this.state.refreshing}
         onRefresh={() => this.handleRefresh()}
         onEndReached={() => {return}}

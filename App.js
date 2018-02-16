@@ -1,18 +1,17 @@
-import React from 'react';
+import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
-import { store, persistor } from './app/config/store';
-import { Hackd } from './app/config/router';
+import { store } from './app/config/store';
+import { registerScreens } from './app/config/router';
+import { hackd } from './app/config/router';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Hackd />
-        </PersistGate>
-      </Provider>
-    );
-  }
-}
+registerScreens(store, Provider);
+
+persistStore(store, null, () => {
+  registerScreens(store, Provider);
+
+  Navigation.startTabBasedApp({
+    tabs: hackd,
+  });
+});

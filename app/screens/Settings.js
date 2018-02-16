@@ -23,6 +23,13 @@ class Settings extends React.Component {
     super(props);
   }
 
+  navigateToCommentThemes = () => {
+    this.props.navigator.push({
+      screen: 'hackd.CommentThemes',
+      title: 'Comment Themes',
+    });
+  };
+
   tapToCollapseChanged = () => {
     this.props.changeSetting(
       'tapToCollapse',
@@ -56,7 +63,7 @@ class Settings extends React.Component {
             <Cell 
               style={styles.cell} 
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() => this.props.navigation.navigate('CommentThemes')}>
+              onPress={() => this.navigateToCommentThemes()}>
               <CustomText style={{fontSize: 17}}>Comment themes</CustomText>
             </Cell>
           </Section>

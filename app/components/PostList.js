@@ -15,7 +15,15 @@ export default class Posts extends React.Component {
     super(props);
   }
 
-  showPost = (post) => this.props.navigation.navigate('Post', post);
+  showPost = (post) => {
+    this.props.navigator.push({
+      screen: 'hackd.Post',
+      title: 'Post',
+      passProps: {
+        post,
+      },
+    });
+  }
 
   renderSeparator = () => (<View style={styles.rowSeperator} />);
 

@@ -1,160 +1,83 @@
-import React from 'react';
-import { StyleSheet, Image } from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { Navigation } from 'react-native-navigation';
 
-import { truncate } from '../helpers/utils';
 import Posts from '../screens/Posts';
 import Post from '../screens/Post';
-import Settings from '../screens/Settings';
 import Account from '../screens/Account';
 import Search from '../screens/Search';
-import Saved from '../screens/Auth/Saved';
-import CommentThemes from '../screens/Settings/CommentThemes';
 import Submit from '../screens/Submit';
+import Settings from '../screens/Settings';
 
-const PostStack = StackNavigator({
-  Posts: {
-    screen: Posts,
-  },
-  Post: {
-    screen: Post,
-    navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.descendants > -1 
-             ? `${navigation.state.params.descendants} comments` 
-             : truncate(navigation.state.params.title, 20),
-    }),
-  },
-});
+// Auth
+import Saved from '../screens/Auth/Saved';
+import Login from '../screens/Auth/Login';
+import AccountDetails from '../screens/Auth/AccountDetails';
 
-const AccountStack = StackNavigator({
-  Account: {
-    screen: Account,
-    navigationOptions: {
-      title: 'Account',
-    },
-  },
-  Saved: {
-    screen: Saved,
-    navigationOptions: {
-      title: 'Saved',
-    },
-  },
-  Post: {
-    screen: Post,
-    navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.descendants > -1 
-             ? `${navigation.state.params.descendants} comments` 
-             : truncate(navigation.state.params.title, 20),
-    }),
-  },
-});
+// Settings
+import CommentThemes from '../screens/Settings/CommentThemes';
 
-const SubmitStack = StackNavigator({
-  Submit: {
-    screen: Submit,
-    navigationOptions: {
-      title: 'Submit',
-    },
-  },
-});
+function registerScreens(store, Provider) {
+  Navigation.registerComponent('hackd.Posts', () => Posts, store, Provider);
+  Navigation.registerComponent('hackd.Post', () => Post, store, Provider);
+  Navigation.registerComponent('hackd.Account', () => Account, store, Provider);
+  Navigation.registerComponent('hackd.Search', () => Search, store, Provider);
+  Navigation.registerComponent('hackd.Submit', () => Submit, store, Provider);
+  Navigation.registerComponent('hackd.Settings', () => Settings, store, Provider);
 
-const SettingsStack = StackNavigator({
-  Settings: {
-    screen: Settings,
-    navigationOptions: {
-      title: 'Settings',
-    },
-  },
-  CommentThemes: {
-    screen: CommentThemes,
-    navigationOptions: {
-      title: 'Comment Themes',
-    },
-  },
-});
+  Navigation.registerComponent('hackd.Saved', () => Saved, store, Provider);
+  Navigation.registerComponent('hackd.Login', () => Login, store, Provider);
+  Navigation.registerComponent('hackd.AccountDetails', () => AccountDetails, store, Provider);
 
-const SearchStack = StackNavigator({
-  Search: {
-    screen: Search,
-    navigationOptions: {
-      title: 'Search',
-    },
-  },
-});
+  Navigation.registerComponent('hackd.CommentThemes', () => CommentThemes, store, Provider);
+}
 
-export const Hackd = TabNavigator({
-  Posts: {
-    screen: PostStack,
-    navigationOptions: {
-      tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => (
-        <Image
-          source={require('../img/feed.png')}
-          style={[styles.icon, { tintColor }]}
-        />
-      ),
-    },
-  },
-  Account: {
-    screen: AccountStack,
-    navigationOptions: {
-      tabBarLabel: 'Account',
-      tabBarIcon: ({ tintColor }) => (
-        <Image
-          source={require('../img/account.png')}
-          style={[styles.icon, { tintColor }]}
-        />
-      ),
-    },
-  },
-  Submit: {
-    screen: SubmitStack,
-    navigationOptions: {
-      tabBarLabel: 'Submit',
-      tabBarIcon: ({ tintColor }) => (
-        <Image
-          source={require('../img/submit.png')}
-          style={[styles.icon, { tintColor }]}
-        />
-      ),
-    },
-  },
-  Search: {
-    screen: SearchStack,
-    navigationOptions: {
-      tabBarLabel: 'Search',
-      tabBarIcon: ({ tintColor }) => (
-        <Image
-          source={require('../img/search.png')}
-          style={[styles.icon, { tintColor }]}
-        />
-      ),
-    },
-  },
-  Settings: {
-    screen: SettingsStack,
-    navigationOptions: {
-      tabBarLabel: 'Settings',
-      tabBarIcon: ({ tintColor }) => (
-        <Image
-          source={require('../img/settings.png')}
-          style={[styles.icon, { tintColor }]}
-        />
-      ),
-    },
-  },
-}, {
-  tabBarOptions: {
-    // showLabel: false,
-    style: {
-      // backgroundColor: '#FFFFFF',
-    },
-  },
-});
+const navigatorStyle = {
+  screenBackgroundColor: '#F2F3F6',
+};
 
-const styles = StyleSheet.create({
-  icon: {
-    width: 26,
-    height: 26,
+const hackd = [
+  {
+    label: 'Feed',
+    screen: 'hackd.Posts',
+    icon: require('../img/feed.png'),
+    selectedIcon: require('../img/feed.png'),
+    title: 'Feed',
+    navigatorStyle,
   },
-});
+  {
+    label: 'Account',
+    screen: 'hackd.Account',
+    icon: require('../img/account.png'),
+    selectedIcon: require('../img/account.png'),
+    title: 'Account',
+    navigatorStyle,
+  },
+  {
+    label: 'Submit',
+    screen: 'hackd.Submit',
+    icon: require('../img/submit.png'),
+    selectedIcon: require('../img/submit.png'),
+    title: 'Submit',
+    navigatorStyle,
+  },
+  {
+    label: 'Search',
+    screen: 'hackd.Search',
+    icon: require('../img/search.png'),
+    selectedIcon: require('../img/search.png'),
+    title: 'Search',
+    navigatorStyle,
+  },
+  {
+    label: 'Settings',
+    screen: 'hackd.Settings',
+    icon: require('../img/settings.png'),
+    selectedIcon: require('../img/settings.png'),
+    title: 'Settings',
+    navigatorStyle,
+  },
+];
+
+export { 
+  registerScreens,
+  hackd,
+};

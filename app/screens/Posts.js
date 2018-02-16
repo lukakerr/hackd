@@ -23,28 +23,30 @@ class Posts extends React.Component {
       refreshing: false,
       loadingMorePosts: false,
     };
-    this.selectFeed = this.selectFeed.bind(this);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
-  static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
-    return {
-      title: params.feedTitle,
-      headerRight: (
-        <HeaderButton
-          style={{width: 26, height: 26, marginRight: 25, tintColor: '#007AFF'}}
-          onPress={() => params.handleSelect()}
-          image={require('../img/list.png')}
-        />
-      ),
-    };
+  static navigatorButtons = {
+    rightButtons: [
+      {
+        icon: require('../img/list.png'),
+        id: 'selectFeed'
+      }
+    ]
   };
+
+  onNavigatorEvent(event) {
+    if (event.type == 'NavBarButtonPress') { 
+      if (event.id == 'selectFeed') {
+        this.selectFeed();
+      }
+    }
+  }
 
   componentDidMount() {
     this.makeRequest();
-    this.props.navigation.setParams({ 
-      handleSelect: this.selectFeed,
-      feedTitle: capitalize(this.props.storyType),
+    this.props.navigator.setTitle({
+      title: capitalize(this.props.storyType),
     });
   }
 
@@ -70,8 +72,8 @@ class Posts extends React.Component {
 
       // If 'Cancel' not pressed and selectedFeed isnt current storyType
       if (buttonIndex !== 0 && selectedFeed !== this.props.storyType) {
-        this.props.navigation.setParams({ 
-          feedTitle: capitalize(selectedFeed) 
+        this.props.navigator.setTitle({
+          title: capitalize(selectedFeed),
         });
         this.props.setStoryType(selectedFeed);
         this.makeRequest();
@@ -135,7 +137,7 @@ class Posts extends React.Component {
         data={this.props.posts}
         isLoadingPosts={this.props.isLoadingPosts}
         loadingMore={this.state.loadingMorePosts}
-        navigation={this.props.navigation}
+        navigator={this.props.navigator}
         refreshing={this.state.refreshing}
         onRefresh={() => this.handleRefresh()}
         onEndReached={() => this.handleEndReached()}

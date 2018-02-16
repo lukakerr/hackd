@@ -58,11 +58,17 @@ class AccountDetails extends React.Component {
   };
 
   navigateToSaved = () => {
-    this.props.navigation.navigate('Saved',
-      this.props.accounts[this.props.user.username] 
+    const saved = this.props.accounts[this.props.user.username] 
       ? this.props.accounts[this.props.user.username].saved
       : []
-    )
+
+    this.props.navigator.push({
+      screen: 'hackd.Saved',
+      title: 'Saved',
+      passProps: {
+        saved,
+      }
+    });
   };
 
   render() {

@@ -17,7 +17,7 @@ class Account extends React.Component {
       return (
         <AccountDetails
           user={this.props.user}
-          navigation={this.props.navigation}
+          navigator={this.props.navigator}
         />
       );
     }

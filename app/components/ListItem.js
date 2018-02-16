@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: config.colors.mediumGray,
+    backgroundColor: '#FFF',
   },
   listItemSection: {
     paddingBottom: 5
