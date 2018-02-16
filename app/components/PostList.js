@@ -23,7 +23,7 @@ export default class Posts extends React.Component {
         post,
       },
     });
-  }
+  };
 
   renderSeparator = () => (<View style={styles.rowSeperator} />);
 
@@ -75,6 +75,7 @@ export default class Posts extends React.Component {
             <ListItem
               item={item}
               onPressItem={() => this.showPost(item)}
+              navigator={this.props.navigator}
             />
           )}
         />

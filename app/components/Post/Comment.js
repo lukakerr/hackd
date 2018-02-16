@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
+import ReactNativeHaptic from 'react-native-haptic';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -65,6 +66,7 @@ class Comment extends React.Component {
   };
 
   upvote = () => {
+    ReactNativeHaptic.generate('impact')
     const id = this.props.id;
 
     // Already upvoted, lets unvote it

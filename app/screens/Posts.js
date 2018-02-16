@@ -105,11 +105,11 @@ class Posts extends React.Component {
             });
           })
           .catch(e => {
-            console.error(e);
+            return;
           });
       })
       .catch((error) => {
-        console.error(error);
+        return;
       });
   };
 

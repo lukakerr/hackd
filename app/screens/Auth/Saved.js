@@ -40,7 +40,7 @@ export default class Saved extends React.Component {
         });
       })
       .catch(e => {
-        console.error(e);
+        return;
       });
   };
 

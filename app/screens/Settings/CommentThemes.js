@@ -4,6 +4,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import TableView from 'react-native-tableview';
+import ReactNativeHaptic from 'react-native-haptic';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -23,6 +24,7 @@ class CommentThemes extends React.Component {
   }
 
   commentThemeChanged = (theme) => {
+    ReactNativeHaptic.generate('selection')
     this.props.changeSetting(
       'commentTheme',
       theme

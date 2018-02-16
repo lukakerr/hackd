@@ -37,6 +37,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		86411DEED3CA41479F95BD16 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 686089DD49C94860B58E7332 /* libSafariViewManager.a */; };
+		A1622F732036CA2600B52F96 /* libReactNativeHaptic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1622F6F2036CA0E00B52F96 /* libReactNativeHaptic.a */; };
 		A1FE952E2036944300B1087E /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FE952B2036942700B1087E /* libReactNativeNavigation.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
@@ -315,6 +316,13 @@
 			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
 			remoteInfo = RNTableView;
 		};
+		A1622F6E2036CA0E00B52F96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1622F452036CA0D00B52F96 /* ReactNativeHaptic.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = ReactNativeHaptic;
+		};
 		A179AB78202EE1CE00B54F1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 94E0F0BEF8BC4DB495D8AD86 /* SafariViewManager.xcodeproj */;
@@ -365,6 +373,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		94E0F0BEF8BC4DB495D8AD86 /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "../node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
+		A1622F452036CA0D00B52F96 /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
 		A1FE95012036942700B1087E /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		C2CF41F2E4494C6681665E2D /* RNTableView.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTableView.xcodeproj; path = "../node_modules/react-native-tableview/RNTableView.xcodeproj"; sourceTree = "<group>"; };
@@ -384,6 +393,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1622F732036CA2600B52F96 /* libReactNativeHaptic.a in Frameworks */,
 				A1FE952E2036944300B1087E /* libReactNativeNavigation.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -572,6 +582,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A1622F452036CA0D00B52F96 /* ReactNativeHaptic.xcodeproj */,
 				A1FE95012036942700B1087E /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -639,6 +650,14 @@
 			isa = PBXGroup;
 			children = (
 				A13549F0202C4E84001D695A /* libRNTableView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1622F462036CA0D00B52F96 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1622F6F2036CA0E00B52F96 /* libReactNativeHaptic.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -830,6 +849,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = A1622F462036CA0D00B52F96 /* Products */;
+					ProjectRef = A1622F452036CA0D00B52F96 /* ReactNativeHaptic.xcodeproj */;
 				},
 				{
 					ProductGroup = A1FE95022036942700B1087E /* Products */;
@@ -1112,6 +1135,13 @@
 			fileType = archive.ar;
 			path = libRNTableView.a;
 			remoteRef = A13549EF202C4E84001D695A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A1622F6F2036CA0E00B52F96 /* libReactNativeHaptic.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeHaptic.a;
+			remoteRef = A1622F6E2036CA0E00B52F96 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		A179AB79202EE1CE00B54F1D /* libSafariViewManager.a */ = {

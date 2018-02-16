@@ -6,6 +6,7 @@ Currently a work in progress.
 
 ### Features
 
+##### Main
 - [x] Browse anonymously or login
 - [x] 6 feeds to choose from:
 	- Top
@@ -30,6 +31,9 @@ Currently a work in progress.
 	- [ ] View their recently viewed articles
 	- [x] View their own profile
 - [x] Users can login/logout of multiple accounts without losing their saved/upvoted/offline/viewed posts
+
+##### Other
+- [x] Haptic feedback for common actions
 
 ### Run Locally
 

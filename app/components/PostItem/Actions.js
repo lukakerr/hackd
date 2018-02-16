@@ -8,6 +8,7 @@ import {
   AlertIOS,
   Share,
 } from 'react-native';
+import ReactNativeHaptic from 'react-native-haptic';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -113,6 +114,7 @@ class Actions extends React.Component {
   };
 
   upvote = () => {
+    ReactNativeHaptic.generate('impact')
     const id = this.props.item.id;
     if (!this.validateUserLoggedIn('upvote')) {
       return;
