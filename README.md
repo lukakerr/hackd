@@ -44,10 +44,12 @@ $ cd hackd
 $ npm install
 
 # Link native libraries
-$ react-native link
+$ npm run link
 
 # Run the app
-$ react-native run-ios
+$ npm run start
+# Or for iPhone X
+$ npm run start:x
 ```
 
 ### Test
