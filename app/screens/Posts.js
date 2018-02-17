@@ -13,7 +13,7 @@ import PostList from '../components/PostList';
 import { getItems } from '../helpers/api';
 import { capitalize } from '../helpers/utils';
 
-const MAX_NUM_POSTS = 15 * 8;
+const MAX_NUM_POSTS = 15 * 10;
 
 class Posts extends React.Component {
   constructor(props) {
