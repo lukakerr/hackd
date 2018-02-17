@@ -7,6 +7,9 @@
     "lightGray": "#FEFEFE",
     "mediumGray": "#FAFAFA",
     "darkGray": "#E6E6E6",
+    "blue": "#2D7BF6",
+    "placeholder": "#999",
+    "underline": "#E4E4E5",
     "code": "#303030"
   },
   "commentThemes": {

@@ -24,11 +24,11 @@ class CommentThemes extends React.Component {
   }
 
   commentThemeChanged = (theme) => {
-    ReactNativeHaptic.generate('selection')
     this.props.changeSetting(
       'commentTheme',
       theme
-    )
+    );
+    ReactNativeHaptic.generate('selection')
   };
 
   render() {

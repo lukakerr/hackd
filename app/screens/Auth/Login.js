@@ -3,9 +3,6 @@ import commonStyles from '../../styles/common';
 import {
   View,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -13,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
 import CustomText from '../../components/CustomText';
-import config from '../../config/default';
+import Form from '../../components/Form';
 import { login } from '../../helpers/api';
 
 class Login extends React.Component {
@@ -61,38 +58,29 @@ class Login extends React.Component {
     });
   };
 
+  goToFeed = () => {
+    this.props.navigator.switchToTab({
+      tabIndex: 0,
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <CustomText style={[styles.header, commonStyles.textCenter]}>Login to Hacker News</CustomText>
-        <TextInput style={styles.input}
-           underlineColorAndroid='transparent'
-           placeholder='Username'
-           autoCapitalize='none'
-           placeholderTextColor='#000'
-           onChangeText={this.handleUsername}/>
-        
-        <TextInput style={styles.input}
-           underlineColorAndroid='transparent'
-           placeholder='Password'
-           autoCapitalize='none'
-           placeholderTextColor='#000'
-           secureTextEntry={true}
-           onChangeText={this.handlePassword}/>
-           
-        <TouchableOpacity
-           style={styles.submitButton}
-           onPress={() => this.logIn()}>
-           <CustomText style={styles.submitButtonText}>Login</CustomText>
-        </TouchableOpacity>
 
-        <View>
-          <CustomText style={[styles.error, commonStyles.textCenter]}>{this.state.error}</CustomText>
-        </View>
-
-        <View>
-          <ActivityIndicator animating={this.state.loading} />
-        </View>
+        <Form
+          inputs={[
+            { placeholder: 'Username', action: this.handleUsername },
+            { placeholder: 'Password', action: this.handlePassword, secureTextEntry: true },
+          ]}
+          submit={this.logIn}
+          submitText='Login'
+          back={this.goToFeed}
+          backText='feed'
+          error={this.state.error}
+          loading={this.state.loading}
+        />
      </View>
     );
   }
@@ -100,35 +88,14 @@ class Login extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    paddingTop: 50,
+    backgroundColor: '#FFF',
+    flex: 1,
   },
   header: {
-    fontSize: 20,
-    margin: 20,
-  },
-  input: {
-    fontSize: 16,
-    margin: 15,
-    height: 40,
-    padding: 10,
-    borderColor: config.colors.orange,
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  submitButton: {
-    backgroundColor: config.colors.orange,
-    padding: 10,
-    margin: 15,
-    height: 40,
-    borderRadius: 5,
-  },
-  submitButtonText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: 'white',
-  },
-  error: {
-    color: 'red',
+    fontSize: 28,
+    margin: 30,
+    fontWeight: 'bold',
   },
 });
 

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import config from '../config/default';
+import { truncate } from '../helpers/utils';
 import ListItem from './ListItem';
 
 export default class Posts extends React.Component {
@@ -17,9 +18,12 @@ export default class Posts extends React.Component {
   }
 
   showPost = (post) => {
+    const title = post.descendants > -1 
+      ? `${post.descendants} comments` 
+      : truncate(post.title, 20);
     this.props.navigator.push({
       screen: 'hackd.Post',
-      title: 'Post',
+      title,
       passProps: {
         post,
       },
@@ -27,9 +31,12 @@ export default class Posts extends React.Component {
   };
 
   showPostPreview = (post) => {
+    const title = post.descendants > -1 
+      ? `${post.descendants} comments` 
+      : truncate(post.title, 20);
     this.props.navigator.push({
       screen: 'hackd.Post',
-      title: 'Post',
+      title,
       passProps: {
         post,
       },

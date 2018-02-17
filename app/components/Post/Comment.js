@@ -66,7 +66,6 @@ class Comment extends React.Component {
   };
 
   upvote = () => {
-    ReactNativeHaptic.generate('impact')
     const id = this.props.id;
 
     // Already upvoted, lets unvote it
@@ -85,6 +84,7 @@ class Comment extends React.Component {
       this.props.addIdToUserAccount(id, 'upvotedComments');
       this.upvoteComment(id);
     }
+    ReactNativeHaptic.generate('impact')
   };
 
   unvoteComment = (id) => {
@@ -133,7 +133,7 @@ class Comment extends React.Component {
                 <View style={styles.commentInfo}>
                   <User by={this.props.author} style={styles.userName} />
                   <Time time={this.props.time} />
-                  { this.props.user.loggedIn && 
+                  {this.props.user.loggedIn && 
                     <TouchableOpacity 
                       onPress={this.upvote} 
                       activeOpacity={0.8} 

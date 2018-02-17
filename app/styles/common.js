@@ -28,4 +28,7 @@ export default StyleSheet.create({
     fontSize: 20,
     opacity: 0.8,
   },
+  backgroundWhite: {
+    backgroundColor: '#FFF',
+  },
 });

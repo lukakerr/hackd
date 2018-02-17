@@ -22,7 +22,9 @@ class Account extends React.Component {
       );
     }
     return (
-      <Login />
+      <Login 
+        navigator={this.props.navigator}
+      />
     );
   }
 }

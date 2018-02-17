@@ -2,9 +2,10 @@ import React from 'react';
 import {
   Text,
 } from 'react-native';
+
 import commonStyles from '../styles/common';
 
-export default class CustomText extends React.Component {
+export default class CustomText extends React.PureComponent {
   constructor(props) {
     super(props);
   }

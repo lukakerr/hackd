@@ -81,15 +81,12 @@ class Actions extends React.Component {
             return;
           }
         } else if (buttonIndex === 2) {
-          this.share(
-            this.props.item.url,
-            this.props.item.title
-          );
+          this.share();
         } else if (buttonIndex === 3) {
           if (!this.validateUserLoggedIn('save')) {
             return;
           }
-          this.props.addIdToUserAccount(this.props.item.id, 'saved');
+          this.save();
         };
       }
     });
@@ -114,7 +111,6 @@ class Actions extends React.Component {
   };
 
   upvote = () => {
-    ReactNativeHaptic.generate('impact')
     const id = this.props.item.id;
     if (!this.validateUserLoggedIn('upvote')) {
       return;
@@ -125,6 +121,8 @@ class Actions extends React.Component {
     });
 
     this.props.addIdToUserAccount(id, 'upvoted');
+
+    ReactNativeHaptic.generate('impact')
     
     upvote(id).then(upvoted => {
       if (!upvoted) {
@@ -140,12 +138,17 @@ class Actions extends React.Component {
     });
   };
 
-  share = (url, title) => {
+  share = () => {
     Share.share({
       message: 'Checkout this Hacker News post!',
-      url,
-      title
+      url: this.props.item.url,
+      title: this.props.item.title,
     });
+  };
+
+  save = () => {
+    ReactNativeHaptic.generate('impact')
+    this.props.addIdToUserAccount(this.props.item.id, 'saved');
   };
 
   render() {

@@ -14,7 +14,7 @@ import User from './PostItem/User';
 import Time from './PostItem/Time';
 import Actions from './PostItem/Actions';
 
-export default class ListItem extends React.Component {
+export default class ListItem extends React.PureComponent {
   constructor(props) {
     super(props);
   }

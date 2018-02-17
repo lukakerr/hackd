@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions';
 
-import HeaderButton from '../components/HeaderButton';
 import PostList from '../components/PostList';
 import { getItems } from '../helpers/api';
 import { capitalize } from '../helpers/utils';

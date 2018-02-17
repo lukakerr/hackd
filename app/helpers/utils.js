@@ -9,8 +9,9 @@ const truncate = (str, len) => {
 };
 
 const addToUserAccount = (accounts, user, id, type) => {
-  const userAccount = accounts[user.username];
-  const newAccounts = {};
+  // Deep copy to new object
+  const newAccounts = JSON.parse(JSON.stringify(accounts));
+  const userAccount = newAccounts[user.username];
 
   // User has an entry
   if (userAccount) {
@@ -39,8 +40,9 @@ const addToUserAccount = (accounts, user, id, type) => {
 };
 
 const removeFromUserAccount = (accounts, user, id, type) => {
-  const userAccount = accounts[user.username];
-  const newAccounts = {};
+  // Deep copy to new object
+  const newAccounts = JSON.parse(JSON.stringify(accounts));
+  const userAccount = newAccounts[user.username];
 
   // User has an entry
   if (userAccount) {
