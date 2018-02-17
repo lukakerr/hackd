@@ -37,18 +37,6 @@ export const removeIdFromUserAccount = (id, type) => {
   };
 };
 
-export const updateUser = (username, password) => {
-  return (dispatch, getState) => {
-    const { loggedIn } = getState().user;
-    const user = {
-      username,
-      password,
-      loggedIn,
-    };
-    dispatch(setUser(user));
-  };
-};
-
 export const login = user => {
   return (dispatch, getState) => {
     dispatch(setUser(user));
