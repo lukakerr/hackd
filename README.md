@@ -34,7 +34,7 @@ Currently a work in progress.
 
 ##### Other
 - [x] Haptic feedback for common actions
-- [x] 3D touch preview (peek and pop)<sup>1</sup>
+- [x] 3D touch preview (peek and pop)<sup><a href="#1">1</a></sup>
 
 ### Run Locally
 
@@ -91,4 +91,4 @@ I've tried to add and support as many native API's as possible such as haptic fe
 
 <br><br>
 
-<sup>1</sup> 3D touch is only available on supported devices. Currently only Wix's [react-native-navigation](https://github.com/wix/react-native-navigation) supports it, although there is a [relatively major bug](https://github.com/wix/react-native-navigation/issues/2445) that hasn't been fixed yet. This bug is present in Hackd.
+<sup id="1">1</sup> 3D touch is only available on supported devices. Currently only Wix's [react-native-navigation](https://github.com/wix/react-native-navigation) supports it, although there is a [relatively major bug](https://github.com/wix/react-native-navigation/issues/2445) that hasn't been fixed yet. This bug is present in Hackd.
