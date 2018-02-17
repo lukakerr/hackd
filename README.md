@@ -34,6 +34,7 @@ Currently a work in progress.
 
 ##### Other
 - [x] Haptic feedback for common actions
+- [x] 3D touch preview (peek and pop)<sup>1</sup>
 
 ### Run Locally
 
@@ -72,11 +73,22 @@ The comments design in hackd is based off a stripped down version of Apollo's co
 
 Hackd also supports font scaling for readers who want smaller or larger text.
 
+I've tried to add and support as many native API's as possible such as haptic feedback and 3D touch. Although many new API's aren't available in the React Native environment yet. 
+
 ### Screenshots
 
 <p align="center">
-  <img src="https://i.imgur.com/Ba94j2C.png" width="200" alt="hackd1">
-  <img src="https://i.imgur.com/DCXKlBk.png" width="200" alt="hackd2">
-  <img src="https://i.imgur.com/Jf8JJnW.png" width="200" alt="hackd2">
-  <img src="https://i.imgur.com/VyQwz1g.png" width="200" alt="hackd2">
+  <img src="https://i.imgur.com/h7b8sfc.png" width="200" alt="hackd1">
+  <img src="https://i.imgur.com/FE1Q6iR.png" width="200" alt="hackd2">
+  <img src="https://i.imgur.com/Tv2CsZi.png" width="200" alt="hackd3">
 </p>
+
+<p align="center">
+  <img src="https://i.imgur.com/D1WmGOG.png" width="200" alt="hackd4">
+  <img src="https://i.imgur.com/MciVZK1.png" width="200" alt="hackd5">
+  <img src="https://i.imgur.com/PbuheBP.png" width="200" alt="hackd6">
+</p>
+
+<br><br>
+
+<sup>1</sup> 3D touch is only available on supported devices. Currently only Wix's [react-native-navigation](https://github.com/wix/react-native-navigation) supports it, although there is a [relatively major bug](https://github.com/wix/react-native-navigation/issues/2445) that hasn't been fixed yet. This bug is present in Hackd.

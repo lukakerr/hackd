@@ -20,12 +20,16 @@ export default class ListItem extends React.Component {
   }
 
   onPress = () => {
-    this.props.onPressItem();
+    this.props.onPress();
+  };
+
+  onPressIn = () => {
+    this.props.onPressIn();
   };
 
   render() {
     return (
-      <TouchableOpacity onPress={this.onPress} activeOpacity={0.8}>
+      <TouchableOpacity onPress={this.onPress} onPressIn={this.onPressIn} activeOpacity={0.8}>
         <View style={styles.listItem}>
           <CustomText styles={styles.listItemSection}>
             <CustomText style={styles.listItemTitle}>

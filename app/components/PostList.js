@@ -13,6 +13,7 @@ import ListItem from './ListItem';
 export default class Posts extends React.Component {
   constructor(props) {
     super(props);
+    this.previewRefs = [];
   }
 
   showPost = (post) => {
@@ -22,6 +23,19 @@ export default class Posts extends React.Component {
       passProps: {
         post,
       },
+    });
+  };
+
+  showPostPreview = (post) => {
+    this.props.navigator.push({
+      screen: 'hackd.Post',
+      title: 'Post',
+      passProps: {
+        post,
+      },
+      previewCommit: true,
+      previewHeight: 400,
+      previewView: this.previewRefs[post.id.toString()],
     });
   };
 
@@ -74,7 +88,9 @@ export default class Posts extends React.Component {
           renderItem={({ item }) => (
             <ListItem
               item={item}
-              onPressItem={() => this.showPost(item)}
+              ref={(ref) => (this.previewRefs[item.id.toString()] = ref)}
+              onPress={() => this.showPost(item)}
+              onPressIn={() => this.showPostPreview(item)}
               navigator={this.props.navigator}
             />
           )}
