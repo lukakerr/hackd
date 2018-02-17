@@ -13,6 +13,8 @@ import PostList from '../components/PostList';
 import { getItems } from '../helpers/api';
 import { capitalize } from '../helpers/utils';
 
+const MAX_NUM_POSTS = 15 * 8;
+
 class Posts extends React.Component {
   constructor(props) {
     super(props);
@@ -123,8 +125,14 @@ class Posts extends React.Component {
   };
 
   handleEndReached = () => {
+    const { page, limit } = this.state;
+
+    if (page * limit > MAX_NUM_POSTS) {
+      return;
+    }
+
     this.setState({
-      page: this.state.page + 1,
+      page: page + 1,
       loadingMorePosts: true,
     }, () => {
       this.makeRequest();
