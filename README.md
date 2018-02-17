@@ -78,15 +78,15 @@ I've tried to add and support as many native API's as possible such as haptic fe
 ### Screenshots
 
 <p align="center">
-  <img src="https://i.imgur.com/h7b8sfc.png" width="200" alt="hackd1">
-  <img src="https://i.imgur.com/FE1Q6iR.png" width="200" alt="hackd2">
-  <img src="https://i.imgur.com/Tv2CsZi.png" width="200" alt="hackd3">
+  <img src="https://i.imgur.com/h7b8sfc.png" width="275" alt="hackd1">
+  <img src="https://i.imgur.com/FE1Q6iR.png" width="275" alt="hackd2">
+  <img src="https://i.imgur.com/Tv2CsZi.png" width="275" alt="hackd3">
 </p>
 
 <p align="center">
-  <img src="https://i.imgur.com/D1WmGOG.png" width="200" alt="hackd4">
-  <img src="https://i.imgur.com/MciVZK1.png" width="200" alt="hackd5">
-  <img src="https://i.imgur.com/PbuheBP.png" width="200" alt="hackd6">
+  <img src="https://i.imgur.com/D1WmGOG.png" width="275" alt="hackd4">
+  <img src="https://i.imgur.com/MciVZK1.png" width="275" alt="hackd5">
+  <img src="https://i.imgur.com/PbuheBP.png" width="275" alt="hackd6">
 </p>
 
 <br><br>
