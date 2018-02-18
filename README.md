@@ -6,7 +6,10 @@ Currently a work in progress.
 
 ### Features
 
+Features that aren't checked below are yet to be implemented. If you want to implement them, please create a pull request! 
+
 ##### Main
+
 - [x] Browse anonymously or login
 - [x] 6 feeds to choose from:
 	- Top
@@ -19,7 +22,7 @@ Currently a work in progress.
 	- [x] Share posts
 	- [ ] Search, filter and view posts (stories, show, ask), comments, polls and users
 	- [x] Read articles in app with Safari View Controller
-	- [x] Collapse/expand comments
+	- [x] Read, collapse and expand comments
 - If logged in, the user can also:
 	- [x] Upvote posts
 	- [x] Upvote comments
@@ -27,15 +30,18 @@ Currently a work in progress.
 	- [ ] Comment
 	- [ ] Submit a post
 	- [x] Save a post
-	- [ ] Add a post to offline reading section
+	- [ ] Add a post to their offline reading section
 	- [ ] View their recently viewed articles
+	- [ ] View their upvoted posts
 	- [x] View their own profile
-- [x] Users can login/logout of multiple accounts without losing their saved/upvoted/offline/viewed posts
+- [x] Users can login/logout of multiple different accounts without losing their saved/upvoted/offline/viewed posts
 
 ##### Other
+
 - [x] Haptic feedback for common actions
-- [x] 3D touch preview (peek and pop)<sup><a href="#1">1</a></sup>
+- [x] 3D touch actions and preview (peek and pop)<sup><a href="#1">1</a></sup>
 - [x] Themable app colors (i.e. comments, navigation, buttons, tabbar)
+- [x] Infinite scroll
 
 ### Run Locally
 
