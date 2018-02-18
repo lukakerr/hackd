@@ -5,13 +5,17 @@ import {
   SegmentedControlIOS,
 } from 'react-native';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../actions';
+
 import commonStyles from '../styles/common';
 import config from '../config/default';
 
 import CustomText from '../components/CustomText';
 import Form from '../components/Form';
 
-export default class Submit extends React.Component {
+class Submit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,6 +67,7 @@ export default class Submit extends React.Component {
         <View style={styles.segmentedControlContainer}>
           <SegmentedControlIOS
             style={styles.segmentedControl}
+            tintColor={this.props.settings.appColor}
             values={['Link', 'Text']}
             selectedIndex={this.state.selectedIndex}
             onChange={(event) => {
@@ -79,9 +84,10 @@ export default class Submit extends React.Component {
             ]}
             submit={this.submitUrl}
             back={this.goToFeed}
-            backText='posts'
+            backText='feed'
             error={this.state.error}
             loading={this.state.loading}
+            color={this.props.settings.appColor}
           />
         }
 
@@ -92,10 +98,11 @@ export default class Submit extends React.Component {
             ]}
             submit={this.submitText}
             back={this.goToFeed}
-            backText='posts'
+            backText='feed'
             error={this.state.error}
             loading={this.state.loading}
             scroll={true}
+            color={this.props.settings.appColor}
           />
         }
 
@@ -117,3 +124,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+
+const mapStateToProps = state => ({
+  settings: state.settings,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Submit);

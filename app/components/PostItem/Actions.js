@@ -70,6 +70,7 @@ class Actions extends React.Component {
     ActionSheetIOS.showActionSheetWithOptions({
       title: 'Post actions',
       options: OPTIONS,
+      tintColor: this.props.settings.appColor,
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
       const selectedAction = OPTIONS[buttonIndex].toLowerCase();
@@ -217,6 +218,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispat
 const mapStateToProps = state => ({
   user: state.user,
   accounts: state.accounts,
+  settings: state.settings,
 });
 
 export default connect(

@@ -80,6 +80,7 @@ class Login extends React.Component {
           backText='feed'
           error={this.state.error}
           loading={this.state.loading}
+          color={this.props.settings.appColor}
         />
      </View>
     );
@@ -103,6 +104,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispat
 
 const mapStateToProps = state => ({
   user: state.user,
+  settings: state.settings,
 });
 
 export default connect(

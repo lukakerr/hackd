@@ -61,7 +61,7 @@ export default class Form extends React.PureComponent {
           </View>
 
           <TouchableOpacity
-            style={styles.submitButton}
+            style={[styles.submitButton, { backgroundColor: this.props.color}]}
             activeOpacity={0.8}
             onPress={this.submit}>
             <CustomText style={styles.submitButtonText}>{this.props.submitText ? this.props.submitText : 'Submit'}</CustomText>
@@ -71,7 +71,7 @@ export default class Form extends React.PureComponent {
             style={styles.backButton}
             activeOpacity={0.8}
             onPress={this.back}>
-            <CustomText style={styles.backButtonText}>Back to {this.props.backText}</CustomText>
+            <CustomText style={[styles.backButtonText, { color: this.props.color}]}>Back to {this.props.backText}</CustomText>
           </TouchableOpacity>
         </View>
 
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   submitButton: {
-    backgroundColor: config.colors.blue,
     padding: 12,
     margin: 20,
     marginTop: 50,
@@ -120,7 +119,6 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 16,
-    color: config.colors.blue,
     textAlign: 'center',
   },
   error: {

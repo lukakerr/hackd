@@ -10,8 +10,16 @@ registerScreens(store, Provider);
 
 persistStore(store, null, () => {
   registerScreens(store, Provider);
+  const { settings } = store.getState();
 
   Navigation.startTabBasedApp({
     tabs: hackd,
+    appStyle: {
+      navBarButtonColor: settings.appColor,
+    },
+    tabsStyle: {
+      tabBarSelectedButtonColor: settings.appColor,
+      tabBarSelectedLabelColor: settings.appColor,
+    },
   });
 });

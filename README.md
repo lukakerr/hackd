@@ -35,6 +35,7 @@ Currently a work in progress.
 ##### Other
 - [x] Haptic feedback for common actions
 - [x] 3D touch preview (peek and pop)<sup><a href="#1">1</a></sup>
+- [x] Themable app colors (i.e. comments, navigation, buttons, tabbar)
 
 ### Run Locally
 

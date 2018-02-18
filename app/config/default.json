@@ -7,10 +7,20 @@
     "lightGray": "#FEFEFE",
     "mediumGray": "#FAFAFA",
     "darkGray": "#E6E6E6",
-    "blue": "#2D7BF6",
+    "blue": "#007AFF",
     "placeholder": "#999",
     "underline": "#E4E4E5",
     "code": "#303030"
+  },
+  "appColors": {
+    "default": "#007AFF",
+    "orange": "#EE6F2D",
+    "red": "#FF3B30",
+    "yellow": "#FFCC00",
+    "green": "#4CD964",
+    "teal": "#5AC8FA",
+    "purple": "#5856D6",
+    "pink": "#FF2D55"
   },
   "commentThemes": {
     "raw": {

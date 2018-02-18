@@ -4,6 +4,7 @@ import commonStyles from '../styles/common';
 import {
   ActionSheetIOS,
 } from 'react-native';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions';
@@ -28,12 +29,10 @@ class Posts extends React.Component {
   }
 
   static navigatorButtons = {
-    rightButtons: [
-      {
-        icon: require('../img/list.png'),
-        id: 'selectFeed'
-      }
-    ]
+    rightButtons: [{
+      icon: require('../img/list.png'),
+      id: 'selectFeed'
+    }],
   };
 
   onNavigatorEvent(event) {
@@ -67,6 +66,7 @@ class Posts extends React.Component {
     ActionSheetIOS.showActionSheetWithOptions({
       title: 'Select a feed',
       options: OPTIONS,
+      tintColor: this.props.settings.appColor,
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
       const selectedFeed = OPTIONS[buttonIndex].toLowerCase();
@@ -159,6 +159,7 @@ const mapStateToProps = state => ({
   storyType: state.storyType,
   posts: state.posts,
   isLoadingPosts: state.isLoadingPosts,
+  settings: state.settings,
 });
 
 export default connect(

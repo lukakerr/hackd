@@ -13,8 +13,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions';
 
-import { getUser } from '../helpers/api';
 import CustomText from '../components/CustomText';
+
+import { getUser } from '../helpers/api';
 
 const { Section, Item, Cell } = TableView;
 
@@ -30,18 +31,25 @@ class Settings extends React.Component {
     });
   };
 
-  tapToCollapseChanged = () => {
-    this.props.changeSetting(
-      'tapToCollapse',
-      !this.props.settings.tapToCollapse
-    )
+  navigateToAppColors = () => {
+    this.props.navigator.push({
+      screen: 'hackd.AppColors',
+      title: 'Navigator Themes',
+    });
   };
 
-  useSafariReaderModeChanged = () => {
+  keyValueChanged = (key, value) => {
     this.props.changeSetting(
-      'useSafariReaderMode',
-      !this.props.settings.useSafariReaderMode
-    )
+      key,
+      value
+    );
+  };
+
+  booleanChanged = (key, boolean) => {
+    this.props.changeSetting(
+      key,
+      !boolean
+    );
   };
 
   render() {
@@ -58,7 +66,7 @@ class Settings extends React.Component {
               <Switch
                 style={{marginRight: 16}}
                 value={this.props.settings.tapToCollapse}
-                onValueChange={this.tapToCollapseChanged} />
+                onValueChange={() => this.booleanChanged('tapToCollapse', this.props.settings.tapToCollapse)} />
             </Cell>
             <Cell 
               style={styles.cell} 
@@ -73,7 +81,15 @@ class Settings extends React.Component {
               <Switch
                 style={{marginRight: 16}}
                 value={this.props.settings.useSafariReaderMode}
-                onValueChange={this.useSafariReaderModeChanged} />
+                onValueChange={() => this.booleanChanged('useSafariReaderMode', this.props.settings.useSafariReaderMode)} />
+            </Cell>
+          </Section>
+          <Section label='Navigator (requires relaunch)'>
+            <Cell 
+              style={styles.cell} 
+              accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
+              onPress={() => this.navigateToAppColors()}>
+              <CustomText style={{fontSize: 17}}>Navigator themes</CustomText>
             </Cell>
           </Section>
         </TableView>

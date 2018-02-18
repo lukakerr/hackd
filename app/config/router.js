@@ -14,6 +14,7 @@ import AccountDetails from '../screens/Auth/AccountDetails';
 
 // Settings
 import CommentThemes from '../screens/Settings/CommentThemes';
+import AppColors from '../screens/Settings/AppColors';
 
 function registerScreens(store, Provider) {
   Navigation.registerComponent('hackd.Posts', () => Posts, store, Provider);
@@ -28,6 +29,7 @@ function registerScreens(store, Provider) {
   Navigation.registerComponent('hackd.AccountDetails', () => AccountDetails, store, Provider);
 
   Navigation.registerComponent('hackd.CommentThemes', () => CommentThemes, store, Provider);
+  Navigation.registerComponent('hackd.AppColors', () => AppColors, store, Provider);
 }
 
 const navigatorStyle = {
