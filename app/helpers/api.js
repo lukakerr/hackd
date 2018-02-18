@@ -6,16 +6,10 @@ import config from '../config/default';
  * @param  {String} itemId The ID of the item to fetch
  * @return {Promise}       Returns a promise
  */
-getItem = itemId => {
-  return new Promise((resolve, reject) => {
-    fetch(`${config.api}/item/${itemId}.json`)
-      .then(response => response.json())
-      .then(responseJson => {
-        resolve(responseJson);
-      }).catch(error => {
-        reject(error);
-      });
-  });
+const getItem = itemId => {
+  return fetch(`${config.api}/item/${itemId}.json`)
+    .then(response => response.json())
+    .catch(error => error);
 };
 
 /**
@@ -24,7 +18,7 @@ getItem = itemId => {
  * @return {Promise[]}         An array of Promises resolved
  *                             with Promise.all
  */
-getItems = (page, limit, itemIds) => {
+const getItems = (page, limit, itemIds) => {
   let slicedItems = itemIds;
 
   if (page && limit) {
@@ -47,7 +41,7 @@ getItems = (page, limit, itemIds) => {
  * @param  {String} username The users username
  * @return {Object}          The users data
  */
-getUser = username => {
+const getUser = username => {
   return fetch(`${config.api}/user/${username}.json`)
     .then(response => response.json())
     .then(responseJson => responseJson)
@@ -60,7 +54,7 @@ getUser = username => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the upvote URL
  */
-getUpvoteUrl = itemId => {
+const getUpvoteUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
@@ -77,7 +71,7 @@ getUpvoteUrl = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the unvote URL
  */
-getUnvoteUrl = itemId => {
+const getUnvoteUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
@@ -94,8 +88,8 @@ getUnvoteUrl = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if upvoted, else false
  */
-upvote = itemId => {
-  return this.getUpvoteUrl(itemId)
+const upvote = itemId => {
+  return getUpvoteUrl(itemId)
     .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
       mode: 'no-cors',
       credentials: 'include',
@@ -111,8 +105,8 @@ upvote = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if unvoted, else false
  */
-unvote = itemId => {
-  return this.getUnvoteUrl(itemId)
+const unvote = itemId => {
+  return getUnvoteUrl(itemId)
     .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
       mode: 'no-cors',
       credentials: 'include',
@@ -129,7 +123,7 @@ unvote = itemId => {
  * @return {Promise}         Returns a promise that
  *                           resolves true if logged in, else false
  */
-login = (username, password) => {
+const login = (username, password) => {
   const headers = new Headers({
     'Content-Type': 'application/x-www-form-urlencoded',
     'Access-Control-Allow-Origin': '*',
@@ -155,7 +149,7 @@ login = (username, password) => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the logout URL
  */
-getLogoutUrl = () => {
+const getLogoutUrl = () => {
   return fetch(`${config.base}/news`, {
     mode: 'no-cors',
     credentials: 'include',
@@ -171,8 +165,8 @@ getLogoutUrl = () => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if logged out, else false
  */
-logout = () => {
-  return this.getLogoutUrl()
+const logout = () => {
+  return getLogoutUrl()
     .then(logoutUrl => fetch(`${config.base}/${logoutUrl}`, {
       mode: 'no-cors',
       credentials: 'include',
@@ -187,7 +181,7 @@ logout = () => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the comment URL
  */
-getCommentUrl = itemId => {
+const getCommentUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
@@ -205,8 +199,8 @@ getCommentUrl = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if commented, else false
  */
-comment = (itemId, reply) => {
-  return this.getCommentUrl(itemId).then(commentUrl => {
+const comment = (itemId, reply) => {
+  return getCommentUrl(itemId).then(commentUrl => {
     const headers = new Headers({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Access-Control-Allow-Origin': '*',
@@ -232,7 +226,7 @@ comment = (itemId, reply) => {
  * @param  {Object[]} commentsArray An array containing flattened comments
  * @return {Object[]}               An array containing all flattened comments
  */
-flatten = (comments, commentsArray) => {
+const flatten = (comments, commentsArray) => {
   for (var key in comments) {
     const currentComment = comments[key];
 
@@ -252,7 +246,7 @@ flatten = (comments, commentsArray) => {
  * @return {Promise}             A promise that resolves with
  *                               all comments
  */
-getComments = commentIds => {
+const getComments = commentIds => {
   return new Promise((resolve, reject) => {
     const comments = commentIds.map(id => {
       return getChildComment(id, 0)
@@ -278,7 +272,7 @@ getComments = commentIds => {
  * @param  {Number} level    The level of nesting
  * @return {Promise}         A promise containing all child comments
  */
-getChildComment = (parentId, level) => {
+const getChildComment = (parentId, level) => {
   return new Promise((resolve, reject) => {
     getItem(parentId)
       .then(comment => {
@@ -317,7 +311,7 @@ getChildComment = (parentId, level) => {
  * @return {Object[]}          The new array of comment objects
  *                             with certain comments hidden/closed
  */
-toggleComments = (comments, id, level) => {
+const toggleComments = (comments, id, level) => {
   comments.forEach((comment, index) => {
     if (comment.id === id) {
       // Toggle content visibility, but still show comment header

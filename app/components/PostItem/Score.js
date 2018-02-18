@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+
 import CustomText from '../CustomText';
 
 export default class Score extends React.Component {

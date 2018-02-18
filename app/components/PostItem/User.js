@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+
 import CustomText from '../CustomText';
 
 export default class User extends React.Component {

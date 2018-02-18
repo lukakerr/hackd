@@ -27,11 +27,11 @@ export default class Form extends React.PureComponent {
   };
 
   submit = () => {
-    this.props.submit()
+    this.props.submit();
   };
 
   back = () => {
-    this.props.back()
+    this.props.back();
   };
 
   render() {

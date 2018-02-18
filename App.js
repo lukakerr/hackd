@@ -16,6 +16,7 @@ persistStore(store, null, () => {
     tabs: hackd,
     appStyle: {
       navBarButtonColor: settings.appColor,
+      screenBackgroundColor: '#F2F3F6',
     },
     tabsStyle: {
       tabBarSelectedButtonColor: settings.appColor,

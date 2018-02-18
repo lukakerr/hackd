@@ -33,6 +33,12 @@ class Actions extends React.Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.doUpvote !== nextProps.doUpvote) {
+      this.upvote();
+    }
+  }
+
   checkIfUpvoted = () => {
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
@@ -75,7 +81,7 @@ class Actions extends React.Component {
     }, (buttonIndex) => {
       const selectedAction = OPTIONS[buttonIndex].toLowerCase();
 
-      // If 'Cancel' not pressed and selectedFeed isnt current storyType
+      // If 'Cancel' not pressed
       if (buttonIndex !== 0) {
         if (buttonIndex === 1) {
           if (!this.validateUserLoggedIn('reply')) {
@@ -113,7 +119,7 @@ class Actions extends React.Component {
 
   upvote = () => {
     const id = this.props.item.id;
-    if (!this.validateUserLoggedIn('upvote')) {
+    if (!this.validateUserLoggedIn('upvote') || this.state.upvoted) {
       return;
     }
 

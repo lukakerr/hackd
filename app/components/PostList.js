@@ -43,6 +43,16 @@ export default class Posts extends React.Component {
       previewCommit: true,
       previewHeight: 400,
       previewView: this.previewRefs[post.id.toString()],
+      previewActions: [{
+        id: 'action-cancel',
+        title: 'Cancel'
+      }, {
+        id: 'action-upvote',
+        title: 'Upvote',
+      }, {
+        id: 'action-save',
+        title: 'Save',
+      }]
     });
   };
 

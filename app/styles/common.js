@@ -31,4 +31,22 @@ export default StyleSheet.create({
   backgroundWhite: {
     backgroundColor: '#FFF',
   },
+  cell: {
+    flexDirection: 'row',
+    height: 44,
+    paddingLeft: 15,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cellText: {
+    fontSize: 17,
+  },
+  cellValue: {
+    fontSize: 17, 
+    marginRight: 16,
+    color: '#8E8E93',
+  },
+  cellSwitch: {
+    marginRight: 16,
+  },
 });

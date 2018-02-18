@@ -32,10 +32,6 @@ function registerScreens(store, Provider) {
   Navigation.registerComponent('hackd.AppColors', () => AppColors, store, Provider);
 }
 
-const navigatorStyle = {
-  screenBackgroundColor: '#F2F3F6',
-};
-
 const hackd = [
   {
     label: 'Feed',
@@ -43,7 +39,6 @@ const hackd = [
     icon: require('../img/feed.png'),
     selectedIcon: require('../img/feed.png'),
     title: 'Feed',
-    navigatorStyle,
   },
   {
     label: 'Account',
@@ -51,7 +46,6 @@ const hackd = [
     icon: require('../img/account.png'),
     selectedIcon: require('../img/account.png'),
     title: 'Account',
-    navigatorStyle,
   },
   {
     label: 'Submit',
@@ -59,7 +53,6 @@ const hackd = [
     icon: require('../img/submit.png'),
     selectedIcon: require('../img/submit.png'),
     title: 'Submit',
-    navigatorStyle,
   },
   {
     label: 'Search',
@@ -67,7 +60,6 @@ const hackd = [
     icon: require('../img/search.png'),
     selectedIcon: require('../img/search.png'),
     title: 'Search',
-    navigatorStyle,
   },
   {
     label: 'Settings',
@@ -75,7 +67,6 @@ const hackd = [
     icon: require('../img/settings.png'),
     selectedIcon: require('../img/settings.png'),
     title: 'Settings',
-    navigatorStyle,
   },
 ];
 

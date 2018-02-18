@@ -11,7 +11,7 @@ import CustomText from '../CustomText';
 import commonStyles from '../../styles/common';
 import { 
   getComments,
-  toggleComments
+  toggleComments,
 } from '../../helpers/api';
 
 export default class AllComments extends React.Component {

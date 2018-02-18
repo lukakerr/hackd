@@ -16,7 +16,7 @@ import { ActionCreators } from '../../actions';
 import { getUser } from '../../helpers/api';
 import CustomText from '../../components/CustomText';
 
-const { Section, Item } = TableView;
+const { Section, Cell } = TableView;
 
 TimeAgo.locale(en);
 const timeAgo = new TimeAgo('en-US');
@@ -95,31 +95,30 @@ class AccountDetails extends React.Component {
           </View>
         }
 
-        <TableView 
-          textColor='black'
-          style={[styles.tableFlex, { height: 185 }]}
-          tableViewStyle={TableView.Consts.Style.Grouped} 
-          tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-          <Section label='Account Details'>
-            <Item detail={this.state.username}>
-              Username
-            </Item>
-            <Item 
-              accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator} 
-              onPress={() => this.navigateToSaved()}>
-              Saved
-            </Item>
-          </Section>
-        </TableView>
-
-        <TableView 
-          textColor='red'
-          style={[styles.tableFlex, { height: 185 }]}
-          tableViewStyle={TableView.Consts.Style.Grouped}>
-          <Section>
-            <Item onPress={() => this.props.logOut()}>Logout</Item>
-          </Section>
-        </TableView>
+        <View style={commonStyles.flex}>
+          <TableView 
+            style={commonStyles.flex}
+            tableViewStyle={TableView.Consts.Style.Grouped} 
+            tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
+            <Section label='Account Details'>
+              <Cell style={commonStyles.cell}>
+                <CustomText style={commonStyles.cellText}>Username</CustomText>
+                <CustomText style={commonStyles.cellValue}>{this.state.username}</CustomText>
+              </Cell>
+              <Cell 
+                style={commonStyles.cell} 
+                accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
+                onPress={() => this.navigateToSaved()}>
+                <CustomText style={commonStyles.cellText}>Saved</CustomText>
+              </Cell>
+            </Section>
+            <Section>
+              <Cell style={commonStyles.cell} onPress={() => this.props.logOut()}>
+                <CustomText style={[commonStyles.cellText, styles.logout]}>Logout</CustomText>
+              </Cell>
+            </Section>
+          </TableView>
+        </View>
       </View>
     );
   }
@@ -145,7 +144,10 @@ const styles = StyleSheet.create({
   },
   tableFlex: {
     flex: 0, 
-  }
+  },
+  logout: {
+    color: 'red',
+  },
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);

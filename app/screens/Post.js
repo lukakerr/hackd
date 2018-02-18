@@ -30,13 +30,25 @@ class Post extends React.Component {
     super(props);
     this.state = {
       post: null,
+      doUpvote: false,
     };
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   componentWillMount() {
     this.setState({
       post: this.props.post,
     });
+  }
+
+  onNavigatorEvent(event) {
+    if (event.type === 'PreviewActionPress') {
+      if (event.id === 'action-upvote') {
+        this.setState({
+          doUpvote: true,
+        });
+      }
+    }
   }
 
   openUrl = (url) => {
@@ -94,6 +106,7 @@ class Post extends React.Component {
             <View style={styles.postInfoAction}>
               <View style={styles.postInfoActionText}>
                 <Actions
+                  doUpvote={this.state.doUpvote}
                   item={this.state.post}
                 />
               </View>

@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   Switch,
+  ActionSheetIOS,
 } from 'react-native';
 import TableView from 'react-native-tableview';
 
@@ -16,8 +17,9 @@ import { ActionCreators } from '../actions';
 import CustomText from '../components/CustomText';
 
 import { getUser } from '../helpers/api';
+import { capitalize } from '../helpers/utils';
 
-const { Section, Item, Cell } = TableView;
+const { Section, Cell } = TableView;
 
 class Settings extends React.Component {
   constructor(props) {
@@ -52,44 +54,61 @@ class Settings extends React.Component {
     );
   };
 
+  multiChange = (key, options, title) => {
+    ActionSheetIOS.showActionSheetWithOptions({
+      title,
+      options,
+      tintColor: this.props.settings.appColor,
+      cancelButtonIndex: 0,
+    }, (buttonIndex) => {
+      const selectedAction = options[buttonIndex].toLowerCase();
+
+      if (buttonIndex !== 0) {
+        this.props.changeSetting(
+          key,
+          selectedAction,
+        );
+      }
+    });
+  };
+
   render() {
     return (
       <View style={commonStyles.flex}>
         <TableView 
           style={commonStyles.flex}
-          textColor='black'
           tableViewStyle={TableView.Consts.Style.Grouped} 
           tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
           <Section label='Comments'>
-            <Cell style={styles.cell}>
-              <CustomText style={{fontSize: 17}}>Tap to collapse</CustomText>
+            <Cell style={commonStyles.cell}>
+              <CustomText style={commonStyles.cellText}>Tap to collapse</CustomText>
               <Switch
-                style={{marginRight: 16}}
+                style={commonStyles.cellSwitch}
                 value={this.props.settings.tapToCollapse}
                 onValueChange={() => this.booleanChanged('tapToCollapse', this.props.settings.tapToCollapse)} />
             </Cell>
             <Cell 
-              style={styles.cell} 
+              style={commonStyles.cell} 
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
               onPress={() => this.navigateToCommentThemes()}>
-              <CustomText style={{fontSize: 17}}>Comment themes</CustomText>
+              <CustomText style={commonStyles.cellText}>Comment themes</CustomText>
             </Cell>
           </Section>
           <Section label='Posts'>
-            <Cell style={styles.cell}>
-              <CustomText style={{fontSize: 17}}>Use Safari Reader Mode</CustomText>
+            <Cell style={commonStyles.cell}>
+              <CustomText style={commonStyles.cellText}>Use Safari Reader Mode</CustomText>
               <Switch
-                style={{marginRight: 16}}
+                style={commonStyles.cellSwitch}
                 value={this.props.settings.useSafariReaderMode}
                 onValueChange={() => this.booleanChanged('useSafariReaderMode', this.props.settings.useSafariReaderMode)} />
             </Cell>
           </Section>
           <Section label='Navigator (requires relaunch)'>
             <Cell 
-              style={styles.cell} 
+              style={commonStyles.cell} 
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
               onPress={() => this.navigateToAppColors()}>
-              <CustomText style={{fontSize: 17}}>Navigator themes</CustomText>
+              <CustomText style={commonStyles.cellText}>Navigator themes</CustomText>
             </Cell>
           </Section>
         </TableView>
@@ -97,16 +116,6 @@ class Settings extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  cell: {
-    flexDirection: 'row',
-    height: 44,
-    paddingLeft: 15,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-});
 
 const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
