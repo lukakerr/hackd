@@ -22,7 +22,6 @@ export default class Posts extends React.Component {
     this.state = {
       isSwiping: false,
     };
-    this.activated = false;
   }
 
   showPost = (post) => {
