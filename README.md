@@ -87,7 +87,7 @@ I've tried to add and support as many native API's as possible such as haptic fe
 
 <p align="center">
   <img src="https://i.imgur.com/h7b8sfc.png" width="275" alt="hackd1">
-  <img src="https://i.imgur.com/FE1Q6iR.png" width="275" alt="hackd2">
+  <img src="https://i.imgur.com/w0WAiUJ.png" width="275" alt="hackd2">
   <img src="https://i.imgur.com/ktXZzcT.png" width="275" alt="hackd3">
 </p>
 
