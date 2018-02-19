@@ -3,6 +3,7 @@
   "base": "https://news.ycombinator.com",
   "colors": {
     "orange": "#EE6F2D",
+    "green": "#4CA748",
     "gray": "#EFEFEF",
     "lightGray": "#FEFEFE",
     "mediumGray": "#FAFAFA",

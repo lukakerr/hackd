@@ -29,16 +29,9 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      post: null,
       doUpvote: false,
     };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-  }
-
-  componentWillMount() {
-    this.setState({
-      post: this.props.post,
-    });
   }
 
   onNavigatorEvent(event) {
@@ -64,12 +57,12 @@ class Post extends React.Component {
       <ScrollView style={styles.postContainer}>
         <View>
           <View style={styles.headerContainer}>
-            <CustomText style={styles.header}>{this.state.post.title}</CustomText>
+            <CustomText style={styles.header}>{this.props.post.title}</CustomText>
           </View>
-          {this.state.post.url && 
-            <TouchableOpacity onPress={() => this.openUrl(this.state.post.url)} activeOpacity={0.8}>
+          {this.props.post.url && 
+            <TouchableOpacity onPress={() => this.openUrl(this.props.post.url)} activeOpacity={0.8}>
               <View style={styles.subHeaderContainer}>
-                <CustomText style={styles.subHeader}>{truncate(this.state.post.url, 35)}</CustomText>
+                <CustomText style={styles.subHeader}>{truncate(this.props.post.url, 35)}</CustomText>
                 <View style={styles.rightArrowContainer}>
                   <Image
                     style={styles.rightArrow}
@@ -79,9 +72,9 @@ class Post extends React.Component {
               </View>
             </TouchableOpacity>
           }
-          {this.state.post.text && 
+          {this.props.post.text && 
             <HTMLView
-              value={`<body>${this.state.post.text}</body>`}
+              value={`<body>${this.props.post.text}</body>`}
               stylesheet={htmlStyles}
               onLinkPress={(url) => this.openUrl(url)}
             />
@@ -91,23 +84,23 @@ class Post extends React.Component {
         <View style={styles.postInfo}>
           <View style={styles.postInfoDetails}>
             <User
-              by={this.state.post.by}
+              by={this.props.post.by}
               style={{opacity: 0.6}}
             />
             <Score
-              score={this.state.post.score}
+              score={this.props.post.score}
             />
             <Comments
-              count={this.state.post.descendants}
+              count={this.props.post.descendants}
             />
             <Time
-              time={this.state.post.time}
+              time={this.props.post.time}
             />
             <View style={styles.postInfoAction}>
               <View style={styles.postInfoActionText}>
                 <Actions
                   doUpvote={this.state.doUpvote}
-                  item={this.state.post}
+                  item={this.props.post}
                 />
               </View>
             </View>
@@ -116,7 +109,7 @@ class Post extends React.Component {
 
         <View>
           <AllComments 
-            post={this.state.post} 
+            post={this.props.post} 
             settings={this.props.settings}
           />
         </View>
