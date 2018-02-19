@@ -6,7 +6,7 @@ Currently a work in progress.
 
 ### Features
 
-Features that aren't checked below are yet to be implemented. If you want to implement them, please create a pull request! 
+Features that aren't checked below are yet to be implemented. If you want to implement them, please create a pull request!
 
 ##### Main
 
@@ -41,6 +41,7 @@ Features that aren't checked below are yet to be implemented. If you want to imp
 - [x] Haptic feedback for common actions
 - [x] 3D touch actions and preview (peek and pop)<sup><a href="#1">1</a></sup>
 - [x] Themable app colors (i.e. comments, navigation, buttons, tabbar)
+- [x] Swipe horizontally to upvote or save
 - [x] Infinite scroll
 
 ### Run Locally
@@ -87,12 +88,12 @@ I've tried to add and support as many native API's as possible such as haptic fe
 <p align="center">
   <img src="https://i.imgur.com/h7b8sfc.png" width="275" alt="hackd1">
   <img src="https://i.imgur.com/FE1Q6iR.png" width="275" alt="hackd2">
-  <img src="https://i.imgur.com/Tv2CsZi.png" width="275" alt="hackd3">
+  <img src="https://i.imgur.com/ktXZzcT.png" width="275" alt="hackd3">
 </p>
 
 <p align="center">
-  <img src="https://i.imgur.com/D1WmGOG.png" width="275" alt="hackd4">
-  <img src="https://i.imgur.com/fGB4Hd7.png" width="275" alt="hackd5">
+	<img src="https://i.imgur.com/A7CXz6f.png" width="275" alt="hackd4">
+  <img src="https://i.imgur.com/np0pc3S.png" width="275" alt="hackd5">
   <img src="https://i.imgur.com/w1ZSiOR.png" width="275" alt="hackd6">
 </p>
 

@@ -7,7 +7,7 @@ import {
 
 import CustomText from '../CustomText';
 
-export default class Comments extends React.Component {
+export default class Comments extends React.PureComponent {
   constructor(props) {
     super(props);
   }

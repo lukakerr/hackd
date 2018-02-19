@@ -24,11 +24,11 @@ class AppColors extends React.Component {
   }
 
   appColorThemeChanged = (color) => {
+    ReactNativeHaptic.generate('selection')
     this.props.changeSetting(
       'appColor',
       color
     );
-    ReactNativeHaptic.generate('selection')
   };
 
   render() {

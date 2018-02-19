@@ -4,7 +4,7 @@ import {
   Image,
 } from 'react-native';
 
-export default class SwipeContent extends React.Component {
+export default class SwipeContent extends React.PureComponent {
   constructor(props) {
     super(props);
   }

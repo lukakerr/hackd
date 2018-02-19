@@ -11,7 +11,10 @@ import Swipeable from 'react-native-swipeable';
 import ReactNativeHaptic from 'react-native-haptic';
 
 import config from '../config/default';
-import { truncate } from '../helpers/utils';
+import { 
+  truncate, 
+  validateUserLoggedIn 
+} from '../helpers/utils';
 import ListItem from './ListItem';
 import SwipeContent from './PostItem/SwipeContent';
 
@@ -22,12 +25,15 @@ export default class Posts extends React.Component {
     this.state = {
       isSwiping: false,
     };
+    this.doUpvote = this.doUpvote.bind(this);
+    this.doSave = this.doSave.bind(this);
   }
 
   showPost = (post) => {
     const title = post.descendants > -1 
       ? `${post.descendants} comments` 
       : truncate(post.title, 20);
+      
     this.props.navigator.push({
       screen: 'hackd.Post',
       title,
@@ -38,9 +44,14 @@ export default class Posts extends React.Component {
   };
 
   showPostPreview = (post) => {
+    if (this.state.isSwiping) {
+      return;
+    };
+
     const title = post.descendants > -1 
       ? `${post.descendants} comments` 
       : truncate(post.title, 20);
+
     this.props.navigator.push({
       screen: 'hackd.Post',
       title,
@@ -77,6 +88,28 @@ export default class Posts extends React.Component {
     );
   };
 
+  renderRightSwipeContent = () => {
+    return (
+      <SwipeContent
+        backgroundColor={config.colors.orange}
+        alignment={'right'}
+        image={require('../img/arrow.png')}
+        size={36}
+      />
+    );
+  };
+
+  renderLeftSwipeContent = () => {
+    return (
+      <SwipeContent
+        backgroundColor={config.colors.green}
+        alignment={'left'}
+        image={require('../img/save.png')}
+        size={32}
+      />
+    );
+  };
+
   onRefresh = () => {
     this.props.onRefresh();
   };
@@ -92,11 +125,17 @@ export default class Posts extends React.Component {
   };
 
   doUpvote = (id) => {
-    
+    if (!validateUserLoggedIn(this.props.user.loggedIn, 'upvote')) {
+      return;
+    }
+    this.props.upvotePost(id);
   };
 
   doSave = (id) => {
-    
+    if (!validateUserLoggedIn(this.props.user.loggedIn, 'save')) {
+      return;
+    }
+    this.props.savePost(id);
   };
 
   render() {
@@ -126,22 +165,8 @@ export default class Posts extends React.Component {
           onEndReachedThreshold={0.5}
           renderItem={({ item }) => (
             <Swipeable 
-              rightContent={(
-                <SwipeContent
-                  backgroundColor={config.colors.orange}
-                  alignment={'right'}
-                  image={require('../img/arrow.png')}
-                  size={36}
-                />
-              )}
-              leftContent={(
-                <SwipeContent
-                  backgroundColor={config.colors.green}
-                  alignment={'left'}
-                  image={require('../img/save.png')}
-                  size={32}
-                />
-              )} 
+              rightContent={this.renderRightSwipeContent()}
+              leftContent={this.renderLeftSwipeContent()} 
               rightActionActivationDistance={150}
               leftActionActivationDistance={150}
               onRightActionActivate={() => this.setActivated(true)}

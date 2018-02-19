@@ -15,6 +15,9 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
 import config from '../../config/default';
+import { 
+  validateUserLoggedIn 
+} from '../../helpers/utils';
 import { upvote } from '../../helpers/api';
 
 import CustomText from '../CustomText';
@@ -80,17 +83,18 @@ class Actions extends React.Component {
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
       const selectedAction = OPTIONS[buttonIndex].toLowerCase();
+      const { loggedIn } = this.props.user;
 
       // If 'Cancel' not pressed
       if (buttonIndex !== 0) {
         if (buttonIndex === 1) {
-          if (!this.validateUserLoggedIn('reply')) {
+          if (!validateUserLoggedIn(loggedIn, 'reply')) {
             return;
           }
         } else if (buttonIndex === 2) {
           this.share();
         } else if (buttonIndex === 3) {
-          if (!this.validateUserLoggedIn('save')) {
+          if (!validateUserLoggedIn(loggedIn, 'save')) {
             return;
           }
           this.save();
@@ -99,50 +103,12 @@ class Actions extends React.Component {
     });
   };
 
-  showAlert = (title, message) => {
-    AlertIOS.alert(
-      title,
-      message
-    );
-  };
-
-  validateUserLoggedIn = (action) => {
-    if (!this.props.user.loggedIn) {
-      this.showAlert(
-        `Cannot ${action}`,
-        'Please login and try again.'
-      );
-      return false;
-    }
-    return true;
-  };
-
   upvote = () => {
-    const id = this.props.item.id;
-    if (!this.validateUserLoggedIn('upvote') || this.state.upvoted) {
+    if (!validateUserLoggedIn(this.props.user.loggedIn, 'upvote')) {
       return;
     }
-
-    this.setState({
-      upvoted: true,
-    });
-
-    this.props.addIdToUserAccount(id, 'upvoted');
-
     ReactNativeHaptic.generate('impact')
-    
-    upvote(id).then(upvoted => {
-      if (!upvoted) {
-        this.props.removeIdFromUserAccount(id, 'upvoted');
-        this.setState({
-          upvoted: false,
-        });
-        this.showAlert(
-          'Cannot upvote',
-          'There was an error, please try again later.'
-        );
-      }
-    });
+    this.props.upvotePost(this.props.item.id);
   };
 
   share = () => {
@@ -155,7 +121,7 @@ class Actions extends React.Component {
 
   save = () => {
     ReactNativeHaptic.generate('impact')
-    this.props.addIdToUserAccount(this.props.item.id, 'saved');
+    this.props.savePost(this.props.item.id);
   };
 
   render() {

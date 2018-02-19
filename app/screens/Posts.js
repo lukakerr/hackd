@@ -26,6 +26,8 @@ class Posts extends React.Component {
       loadingMorePosts: false,
     };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.upvotePost = this.upvotePost.bind(this);
+    this.savePost = this.savePost.bind(this);
   }
 
   static navigatorButtons = {
@@ -138,6 +140,14 @@ class Posts extends React.Component {
     });
   };
 
+  upvotePost = (id) => {
+    this.props.upvotePost(id);
+  };
+
+  savePost = (id) => {
+    this.props.savePost(id);
+  };
+
   render() {
     return (
       <PostList
@@ -146,8 +156,11 @@ class Posts extends React.Component {
         loadingMore={this.state.loadingMorePosts}
         navigator={this.props.navigator}
         refreshing={this.state.refreshing}
+        user={this.props.user}
         onRefresh={() => this.handleRefresh()}
         onEndReached={() => this.handleEndReached()}
+        upvotePost={this.upvotePost}
+        savePost={this.savePost}
       />
     )
   }
@@ -160,6 +173,7 @@ const mapStateToProps = state => ({
   posts: state.posts,
   isLoadingPosts: state.isLoadingPosts,
   settings: state.settings,
+  user: state.user,
 });
 
 export default connect(

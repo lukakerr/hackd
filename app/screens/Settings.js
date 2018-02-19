@@ -25,18 +25,11 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  navigateToCommentThemes = () => {
+  
+  navigateTo = (screen, title) => {
     this.props.navigator.push({
-      screen: 'hackd.CommentThemes',
-      title: 'Comment Themes',
-    });
-  };
-
-  navigateToAppColors = () => {
-    this.props.navigator.push({
-      screen: 'hackd.AppColors',
-      title: 'Navigator Themes',
+      screen,
+      title,
     });
   };
 
@@ -90,7 +83,7 @@ class Settings extends React.Component {
             <Cell 
               style={commonStyles.cell} 
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() => this.navigateToCommentThemes()}>
+              onPress={() => this.navigateTo('hackd.CommentThemes', 'Comment Themes')}>
               <CustomText style={commonStyles.cellText}>Comment themes</CustomText>
             </Cell>
           </Section>
@@ -107,7 +100,7 @@ class Settings extends React.Component {
             <Cell 
               style={commonStyles.cell} 
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() => this.navigateToAppColors()}>
+              onPress={() => this.navigateTo('hackd.AppColors', 'Navigator Themes')}>
               <CustomText style={commonStyles.cellText}>Navigator themes</CustomText>
             </Cell>
           </Section>

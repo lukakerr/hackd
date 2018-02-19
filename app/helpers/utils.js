@@ -1,3 +1,18 @@
+import {
+  AlertIOS,
+} from 'react-native';
+
+const validateUserLoggedIn = (user, action) => {
+  if (!user) {
+    AlertIOS.alert(
+      `Cannot ${action}`,
+      'Please login and try again.',
+    );
+    return false;
+  }
+  return true;
+};
+
 /**
  * Capitalize a string
  * @param  {String} str The string to capitalize
@@ -95,6 +110,7 @@ const removeFromUserAccount = (accounts, user, id, type) => {
 };
 
 export {
+  validateUserLoggedIn,
   capitalize,
   truncate,
   addToUserAccount,

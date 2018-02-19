@@ -6,7 +6,7 @@ import {
 
 import CustomText from '../CustomText';
 
-export default class User extends React.Component {
+export default class User extends React.PureComponent {
   constructor(props) {
     super(props);
   }

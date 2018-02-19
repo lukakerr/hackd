@@ -12,7 +12,7 @@ import CustomText from '../CustomText';
 TimeAgo.locale(en);
 const timeAgo = new TimeAgo('en-US');
 
-export default class Time extends React.Component {
+export default class Time extends React.PureComponent {
   constructor(props) {
     super(props);
   }

@@ -7,7 +7,7 @@ import {
 
 import CustomText from '../CustomText';
 
-export default class Score extends React.Component {
+export default class Score extends React.PureComponent {
   constructor(props) {
     super(props);
   }

@@ -3,7 +3,7 @@ import {
   addToUserAccount, 
   removeFromUserAccount 
 } from '../helpers/utils';
-import { logout } from '../helpers/api';
+import { logout, upvote, } from '../helpers/api';
 
 const setUser = user => {
   return {
@@ -34,6 +34,26 @@ export const removeIdFromUserAccount = (id, type) => {
 
     const newAccounts = removeFromUserAccount(accounts, user, id, type);
     dispatch(setUserDetails(newAccounts));
+  };
+};
+
+export const upvotePost = (id) => {
+  return (dispatch, getState) => {
+
+    // Add upvote initially for immediate feedback
+    dispatch(addIdToUserAccount(id, 'upvoted'));
+    
+    upvote(id).then(upvoted => {
+      if (!upvoted) {
+        dispatch(removeIdFromUserAccount(id, 'upvoted'));
+      }
+    });
+  };
+};
+
+export const savePost = (id) => {
+  return (dispatch, getState) => {
+    dispatch(addIdToUserAccount(id, 'saved'));
   };
 };
 
