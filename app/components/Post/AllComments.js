@@ -21,6 +21,7 @@ export default class AllComments extends React.Component {
       comments: null,
       error: null,
       loading: true,
+      loadingMoreComments: false,
       refreshComments: false,
     };
     this.toggle = this.toggle.bind(this);
@@ -43,28 +44,54 @@ export default class AllComments extends React.Component {
 
   fetchComments = () => {
     const { kids } = this.props.post;
-    if (kids) {
-      getComments(kids)
-        .then(comments => {
-          if (this._mounted) {
-            this.setState({
-              comments,
-              loading: false,
-            });
-          }
-        })
-        .catch(error => {
-          if (this._mounted) {
-            this.setState({
-              error,
-            });
-          }
-        });
-    } else {
+
+    if (!kids) {
       this.setState({
         comments: [],
         loading: false,
-      })
+      });
+      return;
+    }
+
+    for (let i = 0, p = Promise.resolve(); i < kids.length; i++) {
+      p = p.then(_ => new Promise(resolve => {
+
+        // Get replies for current top level comment
+        getComments([kids[i]])
+          .then(comments => {
+            let newComments = this.state.comments || [];
+            newComments.push(...comments)
+
+            let loadingMoreComments = true;
+
+            // Last comment finished loading
+            if (i == kids.length - 1) {
+              loadingMoreComments = false;
+            }
+
+            if (this._mounted) {
+              this.setState({
+                comments: newComments,
+                loading: false,
+                loadingMoreComments,
+              }, () => {
+                resolve();
+              });
+            } else {
+              resolve();
+            }
+          })
+          .catch(error => {
+            if (this._mounted) {
+              this.setState({
+                error,
+                loading: false,
+              }, () => {
+                resolve();
+              });
+            }
+          });
+      }));
     }
   };
 
@@ -94,8 +121,7 @@ export default class AllComments extends React.Component {
       <View style={styles.allComments}>
         <FlatList
           data={this.state.comments}
-          extraData={this.state.refreshComments}
-          keyboardShouldPersistTaps='always'
+          extraData={[this.state.refreshComments, this.state.comments]}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <Comment 
@@ -110,6 +136,11 @@ export default class AllComments extends React.Component {
             />
           )}
         />
+        {this.state.loadingMoreComments &&
+          <View style={styles.loading}>
+            <ActivityIndicator />
+          </View>
+        }
       </View>
     );
   }

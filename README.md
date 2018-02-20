@@ -46,12 +46,10 @@ Features that aren't checked below are yet to be implemented. If you want to imp
 
 ### TODO
 
-- [ ] Add features not checked above
-- [ ] Fix and improve comment fetching. 
-	- Comments are fetched recursively due to Hacker News's API design, then flattened into an array where each reply is the next item in the array. This isn't a good solution for two reasons: 
-		1. The user has to wait for all the comments to be loaded before they can see any (`Promise.all()`).
-		2. If a component unmounts (the user goes back to the feed), all the comments still get fetched, causing the JS thread to drop frames.
-	- To fix this comments and comment replies should be fetched individually, appended to an array and the component will re render with the new comment added. If the component unmounts, simply stop fetching comments. The user will also be able to view comments almost immediately while others load.
+- [ ] Add features not implemented above
+- [x] Fix and improve comment fetching. 
+	- Comments are fetched recursively due to Hacker News's API design, then flattened into an array where each reply is the next item in the array. This isn't a good solution beacuse the user has to wait for all the comments to be loaded before they can see any (`Promise.all()`).
+	- To fix this, each top comment and its replies should be fetched individually, appended to an array and the component will re render with the new comment added. The user will also be able to view comments almost immediately while others load.
 - [ ] Add caching for comments (older than 10 minutes), and posts. If post/comment requested again, check if in cache, if so load from cache.
 
 ### Run Locally
