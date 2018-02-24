@@ -6,6 +6,7 @@
     "start": "react-native run-ios",
     "start:x": "react-native run-ios --simulator='iPhone X'",
     "link": "react-native link",
+    "prettier" : "prettier --write \"**/*.js\"",
     "test": "jest"
   },
   "dependencies": {
