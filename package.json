@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "cheerio-without-node-native": "^0.20.2",
+    "global": "^4.3.2",
+    "ios-deploy": "^1.9.2",
     "javascript-time-ago": "^1.0.28",
     "react": "16.2.0",
     "react-native": "^0.53.0",

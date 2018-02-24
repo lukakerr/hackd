@@ -8,12 +8,12 @@ import config from '../config/default';
  * @return {Promise}       Returns a promise
  */
 
-const searchPost = (options = defaultSearchOptions, query='') => {
+const searchPost = (options = {}, query='') => {
 
   const searchOptions = {
-    sortByDate: false || options.sortByDate,
-    pageNumber: 1 || options.pageNumber,
-    tags: 'story' || options.tag,
+    sortByDate: options.sortByDate || false,
+    pageNumber: options.pageNumber || 1,
+    tags: options.tag || 'story',
   };
 
   const hitsPerPage = '&hitsPerPage=25';
@@ -24,7 +24,7 @@ const searchPost = (options = defaultSearchOptions, query='') => {
   const queryParameter = `query=${query}`;
   const tagParameter = `&tags=${searchOptions.tags}`
 
-  const searchUrl = `${config.apiSearch}${dateParameter}?${queryParameter}${hitsPerPage}${tagParameter}`;
+  const searchUrl = `${config.search}${dateParameter}?${queryParameter}${hitsPerPage}${tagParameter}`;
 
   return fetch(searchUrl)
     .then(response => response.json())
