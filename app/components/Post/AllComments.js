@@ -1,18 +1,10 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 
 import Comment from './Comment';
 import CustomText from '../CustomText';
 import commonStyles from '../../styles/common';
-import { 
-  getComments,
-  toggleComments,
-} from '../../helpers/api';
+import { getComments, toggleComments } from '../../helpers/api';
 
 export default class AllComments extends React.Component {
   constructor(props) {
@@ -54,52 +46,60 @@ export default class AllComments extends React.Component {
     }
 
     for (let i = 0, p = Promise.resolve(); i < kids.length; i++) {
-      p = p.then(_ => new Promise(resolve => {
+      p = p.then(
+        _ =>
+          new Promise(resolve => {
+            // Get replies for current top level comment
+            getComments([kids[i]])
+              .then(comments => {
+                let newComments = this.state.comments || [];
+                newComments.push(...comments);
 
-        // Get replies for current top level comment
-        getComments([kids[i]])
-          .then(comments => {
-            let newComments = this.state.comments || [];
-            newComments.push(...comments)
+                let loadingMoreComments = true;
 
-            let loadingMoreComments = true;
+                // Last comment finished loading
+                if (i == kids.length - 1) {
+                  loadingMoreComments = false;
+                }
 
-            // Last comment finished loading
-            if (i == kids.length - 1) {
-              loadingMoreComments = false;
-            }
-
-            if (this._mounted) {
-              this.setState({
-                comments: newComments,
-                loading: false,
-                loadingMoreComments,
-              }, () => {
-                resolve();
+                if (this._mounted) {
+                  this.setState(
+                    {
+                      comments: newComments,
+                      loading: false,
+                      loadingMoreComments,
+                    },
+                    () => {
+                      resolve();
+                    },
+                  );
+                } else {
+                  resolve();
+                }
+              })
+              .catch(error => {
+                if (this._mounted) {
+                  this.setState(
+                    {
+                      error,
+                      loading: false,
+                    },
+                    () => {
+                      resolve();
+                    },
+                  );
+                }
               });
-            } else {
-              resolve();
-            }
-          })
-          .catch(error => {
-            if (this._mounted) {
-              this.setState({
-                error,
-                loading: false,
-              }, () => {
-                resolve();
-              });
-            }
-          });
-      }));
+          }),
+      );
     }
   };
 
   toggle = (id, level) => {
     if (!this.props.settings.tapToCollapse) {
       return;
-    };
-    
+    }
+
     let { comments } = this.state;
     comments = toggleComments(comments, id, level);
 
@@ -124,7 +124,7 @@ export default class AllComments extends React.Component {
           extraData={[this.state.refreshComments, this.state.comments]}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <Comment 
+            <Comment
               id={item.id}
               level={parseInt(item.level)}
               content={item.text}
@@ -136,11 +136,11 @@ export default class AllComments extends React.Component {
             />
           )}
         />
-        {this.state.loadingMoreComments &&
+        {this.state.loadingMoreComments && (
           <View style={styles.loading}>
             <ActivityIndicator />
           </View>
-        }
+        )}
       </View>
     );
   }

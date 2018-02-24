@@ -29,7 +29,7 @@ class Comment extends React.Component {
     super(props);
     this.state = {
       upvoted: false,
-    }
+    };
     this.toggle = this.toggle.bind(this);
   }
 
@@ -40,10 +40,10 @@ class Comment extends React.Component {
   }
 
   openUrl = url => {
-    const readerMode = this.props.settings.useSafariReaderMode
+    const readerMode = this.props.settings.useSafariReaderMode;
     SafariView.show({
       url,
-      readerMode
+      readerMode,
     });
   };
 
@@ -55,13 +55,17 @@ class Comment extends React.Component {
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
         if (this.props.accounts[this.props.user.username].upvotedComments) {
-          if (this.props.accounts[this.props.user.username].upvotedComments.indexOf(this.props.id) !== -1) {
+          if (
+            this.props.accounts[
+              this.props.user.username
+            ].upvotedComments.indexOf(this.props.id) !== -1
+          ) {
             return true;
           }
         }
       }
     }
-    
+
     return false;
   };
 
@@ -84,10 +88,10 @@ class Comment extends React.Component {
       this.props.addIdToUserAccount(id, 'upvotedComments');
       this.upvoteComment(id);
     }
-    ReactNativeHaptic.generate('impact')
+    ReactNativeHaptic.generate('impact');
   };
 
-  unvoteComment = (id) => {
+  unvoteComment = id => {
     unvote(id).then(unvoted => {
       if (!unvoted) {
         this.props.addIdToUserAccount(id, 'upvotedComments');
@@ -96,13 +100,13 @@ class Comment extends React.Component {
         });
         AlertIOS.alert(
           'Cannot unvote',
-          'There was an error, please try again later.'
+          'There was an error, please try again later.',
         );
       }
     });
   };
 
-  upvoteComment = (id) => {
+  upvoteComment = id => {
     upvote(id).then(upvoted => {
       if (!upvoted) {
         this.props.removeIdFromUserAccount(id, 'upvotedComments');
@@ -111,7 +115,7 @@ class Comment extends React.Component {
         });
         AlertIOS.alert(
           'Cannot upvote',
-          'There was an error, please try again later.'
+          'There was an error, please try again later.',
         );
       }
     });
@@ -120,45 +124,68 @@ class Comment extends React.Component {
   render() {
     const isUpvoted = this.checkIfUpvoted();
     return (
-      <TouchableOpacity onPress={() => this.toggle(this.props.id, this.props.level)} activeOpacity={0.5}>
-        { !this.props.hidden && 
+      <TouchableOpacity
+        onPress={() => this.toggle(this.props.id, this.props.level)}
+        activeOpacity={0.5}
+      >
+        {!this.props.hidden && (
           <View style={styles.commentBox}>
-            <View style={[styles.commentContainer, { marginLeft: (12 * this.props.level) - 10, }]}>
-              <View style={[styles.comment, { 
-                borderLeftWidth: this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
-                borderLeftColor: this.props.level > 0 
-                                 ? config.commentThemes[this.props.settings.commentTheme][this.props.level - 1 % NUM_COLORS] 
-                                 : 'transparent',
-              }]}>
+            <View
+              style={[
+                styles.commentContainer,
+                { marginLeft: 12 * this.props.level - 10 },
+              ]}
+            >
+              <View
+                style={[
+                  styles.comment,
+                  {
+                    borderLeftWidth:
+                      this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
+                    borderLeftColor:
+                      this.props.level > 0
+                        ? config.commentThemes[
+                            this.props.settings.commentTheme
+                          ][this.props.level - 1 % NUM_COLORS]
+                        : 'transparent',
+                  },
+                ]}
+              >
                 <View style={styles.commentInfo}>
                   <User by={this.props.author} style={styles.userName} />
                   <Time time={this.props.time} />
-                  {this.props.user.loggedIn && 
-                    <TouchableOpacity 
-                      onPress={this.upvote} 
-                      activeOpacity={0.8} 
-                      style={styles.iconArrowContainer}>
+                  {this.props.user.loggedIn && (
+                    <TouchableOpacity
+                      onPress={this.upvote}
+                      activeOpacity={0.8}
+                      style={styles.iconArrowContainer}
+                    >
                       <Image
-                        style={[styles.iconArrow, { 
-                          tintColor: isUpvoted ? config.colors.orange : 'black',
-                          opacity: isUpvoted ? 1 : 0.6,
-                        }]}
+                        style={[
+                          styles.iconArrow,
+                          {
+                            tintColor: isUpvoted
+                              ? config.colors.orange
+                              : 'black',
+                            opacity: isUpvoted ? 1 : 0.6,
+                          },
+                        ]}
                         source={require('../../img/arrow.png')}
                       />
                     </TouchableOpacity>
-                  }
+                  )}
                 </View>
-                {this.props.open && 
+                {this.props.open && (
                   <HTMLView
                     value={`<body>${this.props.content}</body>`}
                     stylesheet={htmlStyles}
-                    onLinkPress={(url) => this.openUrl(url)}
+                    onLinkPress={url => this.openUrl(url)}
                   />
-                }
+                )}
               </View>
             </View>
           </View>
-        }
+        )}
       </TouchableOpacity>
     );
   }
@@ -189,10 +216,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   iconArrowContainer: {
-    height: 20, 
+    height: 20,
     width: 20,
     marginTop: 1,
-    padding: 2,  
+    padding: 2,
     borderRadius: 5,
     marginLeft: 3,
   },
@@ -202,7 +229,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,
@@ -210,7 +238,4 @@ const mapStateToProps = state => ({
   accounts: state.accounts,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Comment);
+export default connect(mapStateToProps, mapDispatchToProps)(Comment);

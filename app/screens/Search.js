@@ -1,9 +1,6 @@
 import React from 'react';
 import commonStyles from '../styles/common';
-import {
-  Text,
-  View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 export default class Search extends React.Component {
   constructor(props) {

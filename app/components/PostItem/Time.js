@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -21,13 +17,12 @@ export default class Time extends React.PureComponent {
     return (
       <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            source={require('../../img/clock.png')}
-          />
+          <Image style={styles.icon} source={require('../../img/clock.png')} />
         </View>
         <CustomText>
-          {timeAgo.format(new Date(this.props.time * 1000), { flavour: 'tiny' })}
+          {timeAgo.format(new Date(this.props.time * 1000), {
+            flavour: 'tiny',
+          })}
         </CustomText>
       </CustomText>
     );

@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  SegmentedControlIOS,
-} from 'react-native';
+import { View, StyleSheet, SegmentedControlIOS } from 'react-native';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -32,16 +28,16 @@ class Submit extends React.Component {
     navBarNoBorder: true,
   };
 
-  handleTitle = (title) => {
-    this.setState({ title, error: null, });
+  handleTitle = title => {
+    this.setState({ title, error: null });
   };
 
-  handleUrl = (url) => {
-    this.setState({ url, error: null, });
+  handleUrl = url => {
+    this.setState({ url, error: null });
   };
 
-  handleText = (text) => {
-    this.setState({ text, error: null, });
+  handleText = text => {
+    this.setState({ text, error: null });
   };
 
   submitUrl = () => {
@@ -63,20 +59,21 @@ class Submit extends React.Component {
   render() {
     return (
       <View style={[commonStyles.flex, commonStyles.backgroundWhite]}>
-
         <View style={styles.segmentedControlContainer}>
           <SegmentedControlIOS
             style={styles.segmentedControl}
             tintColor={this.props.settings.appColor}
             values={['Link', 'Text']}
             selectedIndex={this.state.selectedIndex}
-            onChange={(event) => {
-              this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+            onChange={event => {
+              this.setState({
+                selectedIndex: event.nativeEvent.selectedSegmentIndex,
+              });
             }}
           />
         </View>
 
-        {this.state.selectedIndex === 0 && 
+        {this.state.selectedIndex === 0 && (
           <Form
             inputs={[
               { placeholder: 'Title', action: this.handleTitle },
@@ -84,28 +81,27 @@ class Submit extends React.Component {
             ]}
             submit={this.submitUrl}
             back={this.goToFeed}
-            backText='feed'
+            backText="feed"
             error={this.state.error}
             loading={this.state.loading}
             color={this.props.settings.appColor}
           />
-        }
+        )}
 
-        {this.state.selectedIndex === 1 && 
+        {this.state.selectedIndex === 1 && (
           <Form
             inputs={[
               { placeholder: 'Text', action: this.handleText, multiline: true },
             ]}
             submit={this.submitText}
             back={this.goToFeed}
-            backText='feed'
+            backText="feed"
             error={this.state.error}
             loading={this.state.loading}
             scroll={true}
             color={this.props.settings.appColor}
           />
-        }
-
+        )}
       </View>
     );
   }
@@ -125,13 +121,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Submit);
+export default connect(mapStateToProps, mapDispatchToProps)(Submit);

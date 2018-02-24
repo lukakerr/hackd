@@ -1,10 +1,6 @@
 import React from 'react';
 import commonStyles from '../../styles/common';
-import {
-  Text,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import TableView from 'react-native-tableview';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
@@ -30,7 +26,7 @@ class AccountDetails extends React.Component {
       karma: null,
       about: null,
       submitted: null,
-      userExists: false
+      userExists: false,
     };
   }
 
@@ -58,63 +54,84 @@ class AccountDetails extends React.Component {
   };
 
   navigateToSaved = () => {
-    const saved = this.props.accounts[this.props.user.username] 
+    const saved = this.props.accounts[this.props.user.username]
       ? this.props.accounts[this.props.user.username].saved
-      : []
+      : [];
 
     this.props.navigator.push({
       screen: 'hackd.Saved',
       title: 'Saved',
       passProps: {
         saved,
-      }
+      },
     });
   };
 
   render() {
     return (
       <View style={commonStyles.flex}>
-        {this.state.userExists &&
+        {this.state.userExists && (
           <View style={styles.gridContainer}>
             <View style={commonStyles.flex}>
-              <CustomText style={[styles.gridContent, styles.gridContentHeader]}>
+              <CustomText
+                style={[styles.gridContent, styles.gridContentHeader]}
+              >
                 {this.state.karma}
               </CustomText>
-              <CustomText style={[styles.gridContent, styles.gridContentSubtitle]}>
+              <CustomText
+                style={[styles.gridContent, styles.gridContentSubtitle]}
+              >
                 KARMA
               </CustomText>
             </View>
             <View style={commonStyles.flex}>
-              <CustomText style={[styles.gridContent, styles.gridContentHeader]}>
-                {timeAgo.format(new Date(this.state.created * 1000), { flavour: 'tiny' })}
+              <CustomText
+                style={[styles.gridContent, styles.gridContentHeader]}
+              >
+                {timeAgo.format(new Date(this.state.created * 1000), {
+                  flavour: 'tiny',
+                })}
               </CustomText>
-              <CustomText style={[styles.gridContent, styles.gridContentSubtitle]}>
+              <CustomText
+                style={[styles.gridContent, styles.gridContentSubtitle]}
+              >
                 AGE
               </CustomText>
             </View>
           </View>
-        }
+        )}
 
         <View style={commonStyles.flex}>
-          <TableView 
+          <TableView
             style={commonStyles.flex}
-            tableViewStyle={TableView.Consts.Style.Grouped} 
-            tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-            <Section label='Account Details'>
+            tableViewStyle={TableView.Consts.Style.Grouped}
+            tableViewCellStyle={TableView.Consts.CellStyle.Value1}
+          >
+            <Section label="Account Details">
               <Cell style={commonStyles.cell}>
                 <CustomText style={commonStyles.cellText}>Username</CustomText>
-                <CustomText style={commonStyles.cellValue}>{this.state.username}</CustomText>
+                <CustomText style={commonStyles.cellValue}>
+                  {this.state.username}
+                </CustomText>
               </Cell>
-              <Cell 
-                style={commonStyles.cell} 
-                accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-                onPress={() => this.navigateToSaved()}>
+              <Cell
+                style={commonStyles.cell}
+                accessoryType={
+                  TableView.Consts.AccessoryType.DisclosureIndicator
+                }
+                onPress={() => this.navigateToSaved()}
+              >
                 <CustomText style={commonStyles.cellText}>Saved</CustomText>
               </Cell>
             </Section>
             <Section>
-              <Cell style={commonStyles.cell} onPress={() => this.props.logOut()}>
-                <CustomText style={[commonStyles.cellText, styles.logout]}>Logout</CustomText>
+              <Cell
+                style={commonStyles.cell}
+                onPress={() => this.props.logOut()}
+              >
+                <CustomText style={[commonStyles.cellText, styles.logout]}>
+                  Logout
+                </CustomText>
               </Cell>
             </Section>
           </TableView>
@@ -143,21 +160,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   tableFlex: {
-    flex: 0, 
+    flex: 0,
   },
   logout: {
     color: 'red',
   },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,
   accounts: state.accounts,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AccountDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountDetails);

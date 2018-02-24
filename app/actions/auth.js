@@ -1,9 +1,6 @@
 import * as types from './types';
-import { 
-  addToUserAccount, 
-  removeFromUserAccount 
-} from '../helpers/utils';
-import { logout, upvote, } from '../helpers/api';
+import { addToUserAccount, removeFromUserAccount } from '../helpers/utils';
+import { logout, upvote } from '../helpers/api';
 
 const setUser = user => {
   return {
@@ -37,12 +34,11 @@ export const removeIdFromUserAccount = (id, type) => {
   };
 };
 
-export const upvotePost = (id) => {
+export const upvotePost = id => {
   return (dispatch, getState) => {
-
     // Add upvote initially for immediate feedback
     dispatch(addIdToUserAccount(id, 'upvoted'));
-    
+
     upvote(id).then(upvoted => {
       if (!upvoted) {
         dispatch(removeIdFromUserAccount(id, 'upvoted'));
@@ -51,7 +47,7 @@ export const upvotePost = (id) => {
   };
 };
 
-export const savePost = (id) => {
+export const savePost = id => {
   return (dispatch, getState) => {
     dispatch(addIdToUserAccount(id, 'saved'));
   };

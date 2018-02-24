@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import TableView from 'react-native-tableview';
 import ReactNativeHaptic from 'react-native-haptic';
 
@@ -23,34 +20,39 @@ class CommentThemes extends React.Component {
     super(props);
   }
 
-  commentThemeChanged = (theme) => {
-    ReactNativeHaptic.generate('selection')
-    this.props.changeSetting(
-      'commentTheme',
-      theme
-    );
+  commentThemeChanged = theme => {
+    ReactNativeHaptic.generate('selection');
+    this.props.changeSetting('commentTheme', theme);
   };
 
   render() {
-    const selectedTheme = this.props.settings.commentTheme
+    const selectedTheme = this.props.settings.commentTheme;
     return (
       <View style={commonStyles.flex}>
-        <TableView 
+        <TableView
           style={commonStyles.flex}
-          textColor='black'
-          tableViewStyle={TableView.Consts.Style.Grouped} 
-          tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-          <Section label='Themes'>
-            {Object.keys(config.commentThemes).map(key =>
-              <Cell 
+          textColor="black"
+          tableViewStyle={TableView.Consts.Style.Grouped}
+          tableViewCellStyle={TableView.Consts.CellStyle.Value1}
+        >
+          <Section label="Themes">
+            {Object.keys(config.commentThemes).map(key => (
+              <Cell
                 key={key}
-                style={styles.cell} 
-                accessoryType={selectedTheme == key ? TableView.Consts.AccessoryType.Checkmark : ''}
-                onPress={() => this.commentThemeChanged(key)}>
-                <CustomText style={{fontSize: 17}}>{capitalize(key)}</CustomText>
+                style={styles.cell}
+                accessoryType={
+                  selectedTheme == key
+                    ? TableView.Consts.AccessoryType.Checkmark
+                    : ''
+                }
+                onPress={() => this.commentThemeChanged(key)}
+              >
+                <CustomText style={{ fontSize: 17 }}>
+                  {capitalize(key)}
+                </CustomText>
                 <Circles data={config.commentThemes[key]} />
               </Cell>
-            )}
+            ))}
           </Section>
         </TableView>
       </View>
@@ -69,13 +71,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CommentThemes);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentThemes);

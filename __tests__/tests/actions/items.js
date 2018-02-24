@@ -4,7 +4,6 @@ import * as actions from '../../../app/actions/items';
 import { posts } from '../../data/api/post';
 
 describe('Items Actions', () => {
-
   it('should set first page posts', () => {
     const getState = () => ({});
 
@@ -15,7 +14,7 @@ describe('Items Actions', () => {
     actions.setPosts(1, posts)(dispatch, getState);
 
     expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_POSTS', 
+      type: 'SET_POSTS',
       posts,
     });
   });
@@ -24,9 +23,8 @@ describe('Items Actions', () => {
     const storyType = 'top';
 
     expect(actions.setStoryType(storyType)).toEqual({
-      type: 'SET_STORY_TYPE', 
+      type: 'SET_STORY_TYPE',
       storyType,
     });
   });
-
 });

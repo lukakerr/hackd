@@ -22,14 +22,34 @@ function registerScreens(store, Provider) {
   Navigation.registerComponent('hackd.Account', () => Account, store, Provider);
   Navigation.registerComponent('hackd.Search', () => Search, store, Provider);
   Navigation.registerComponent('hackd.Submit', () => Submit, store, Provider);
-  Navigation.registerComponent('hackd.Settings', () => Settings, store, Provider);
+  Navigation.registerComponent(
+    'hackd.Settings',
+    () => Settings,
+    store,
+    Provider,
+  );
 
   Navigation.registerComponent('hackd.Saved', () => Saved, store, Provider);
   Navigation.registerComponent('hackd.Login', () => Login, store, Provider);
-  Navigation.registerComponent('hackd.AccountDetails', () => AccountDetails, store, Provider);
+  Navigation.registerComponent(
+    'hackd.AccountDetails',
+    () => AccountDetails,
+    store,
+    Provider,
+  );
 
-  Navigation.registerComponent('hackd.CommentThemes', () => CommentThemes, store, Provider);
-  Navigation.registerComponent('hackd.AppColors', () => AppColors, store, Provider);
+  Navigation.registerComponent(
+    'hackd.CommentThemes',
+    () => CommentThemes,
+    store,
+    Provider,
+  );
+  Navigation.registerComponent(
+    'hackd.AppColors',
+    () => AppColors,
+    store,
+    Provider,
+  );
 }
 
 const hackd = [
@@ -70,7 +90,4 @@ const hackd = [
   },
 ];
 
-export { 
-  registerScreens,
-  hackd,
-};
+export { registerScreens, hackd };

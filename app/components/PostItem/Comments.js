@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 
 import CustomText from '../CustomText';
 
@@ -21,9 +17,7 @@ export default class Comments extends React.PureComponent {
             source={require('../../img/comment.png')}
           />
         </View>
-        <CustomText>
-          {this.props.count > -1 ? this.props.count : 0}
-        </CustomText>
+        <CustomText>{this.props.count > -1 ? this.props.count : 0}</CustomText>
       </CustomText>
     );
   }

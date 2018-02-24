@@ -19,7 +19,7 @@ export default class Saved extends React.Component {
 
   componentWillMount() {
     this.setState({
-      savedIds: this.props.saved
+      savedIds: this.props.saved,
     });
   }
 
@@ -45,11 +45,14 @@ export default class Saved extends React.Component {
   };
 
   handleRefresh = () => {
-    this.setState({
-      refreshing: true,
-    }, () => {
-      this.fetchSavedPosts();
-    });
+    this.setState(
+      {
+        refreshing: true,
+      },
+      () => {
+        this.fetchSavedPosts();
+      },
+    );
   };
 
   render() {
@@ -67,8 +70,10 @@ export default class Saved extends React.Component {
         navigator={this.props.navigator}
         refreshing={this.state.refreshing}
         onRefresh={() => this.handleRefresh()}
-        onEndReached={() => {return}}
+        onEndReached={() => {
+          return;
+        }}
       />
-    )
+    );
   }
 }

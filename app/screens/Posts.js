@@ -1,9 +1,7 @@
 import React from 'react';
 import config from '../config/default';
 import commonStyles from '../styles/common';
-import {
-  ActionSheetIOS,
-} from 'react-native';
+import { ActionSheetIOS } from 'react-native';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -31,14 +29,16 @@ class Posts extends React.Component {
   }
 
   static navigatorButtons = {
-    rightButtons: [{
-      icon: require('../img/list.png'),
-      id: 'selectFeed'
-    }],
+    rightButtons: [
+      {
+        icon: require('../img/list.png'),
+        id: 'selectFeed',
+      },
+    ],
   };
 
   onNavigatorEvent(event) {
-    if (event.type == 'NavBarButtonPress') { 
+    if (event.type == 'NavBarButtonPress') {
       if (event.id == 'selectFeed') {
         this.selectFeed();
       }
@@ -56,32 +56,27 @@ class Posts extends React.Component {
   // The storyType is updated in the store
   // And the posts are reloaded
   selectFeed = () => {
-    const OPTIONS = [
-      'Cancel', 
-      'Top', 
-      'New', 
-      'Best',
-      'Ask',
-      'Show',
-      'Jobs',
-    ];
-    ActionSheetIOS.showActionSheetWithOptions({
-      title: 'Select a feed',
-      options: OPTIONS,
-      tintColor: this.props.settings.appColor,
-      cancelButtonIndex: 0,
-    }, (buttonIndex) => {
-      const selectedFeed = OPTIONS[buttonIndex].toLowerCase();
+    const OPTIONS = ['Cancel', 'Top', 'New', 'Best', 'Ask', 'Show', 'Jobs'];
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: 'Select a feed',
+        options: OPTIONS,
+        tintColor: this.props.settings.appColor,
+        cancelButtonIndex: 0,
+      },
+      buttonIndex => {
+        const selectedFeed = OPTIONS[buttonIndex].toLowerCase();
 
-      // If 'Cancel' not pressed and selectedFeed isnt current storyType
-      if (buttonIndex !== 0 && selectedFeed !== this.props.storyType) {
-        this.props.navigator.setTitle({
-          title: capitalize(selectedFeed),
-        });
-        this.props.setStoryType(selectedFeed);
-        this.makeRequest();
-      }
-    });
+        // If 'Cancel' not pressed and selectedFeed isnt current storyType
+        if (buttonIndex !== 0 && selectedFeed !== this.props.storyType) {
+          this.props.navigator.setTitle({
+            title: capitalize(selectedFeed),
+          });
+          this.props.setStoryType(selectedFeed);
+          this.makeRequest();
+        }
+      },
+    );
   };
 
   // Get posts based on storyType
@@ -94,8 +89,8 @@ class Posts extends React.Component {
     }
 
     return fetch(`${config.api}/${storyType}stories.json`)
-      .then((response) => response.json())
-      .then((responseJson) => {
+      .then(response => response.json())
+      .then(responseJson => {
         const posts = getItems(page, limit, responseJson);
 
         // Wait for all Promises to complete
@@ -111,18 +106,21 @@ class Posts extends React.Component {
             return;
           });
       })
-      .catch((error) => {
+      .catch(error => {
         return;
       });
   };
 
   handleRefresh = () => {
-    this.setState({
-      page: 1,
-      refreshing: true,
-    }, () => {
-      this.makeRequest();
-    });
+    this.setState(
+      {
+        page: 1,
+        refreshing: true,
+      },
+      () => {
+        this.makeRequest();
+      },
+    );
   };
 
   handleEndReached = () => {
@@ -132,19 +130,22 @@ class Posts extends React.Component {
       return;
     }
 
-    this.setState({
-      page: page + 1,
-      loadingMorePosts: true,
-    }, () => {
-      this.makeRequest();
-    });
+    this.setState(
+      {
+        page: page + 1,
+        loadingMorePosts: true,
+      },
+      () => {
+        this.makeRequest();
+      },
+    );
   };
 
-  upvotePost = (id) => {
+  upvotePost = id => {
     this.props.upvotePost(id);
   };
 
-  savePost = (id) => {
+  savePost = id => {
     this.props.savePost(id);
   };
 
@@ -162,11 +163,12 @@ class Posts extends React.Component {
         upvotePost={this.upvotePost}
         savePost={this.savePost}
       />
-    )
+    );
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   storyType: state.storyType,
@@ -176,7 +178,4 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Posts);
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
