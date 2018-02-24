@@ -28,6 +28,7 @@
     "babel-jest": "22.1.0",
     "babel-preset-react-native": "4.0.0",
     "jest": "22.1.4",
+    "prettier": "1.10.2",
     "react-test-renderer": "16.2.0",
     "redux-logger": "^3.0.6"
   },
