@@ -8,8 +8,10 @@ import {
   View,
   ScrollView
 } from 'react-native';
+import SearchBar from 'react-native-search-bar'
 
-import { searchPost } from '../helpers/api';
+import { searchPost , getItems} from '../helpers/api';
+import {posts} from '../reducers/items';
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -18,26 +20,44 @@ export default class Search extends React.Component {
     this.state = {
       searchResults: [],
     };
+
+    this.onSearchTextChanged = this.onSearchTextChanged.bind(this);
   }
 
-  componentDidMount() {
-    searchPost({}, 'dog').then(responseJson => {
-      this.setState({
-        searchResults: responseJson.hits,
+  onSearchTextChanged(searchBarText) {
+    // There's no point in us searching for nothing
+    // If they don't have anything in the search box, dont bother showing previous search results
+    // Of course this can always be changed, I don't know if thats proper functionality :p
+    if (searchBarText.length !== 0) {
+      searchPost({}, searchBarText).then(responseJson => {
+        this.setState({
+          searchResults: responseJson.hits,
+        });
       });
-    });
+    } else if (searchBarText.length === 0) {
+      this.setState({
+        searchResults: [],
+      });
+    }
   }
 
   render() {
     const { searchResults } = this.state;
     return (
-      <ScrollView style={styles.searchContainer}>
-        <View>
-          {searchResults.map(result => (
-            <Text key={result.title}>{result.title}</Text>
-          ))}
-        </View>
-      </ScrollView>
+      <View style={commonStyles.flex}>
+        <SearchBar
+          ref='SearchBar'
+          placeholder='Search'
+          onChangeText={this.onSearchTextChanged}
+        />
+        <ScrollView style={styles.searchContainer}>
+          <View>
+            {searchResults.map(result => (
+              <Text key={result.title}>{result.title}</Text>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }

@@ -19,6 +19,7 @@
     "react-native-htmlview": "^0.12.1",
     "react-native-navigation": "^1.1.378",
     "react-native-safari-view": "^2.1.0",
+    "react-native-search-bar": "^3.4.0",
     "react-native-swipeable": "^0.6.0",
     "react-native-tableview": "^2.1.0",
     "react-redux": "^5.0.6",
