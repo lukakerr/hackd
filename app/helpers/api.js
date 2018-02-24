@@ -2,6 +2,36 @@ import cheerio from 'cheerio-without-node-native';
 import config from '../config/default';
 
 /**
+ * Gets post from given query
+ * @param  {String} query The query string to search for
+ * @param  {Object} options The options for the search, see the 'searchOptions' variable in helpers/api.js
+ * @return {Promise}       Returns a promise
+ */
+
+const searchPost = (options = defaultSearchOptions, query='') => {
+
+  const searchOptions = {
+    sortByDate: false || options.sortByDate,
+    pageNumber: 1 || options.pageNumber,
+    tags: 'story' || options.tag,
+  };
+
+  const hitsPerPage = '&hitsPerPage=25';
+
+  // There has to be better way to do this
+  // TODO: Refactor this
+  const dateParameter = searchOptions.sortByDate ? 'search_by_date' : 'search';
+  const queryParameter = `query=${query}`;
+  const tagParameter = `&tags=${searchOptions.tags}`
+
+  const searchUrl = `${config.apiSearch}${dateParameter}?${queryParameter}${hitsPerPage}${tagParameter}`;
+
+  return fetch(searchUrl)
+    .then(response => response.json())
+    .catch(error => error);
+}
+
+/**
  * Get item from given ID
  * @param  {String} itemId The ID of the item to fetch
  * @return {Promise}       Returns a promise
@@ -364,4 +394,5 @@ export {
   logout,
   getComments,
   toggleComments,
+  searchPost,
 };
