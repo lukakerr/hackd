@@ -1,5 +1,6 @@
 {
   "api": "https://hacker-news.firebaseio.com/v0",
+  "search": "http://hn.algolia.com/api/v1/",
   "base": "https://news.ycombinator.com",
   "colors": {
     "orange": "#EE6F2D",
