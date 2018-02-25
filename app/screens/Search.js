@@ -8,7 +8,7 @@ import {
   View,
   ScrollView
 } from 'react-native';
-import SearchBar from 'react-native-search-bar'
+import SearchBar from 'react-native-search-bar' // https://www.npmjs.com/package/react-native-search-bar
 
 import { searchPost , getItems} from '../helpers/api';
 import {posts} from '../reducers/items';
