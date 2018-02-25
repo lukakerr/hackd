@@ -7,7 +7,8 @@
     "start:x": "react-native run-ios --simulator='iPhone X'",
     "link": "react-native link",
     "prettier": "prettier --write \"**/*.js\"",
-    "eslint": "eslint .",
+    "eslint": "eslint --fix .; exit 0;",
+    "format": "npm run prettier && npm run eslint",
     "test": "jest"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "babel-jest": "22.1.0",
     "babel-preset-react-native": "4.0.0",
     "eslint": "^4.18.1",
