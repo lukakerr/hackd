@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import TableView from 'react-native-tableview';
 import ReactNativeHaptic from 'react-native-haptic';
 
@@ -23,34 +20,39 @@ class AppColors extends React.Component {
     super(props);
   }
 
-  appColorThemeChanged = (color) => {
-    ReactNativeHaptic.generate('selection')
-    this.props.changeSetting(
-      'appColor',
-      color
-    );
+  appColorThemeChanged = color => {
+    ReactNativeHaptic.generate('selection');
+    this.props.changeSetting('appColor', color);
   };
 
   render() {
-    const appColor = this.props.settings.appColor
+    const appColor = this.props.settings.appColor;
     return (
       <View style={commonStyles.flex}>
-        <TableView 
+        <TableView
           style={commonStyles.flex}
-          textColor='black'
-          tableViewStyle={TableView.Consts.Style.Grouped} 
-          tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-          <Section label='Themes'>
-            {Object.keys(config.appColors).map(key =>
-              <Cell 
+          textColor="black"
+          tableViewStyle={TableView.Consts.Style.Grouped}
+          tableViewCellStyle={TableView.Consts.CellStyle.Value1}
+        >
+          <Section label="Themes">
+            {Object.keys(config.appColors).map(key => (
+              <Cell
                 key={key}
-                style={styles.cell} 
-                accessoryType={appColor == config.appColors[key] ? TableView.Consts.AccessoryType.Checkmark : ''}
-                onPress={() => this.appColorThemeChanged(config.appColors[key])}>
-                <CustomText style={{fontSize: 17}}>{capitalize(key)}</CustomText>
+                style={styles.cell}
+                accessoryType={
+                  appColor == config.appColors[key]
+                    ? TableView.Consts.AccessoryType.Checkmark
+                    : ''
+                }
+                onPress={() => this.appColorThemeChanged(config.appColors[key])}
+              >
+                <CustomText style={{ fontSize: 17 }}>
+                  {capitalize(key)}
+                </CustomText>
                 <Circles data={[config.appColors[key]]} />
               </Cell>
-            )}
+            ))}
           </Section>
         </TableView>
       </View>
@@ -69,13 +71,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppColors);
+export default connect(mapStateToProps, mapDispatchToProps)(AppColors);

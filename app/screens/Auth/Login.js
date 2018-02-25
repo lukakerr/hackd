@@ -1,9 +1,6 @@
 import React from 'react';
 import commonStyles from '../../styles/common';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,16 +21,16 @@ class Login extends React.Component {
     };
   }
 
-  handleUsername = (text) => {
-    this.setState({ username: text, error: null, });
+  handleUsername = text => {
+    this.setState({ username: text, error: null });
   };
 
-  handlePassword = (text) => {
-    this.setState({ password: text, error: null, });
+  handlePassword = text => {
+    this.setState({ password: text, error: null });
   };
 
   logIn = () => {
-    this.setState({ loading: true, error: null, });
+    this.setState({ loading: true, error: null });
     const { username, password } = this.state;
 
     login(username, password).then(loggedIn => {
@@ -49,9 +46,9 @@ class Login extends React.Component {
         const user = {
           loggedIn: false,
         };
-        this.setState({ 
+        this.setState({
           loading: false,
-          error: 'Invalid username or password. Please try again.' 
+          error: 'Invalid username or password. Please try again.',
         });
         this.props.login(user);
       }
@@ -67,22 +64,28 @@ class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <CustomText style={[styles.header, commonStyles.textCenter]}>Login to Hacker News</CustomText>
+        <CustomText style={[styles.header, commonStyles.textCenter]}>
+          Login to Hacker News
+        </CustomText>
 
         <Form
           inputs={[
             { placeholder: 'Username', action: this.handleUsername },
-            { placeholder: 'Password', action: this.handlePassword, secureTextEntry: true },
+            {
+              placeholder: 'Password',
+              action: this.handlePassword,
+              secureTextEntry: true,
+            },
           ]}
           submit={this.logIn}
-          submitText='Login'
+          submitText="Login"
           back={this.goToFeed}
-          backText='feed'
+          backText="feed"
           error={this.state.error}
           loading={this.state.loading}
           color={this.props.settings.appColor}
         />
-     </View>
+      </View>
     );
   }
 }
@@ -100,14 +103,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,
   settings: state.settings,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

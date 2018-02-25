@@ -1,0 +1,47 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+
+  "globals": {
+    "fetch": false
+  },
+
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "blockBindings": true,
+      "classes": true,
+      "defaultParameters": true,
+      "destructuring": true,
+      "forOf": true,
+      "generators": true,
+      "modules": true,
+      "objectLiteralComputedProperties": true,
+      "objectLiteralDuplicateProperties": true,
+      "objectLiteralShorthandMethods": true,
+      "objectLiteralShorthandProperties": true,
+      "regexUFlag": true,
+      "regexYFlag": true,
+      "restParams": true,
+      "spread": true,
+      "superInFunctions": true,
+      "templateStrings": true,
+      "unicodeCodePointEscapes": true,
+      "globalReturn": true
+    },
+    "sourceType": "module"
+  }, 
+
+  "extends": "airbnb",
+
+  "rules": {
+    "arrow-parens": 0,
+    "no-param-reassign": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+  }
+}
+
+// https://eslint.org/docs/rules/

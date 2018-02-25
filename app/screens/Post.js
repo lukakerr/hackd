@@ -44,11 +44,11 @@ class Post extends React.Component {
     }
   }
 
-  openUrl = (url) => {
-    const readerMode = this.props.settings.useSafariReaderMode
+  openUrl = url => {
+    const readerMode = this.props.settings.useSafariReaderMode;
     SafariView.show({
       url,
-      readerMode
+      readerMode,
     });
   };
 
@@ -57,12 +57,19 @@ class Post extends React.Component {
       <ScrollView style={styles.postContainer}>
         <View>
           <View style={styles.headerContainer}>
-            <CustomText style={styles.header}>{this.props.post.title}</CustomText>
+            <CustomText style={styles.header}>
+              {this.props.post.title}
+            </CustomText>
           </View>
-          {this.props.post.url && 
-            <TouchableOpacity onPress={() => this.openUrl(this.props.post.url)} activeOpacity={0.8}>
+          {this.props.post.url && (
+            <TouchableOpacity
+              onPress={() => this.openUrl(this.props.post.url)}
+              activeOpacity={0.8}
+            >
               <View style={styles.subHeaderContainer}>
-                <CustomText style={styles.subHeader}>{truncate(this.props.post.url, 35)}</CustomText>
+                <CustomText style={styles.subHeader}>
+                  {truncate(this.props.post.url, 35)}
+                </CustomText>
                 <View style={styles.rightArrowContainer}>
                   <Image
                     style={styles.rightArrow}
@@ -71,31 +78,22 @@ class Post extends React.Component {
                 </View>
               </View>
             </TouchableOpacity>
-          }
-          {this.props.post.text && 
+          )}
+          {this.props.post.text && (
             <HTMLView
               value={`<body>${this.props.post.text}</body>`}
               stylesheet={htmlStyles}
-              onLinkPress={(url) => this.openUrl(url)}
+              onLinkPress={url => this.openUrl(url)}
             />
-          }
+          )}
         </View>
 
         <View style={styles.postInfo}>
           <View style={styles.postInfoDetails}>
-            <User
-              by={this.props.post.by}
-              style={{opacity: 0.6}}
-            />
-            <Score
-              score={this.props.post.score}
-            />
-            <Comments
-              count={this.props.post.descendants}
-            />
-            <Time
-              time={this.props.post.time}
-            />
+            <User by={this.props.post.by} style={{ opacity: 0.6 }} />
+            <Score score={this.props.post.score} />
+            <Comments count={this.props.post.descendants} />
+            <Time time={this.props.post.time} />
             <View style={styles.postInfoAction}>
               <View style={styles.postInfoActionText}>
                 <Actions
@@ -108,10 +106,7 @@ class Post extends React.Component {
         </View>
 
         <View>
-          <AllComments 
-            post={this.props.post} 
-            settings={this.props.settings}
-          />
+          <AllComments post={this.props.post} settings={this.props.settings} />
         </View>
       </ScrollView>
     );
@@ -183,15 +178,11 @@ const styles = StyleSheet.create({
   },
 });
 
-
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Post);
-
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

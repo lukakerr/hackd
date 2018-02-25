@@ -36,47 +36,60 @@ export default class Form extends React.PureComponent {
 
   render() {
     return (
-      <ScrollView 
-        keyboardShouldPersistTaps='always'
+      <ScrollView
+        keyboardShouldPersistTaps="always"
         scrollEnabled={this.props.scroll ? this.props.scroll : false}
         style={commonStyles.backgroundWhite}
       >
         <View>
           <View style={styles.inputContainer}>
-            { Object.keys(this.props.inputs).map(key => {
+            {Object.keys(this.props.inputs).map(key => {
               const input = this.props.inputs[key];
 
               return (
-                <TextInput style={styles.input}
+                <TextInput
+                  style={styles.input}
                   key={input.placeholder}
                   multiline={input.multiline ? input.multiline : false}
-                  secureTextEntry={input.secureTextEntry ? input.secureTextEntry : false}
+                  secureTextEntry={
+                    input.secureTextEntry ? input.secureTextEntry : false
+                  }
                   placeholder={input.placeholder}
-                  autoCapitalize='none'
+                  autoCapitalize="none"
                   placeholderTextColor={config.colors.placeholder}
-                  onChangeText={(text) => this.textChanged(input, text)}
+                  onChangeText={text => this.textChanged(input, text)}
                 />
               );
             })}
           </View>
 
           <TouchableOpacity
-            style={[styles.submitButton, { backgroundColor: this.props.color}]}
+            style={[styles.submitButton, { backgroundColor: this.props.color }]}
             activeOpacity={0.8}
-            onPress={this.submit}>
-            <CustomText style={styles.submitButtonText}>{this.props.submitText ? this.props.submitText : 'Submit'}</CustomText>
+            onPress={this.submit}
+          >
+            <CustomText style={styles.submitButtonText}>
+              {this.props.submitText ? this.props.submitText : 'Submit'}
+            </CustomText>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.backButton}
             activeOpacity={0.8}
-            onPress={this.back}>
-            <CustomText style={[styles.backButtonText, { color: this.props.color}]}>Back to {this.props.backText}</CustomText>
+            onPress={this.back}
+          >
+            <CustomText
+              style={[styles.backButtonText, { color: this.props.color }]}
+            >
+              Back to {this.props.backText}
+            </CustomText>
           </TouchableOpacity>
         </View>
 
         <View>
-          <CustomText style={[styles.error, commonStyles.textCenter]}>{this.props.error}</CustomText>
+          <CustomText style={[styles.error, commonStyles.textCenter]}>
+            {this.props.error}
+          </CustomText>
         </View>
 
         <View>

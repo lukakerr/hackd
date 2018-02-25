@@ -1,8 +1,4 @@
-import { 
-  createStore, 
-  applyMiddleware, 
-  compose,
-} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -15,31 +11,20 @@ const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
-  whitelist: [
-    'user',
-    'accounts',
-    'settings',
-  ],
-}
+  whitelist: ['user', 'accounts', 'settings'],
+};
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 const loggerMiddleware = createLogger({
-  predicate: (getState, action) => __DEV__
+  predicate: (getState, action) => __DEV__,
 });
 
-const configureStore = (initialState) => {
-  const enhancer = compose(
-    applyMiddleware(
-      thunkMiddleware,
-      loggerMiddleware,
-    ),
-  );
+const configureStore = initialState => {
+  const enhancer = compose(applyMiddleware(thunkMiddleware, loggerMiddleware));
   return createStore(persistedReducer, initialState, enhancer);
 };
 
 const store = configureStore({});
 
-export {
-  store,
-};
+export { store };

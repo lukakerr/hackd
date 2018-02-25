@@ -42,7 +42,7 @@ export default StyleSheet.create({
     fontSize: 17,
   },
   cellValue: {
-    fontSize: 17, 
+    fontSize: 17,
     marginRight: 16,
     color: '#8E8E93',
   },

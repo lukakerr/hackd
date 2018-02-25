@@ -1,4 +1,4 @@
-import { 
+import {
   capitalize,
   truncate,
   addToUserAccount,
@@ -29,7 +29,7 @@ describe('App Utils', () => {
     expect(addToUserAccount(account, appUser, id, type)).toEqual({
       [appUser.username]: {
         upvoted: [id],
-      }
+      },
     });
   });
 
@@ -45,8 +45,7 @@ describe('App Utils', () => {
     expect(removeFromUserAccount(account, appUser, id, type)).toEqual({
       [appUser.username]: {
         upvotedComments: [id2],
-      }
+      },
     });
   });
-
 });

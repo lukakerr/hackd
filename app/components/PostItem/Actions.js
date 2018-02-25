@@ -15,9 +15,7 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
 import config from '../../config/default';
-import { 
-  validateUserLoggedIn 
-} from '../../helpers/utils';
+import { validateUserLoggedIn } from '../../helpers/utils';
 import { upvote } from '../../helpers/api';
 
 import CustomText from '../CustomText';
@@ -46,13 +44,17 @@ class Actions extends React.Component {
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
         if (this.props.accounts[this.props.user.username].upvoted) {
-          if (this.props.accounts[this.props.user.username].upvoted.indexOf(this.props.item.id) !== -1) {
+          if (
+            this.props.accounts[this.props.user.username].upvoted.indexOf(
+              this.props.item.id,
+            ) !== -1
+          ) {
             return true;
           }
         }
       }
     }
-    
+
     return false;
   };
 
@@ -62,52 +64,54 @@ class Actions extends React.Component {
     if (this.props.user.loggedIn) {
       if (this.props.accounts[this.props.user.username]) {
         if (this.props.accounts[this.props.user.username].saved) {
-          if (this.props.accounts[this.props.user.username].saved.indexOf(this.props.item.id) !== -1) {
+          if (
+            this.props.accounts[this.props.user.username].saved.indexOf(
+              this.props.item.id,
+            ) !== -1
+          ) {
             saveOption = 'Unsave';
           }
         }
       }
     }
 
-    const OPTIONS = [
-      'Cancel', 
-      'Reply',
-      'Share',
-      saveOption,
-    ];
+    const OPTIONS = ['Cancel', 'Reply', 'Share', saveOption];
 
-    ActionSheetIOS.showActionSheetWithOptions({
-      title: 'Post actions',
-      options: OPTIONS,
-      tintColor: this.props.settings.appColor,
-      cancelButtonIndex: 0,
-    }, (buttonIndex) => {
-      const selectedAction = OPTIONS[buttonIndex].toLowerCase();
-      const { loggedIn } = this.props.user;
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: 'Post actions',
+        options: OPTIONS,
+        tintColor: this.props.settings.appColor,
+        cancelButtonIndex: 0,
+      },
+      buttonIndex => {
+        const selectedAction = OPTIONS[buttonIndex].toLowerCase();
+        const { loggedIn } = this.props.user;
 
-      // If 'Cancel' not pressed
-      if (buttonIndex !== 0) {
-        if (buttonIndex === 1) {
-          if (!validateUserLoggedIn(loggedIn, 'reply')) {
-            return;
+        // If 'Cancel' not pressed
+        if (buttonIndex !== 0) {
+          if (buttonIndex === 1) {
+            if (!validateUserLoggedIn(loggedIn, 'reply')) {
+              return;
+            }
+          } else if (buttonIndex === 2) {
+            this.share();
+          } else if (buttonIndex === 3) {
+            if (!validateUserLoggedIn(loggedIn, 'save')) {
+              return;
+            }
+            this.save();
           }
-        } else if (buttonIndex === 2) {
-          this.share();
-        } else if (buttonIndex === 3) {
-          if (!validateUserLoggedIn(loggedIn, 'save')) {
-            return;
-          }
-          this.save();
-        };
-      }
-    });
+        }
+      },
+    );
   };
 
   upvote = () => {
     if (!validateUserLoggedIn(this.props.user.loggedIn, 'upvote')) {
       return;
     }
-    ReactNativeHaptic.generate('impact')
+    ReactNativeHaptic.generate('impact');
     this.props.upvotePost(this.props.item.id);
   };
 
@@ -120,7 +124,7 @@ class Actions extends React.Component {
   };
 
   save = () => {
-    ReactNativeHaptic.generate('impact')
+    ReactNativeHaptic.generate('impact');
     this.props.savePost(this.props.item.id);
   };
 
@@ -129,18 +133,33 @@ class Actions extends React.Component {
     return (
       <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>
-          <TouchableOpacity onPress={this.showActions} activeOpacity={0.8} style={styles.iconDotsContainer}>
+          <TouchableOpacity
+            onPress={this.showActions}
+            activeOpacity={0.8}
+            style={styles.iconDotsContainer}
+          >
             <Image
               style={styles.iconDots}
               source={require('../../img/dots.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity 
-            onPress={this.upvote} 
-            activeOpacity={0.8} 
-            style={[styles.iconArrowContainer, { backgroundColor: isUpvoted ? config.colors.orange : 'transparent' }]}>
+          <TouchableOpacity
+            onPress={this.upvote}
+            activeOpacity={0.8}
+            style={[
+              styles.iconArrowContainer,
+              {
+                backgroundColor: isUpvoted
+                  ? config.colors.orange
+                  : 'transparent',
+              },
+            ]}
+          >
             <Image
-              style={[styles.iconArrow, { tintColor: isUpvoted ? 'white' : 'black' }]}
+              style={[
+                styles.iconArrow,
+                { tintColor: isUpvoted ? 'white' : 'black' },
+              ]}
               source={require('../../img/arrow.png')}
             />
           </TouchableOpacity>
@@ -152,9 +171,9 @@ class Actions extends React.Component {
 
 const styles = StyleSheet.create({
   iconArrowContainer: {
-    height: 28, 
-    width: 28, 
-    padding: 2,  
+    height: 28,
+    width: 28,
+    padding: 2,
     borderRadius: 5,
     marginLeft: 3,
   },
@@ -185,7 +204,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -193,7 +213,4 @@ const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Actions);
+export default connect(mapStateToProps, mapDispatchToProps)(Actions);

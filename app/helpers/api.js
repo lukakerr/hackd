@@ -59,8 +59,7 @@ const getItems = (page, limit, itemIds) => {
 
   // Map each itemId to an Array of Promises
   const posts = slicedItems.map(item => {
-    return getItem(item)
-      .then(post => post);
+    return getItem(item).then(post => post);
   });
 
   return posts;
@@ -88,7 +87,8 @@ const getUpvoteUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
-  }).then(response => response.text())
+  })
+    .then(response => response.text())
     .then(responseText => {
       const document = cheerio.load(responseText);
       return document(`#up_${itemId}`).attr('href');
@@ -105,7 +105,8 @@ const getUnvoteUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
-  }).then(response => response.text())
+  })
+    .then(response => response.text())
     .then(responseText => {
       const document = cheerio.load(responseText);
       return document(`#un_${itemId}`).attr('href');
@@ -120,10 +121,12 @@ const getUnvoteUrl = itemId => {
  */
 const upvote = itemId => {
   return getUpvoteUrl(itemId)
-    .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
-      mode: 'no-cors',
-      credentials: 'include',
-    }))
+    .then(upvoteUrl =>
+      fetch(`${config.base}/${upvoteUrl}`, {
+        mode: 'no-cors',
+        credentials: 'include',
+      }),
+    )
     .then(response => response.text())
     .then(responseText => true)
     .catch(error => false);
@@ -137,10 +140,12 @@ const upvote = itemId => {
  */
 const unvote = itemId => {
   return getUnvoteUrl(itemId)
-    .then(upvoteUrl => fetch(`${config.base}/${upvoteUrl}`, {
-      mode: 'no-cors',
-      credentials: 'include',
-    }))
+    .then(upvoteUrl =>
+      fetch(`${config.base}/${upvoteUrl}`, {
+        mode: 'no-cors',
+        credentials: 'include',
+      }),
+    )
     .then(response => response.text())
     .then(responseText => true)
     .catch(error => false);
@@ -165,7 +170,8 @@ const login = (username, password) => {
     body: `acct=${username}&pw=${password}&goto=news`,
     mode: 'no-cors',
     credentials: 'include',
-  }).then(response => response.text())
+  })
+    .then(response => response.text())
     .then(responseText => {
       if (responseText.match(/Bad Login/i)) {
         return false;
@@ -183,7 +189,8 @@ const getLogoutUrl = () => {
   return fetch(`${config.base}/news`, {
     mode: 'no-cors',
     credentials: 'include',
-  }).then(response => response.text())
+  })
+    .then(response => response.text())
     .then(responseText => {
       const document = cheerio.load(responseText);
       return document('#logout').attr('href');
@@ -197,12 +204,15 @@ const getLogoutUrl = () => {
  */
 const logout = () => {
   return getLogoutUrl()
-    .then(logoutUrl => fetch(`${config.base}/${logoutUrl}`, {
-      mode: 'no-cors',
-      credentials: 'include',
-    })).then(response => response.text())
-      .then(responseText => true)
-      .catch(error => false);
+    .then(logoutUrl =>
+      fetch(`${config.base}/${logoutUrl}`, {
+        mode: 'no-cors',
+        credentials: 'include',
+      }),
+    )
+    .then(response => response.text())
+    .then(responseText => true)
+    .catch(error => false);
 };
 
 /**
@@ -215,7 +225,8 @@ const getCommentUrl = itemId => {
   return fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
-  }).then(response => response.text())
+  })
+    .then(response => response.text())
     .then(responseText => {
       const document = cheerio.load(responseText);
       return document('input[name=hmac]').attr('value');
@@ -230,20 +241,22 @@ const getCommentUrl = itemId => {
  *                         resolves true if commented, else false
  */
 const comment = (itemId, reply) => {
-  return getCommentUrl(itemId).then(commentUrl => {
-    const headers = new Headers({
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Access-Control-Allow-Origin': '*',
-    });
+  return getCommentUrl(itemId)
+    .then(commentUrl => {
+      const headers = new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Origin': '*',
+      });
 
-    return fetch(`${config.base}/comment`, {
-      method: 'POST',
-      headers,
-      body: `parent=${itemId}&goto=item?id=${itemId}&hmac=${commentUrl}&text=${reply}`,
-      mode: 'no-cors',
-      credentials: 'include',
-    });
-  }).then(response => response.text())
+      return fetch(`${config.base}/comment`, {
+        method: 'POST',
+        headers,
+        body: `parent=${itemId}&goto=item?id=${itemId}&hmac=${commentUrl}&text=${reply}`,
+        mode: 'no-cors',
+        credentials: 'include',
+      });
+    })
+    .then(response => response.text())
     .then(responseText => true)
     .catch(error => false);
 };
@@ -260,7 +273,11 @@ const flatten = (comments, commentsArray) => {
   for (var key in comments) {
     const currentComment = comments[key];
 
-    if (comments.hasOwnProperty(key) && !currentComment.dead && !currentComment.deleted) {
+    if (
+      comments.hasOwnProperty(key) &&
+      !currentComment.dead &&
+      !currentComment.deleted
+    ) {
       commentsArray.push(currentComment);
       if (currentComment.kids && currentComment.kids.length > 0) {
         flatten(currentComment.kids, commentsArray);
@@ -279,10 +296,9 @@ const flatten = (comments, commentsArray) => {
 const getComments = commentIds => {
   return new Promise((resolve, reject) => {
     const comments = commentIds.map(id => {
-      return getChildComment(id, 0)
-        .then(comment => {
-          return comment;
-        });
+      return getChildComment(id, 0).then(comment => {
+        return comment;
+      });
     });
 
     Promise.all(comments)
@@ -312,16 +328,14 @@ const getChildComment = (parentId, level) => {
 
         if (comment.kids && comment.kids.length > 0) {
           const results = comment.kids.map(id => {
-            return getChildComment(id, level + 1)
-              .then(c => {
-                return c;
-              });
+            return getChildComment(id, level + 1).then(c => {
+              return c;
+            });
           });
 
-          Promise.all(results)
-            .then(kids => {
-              resolve({ ...comment, kids });
-            });
+          Promise.all(results).then(kids => {
+            resolve({ ...comment, kids });
+          });
         } else {
           resolve(comment);
         }
@@ -383,13 +397,13 @@ const toggleComments = (comments, id, level) => {
   return comments;
 };
 
-export { 
+export {
   getItem,
   getItems,
   upvote,
   unvote,
   login,
-  comment, 
+  comment,
   getUser,
   logout,
   getComments,

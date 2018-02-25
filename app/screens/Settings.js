@@ -1,13 +1,7 @@
 import React from 'react';
 import config from '../config/default';
 import commonStyles from '../styles/common';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Switch,
-  ActionSheetIOS,
-} from 'react-native';
+import { Text, View, StyleSheet, Switch, ActionSheetIOS } from 'react-native';
 import TableView from 'react-native-tableview';
 
 import { connect } from 'react-redux';
@@ -25,7 +19,7 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   navigateTo = (screen, title) => {
     this.props.navigator.push({
       screen,
@@ -34,74 +28,95 @@ class Settings extends React.Component {
   };
 
   keyValueChanged = (key, value) => {
-    this.props.changeSetting(
-      key,
-      value
-    );
+    this.props.changeSetting(key, value);
   };
 
   booleanChanged = (key, boolean) => {
-    this.props.changeSetting(
-      key,
-      !boolean
-    );
+    this.props.changeSetting(key, !boolean);
   };
 
   multiChange = (key, options, title) => {
-    ActionSheetIOS.showActionSheetWithOptions({
-      title,
-      options,
-      tintColor: this.props.settings.appColor,
-      cancelButtonIndex: 0,
-    }, (buttonIndex) => {
-      const selectedAction = options[buttonIndex].toLowerCase();
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title,
+        options,
+        tintColor: this.props.settings.appColor,
+        cancelButtonIndex: 0,
+      },
+      buttonIndex => {
+        const selectedAction = options[buttonIndex].toLowerCase();
 
-      if (buttonIndex !== 0) {
-        this.props.changeSetting(
-          key,
-          selectedAction,
-        );
-      }
-    });
+        if (buttonIndex !== 0) {
+          this.props.changeSetting(key, selectedAction);
+        }
+      },
+    );
   };
 
   render() {
     return (
       <View style={commonStyles.flex}>
-        <TableView 
+        <TableView
           style={commonStyles.flex}
-          tableViewStyle={TableView.Consts.Style.Grouped} 
-          tableViewCellStyle={TableView.Consts.CellStyle.Value1}>
-          <Section label='Comments'>
+          tableViewStyle={TableView.Consts.Style.Grouped}
+          tableViewCellStyle={TableView.Consts.CellStyle.Value1}
+        >
+          <Section label="Comments">
             <Cell style={commonStyles.cell}>
-              <CustomText style={commonStyles.cellText}>Tap to collapse</CustomText>
+              <CustomText style={commonStyles.cellText}>
+                Tap to collapse
+              </CustomText>
               <Switch
                 style={commonStyles.cellSwitch}
                 value={this.props.settings.tapToCollapse}
-                onValueChange={() => this.booleanChanged('tapToCollapse', this.props.settings.tapToCollapse)} />
+                onValueChange={() =>
+                  this.booleanChanged(
+                    'tapToCollapse',
+                    this.props.settings.tapToCollapse,
+                  )
+                }
+              />
             </Cell>
-            <Cell 
-              style={commonStyles.cell} 
+            <Cell
+              style={commonStyles.cell}
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() => this.navigateTo('hackd.CommentThemes', 'Comment Themes')}>
-              <CustomText style={commonStyles.cellText}>Comment themes</CustomText>
+              onPress={() =>
+                this.navigateTo('hackd.CommentThemes', 'Comment Themes')
+              }
+            >
+              <CustomText style={commonStyles.cellText}>
+                Comment themes
+              </CustomText>
             </Cell>
           </Section>
-          <Section label='Posts'>
+          <Section label="Posts">
             <Cell style={commonStyles.cell}>
-              <CustomText style={commonStyles.cellText}>Use Safari Reader Mode</CustomText>
+              <CustomText style={commonStyles.cellText}>
+                Use Safari Reader Mode
+              </CustomText>
               <Switch
                 style={commonStyles.cellSwitch}
                 value={this.props.settings.useSafariReaderMode}
-                onValueChange={() => this.booleanChanged('useSafariReaderMode', this.props.settings.useSafariReaderMode)} />
+                onValueChange={() =>
+                  this.booleanChanged(
+                    'useSafariReaderMode',
+                    this.props.settings.useSafariReaderMode,
+                  )
+                }
+              />
             </Cell>
           </Section>
-          <Section label='Navigator (requires relaunch)'>
-            <Cell 
-              style={commonStyles.cell} 
+          <Section label="Navigator (requires relaunch)">
+            <Cell
+              style={commonStyles.cell}
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() => this.navigateTo('hackd.AppColors', 'Navigator Themes')}>
-              <CustomText style={commonStyles.cellText}>Navigator themes</CustomText>
+              onPress={() =>
+                this.navigateTo('hackd.AppColors', 'Navigator Themes')
+              }
+            >
+              <CustomText style={commonStyles.cellText}>
+                Navigator themes
+              </CustomText>
             </Cell>
           </Section>
         </TableView>
@@ -110,13 +125,11 @@ class Settings extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

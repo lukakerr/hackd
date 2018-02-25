@@ -1,12 +1,7 @@
 import React from 'react';
 import config from '../config/default';
 import commonStyles from '../styles/common';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 import Score from './PostItem/Score';
 import Comments from './PostItem/Comments';
@@ -29,7 +24,11 @@ export default class ListItem extends React.PureComponent {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.onPress} onPressIn={this.onPressIn} activeOpacity={0.8}>
+      <TouchableOpacity
+        onPress={this.onPress}
+        onPressIn={this.onPressIn}
+        activeOpacity={0.8}
+      >
         <View style={styles.listItem}>
           <CustomText styles={styles.listItemSection}>
             <CustomText style={styles.listItemTitle}>
@@ -38,24 +37,13 @@ export default class ListItem extends React.PureComponent {
           </CustomText>
           <View>
             <View style={styles.listItemSubTitle}>
-              <User
-                by={this.props.item.by}
-                style={{opacity: 0.6}}
-              />
-              <Score
-                score={this.props.item.score}
-              />
-              <Comments
-                count={this.props.item.descendants}
-              />
-              <Time
-                time={this.props.item.time}
-              />
+              <User by={this.props.item.by} style={{ opacity: 0.6 }} />
+              <Score score={this.props.item.score} />
+              <Comments count={this.props.item.descendants} />
+              <Time time={this.props.item.time} />
               <View style={styles.listItemAction}>
                 <View style={styles.listItemActionText}>
-                  <Actions
-                    item={this.props.item}
-                  />
+                  <Actions item={this.props.item} />
                 </View>
               </View>
             </View>
@@ -75,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   listItemSection: {
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   listItemTitle: {
     fontSize: 16,
@@ -89,7 +77,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   listItemAction: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   listItemActionText: {
     alignSelf: 'flex-end',

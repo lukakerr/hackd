@@ -21,21 +21,15 @@ class Account extends React.Component {
         />
       );
     }
-    return (
-      <Login 
-        navigator={this.props.navigator}
-      />
-    );
+    return <Login navigator={this.props.navigator} />;
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Account);
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

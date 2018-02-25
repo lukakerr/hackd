@@ -1,13 +1,8 @@
-import {
-  AlertIOS,
-} from 'react-native';
+import { AlertIOS } from 'react-native';
 
 const validateUserLoggedIn = (user, action) => {
   if (!user) {
-    AlertIOS.alert(
-      `Cannot ${action}`,
-      'Please login and try again.',
-    );
+    AlertIOS.alert(`Cannot ${action}`, 'Please login and try again.');
     return false;
   }
   return true;

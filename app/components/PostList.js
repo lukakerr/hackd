@@ -11,10 +11,7 @@ import Swipeable from 'react-native-swipeable';
 import ReactNativeHaptic from 'react-native-haptic';
 
 import config from '../config/default';
-import { 
-  truncate, 
-  validateUserLoggedIn 
-} from '../helpers/utils';
+import { truncate, validateUserLoggedIn } from '../helpers/utils';
 import ListItem from './ListItem';
 import SwipeContent from './PostItem/SwipeContent';
 
@@ -29,11 +26,12 @@ export default class Posts extends React.Component {
     this.doSave = this.doSave.bind(this);
   }
 
-  showPost = (post) => {
-    const title = post.descendants > -1 
-      ? `${post.descendants} comments` 
-      : truncate(post.title, 20);
-      
+  showPost = post => {
+    const title =
+      post.descendants > -1
+        ? `${post.descendants} comments`
+        : truncate(post.title, 20);
+
     this.props.navigator.push({
       screen: 'hackd.Post',
       title,
@@ -43,14 +41,15 @@ export default class Posts extends React.Component {
     });
   };
 
-  showPostPreview = (post) => {
+  showPostPreview = post => {
     if (this.state.isSwiping) {
       return;
-    };
+    }
 
-    const title = post.descendants > -1 
-      ? `${post.descendants} comments` 
-      : truncate(post.title, 20);
+    const title =
+      post.descendants > -1
+        ? `${post.descendants} comments`
+        : truncate(post.title, 20);
 
     this.props.navigator.push({
       screen: 'hackd.Post',
@@ -61,17 +60,20 @@ export default class Posts extends React.Component {
       previewCommit: true,
       previewHeight: 400,
       previewView: this.previewRefs[post.id.toString()],
-      previewActions: [{
-        id: 'action-upvote',
-        title: 'Upvote',
-      }, {
-        id: 'action-save',
-        title: 'Save',
-      }]
+      previewActions: [
+        {
+          id: 'action-upvote',
+          title: 'Upvote',
+        },
+        {
+          id: 'action-save',
+          title: 'Save',
+        },
+      ],
     });
   };
 
-  renderSeparator = () => (<View style={styles.rowSeperator} />);
+  renderSeparator = () => <View style={styles.rowSeperator} />;
 
   renderFooter = () => {
     if (!this.props.loadingMore) {
@@ -115,20 +117,20 @@ export default class Posts extends React.Component {
     this.props.onEndReached();
   };
 
-  setActivated = (activated) => {
+  setActivated = activated => {
     if (activated) {
-      ReactNativeHaptic.generate('impact')
+      ReactNativeHaptic.generate('impact');
     }
   };
 
-  doUpvote = (id) => {
+  doUpvote = id => {
     if (!validateUserLoggedIn(this.props.user.loggedIn, 'upvote')) {
       return;
     }
     this.props.upvotePost(id);
   };
 
-  doSave = (id) => {
+  doSave = id => {
     if (!validateUserLoggedIn(this.props.user.loggedIn, 'save')) {
       return;
     }
@@ -152,7 +154,7 @@ export default class Posts extends React.Component {
           data={this.props.data}
           extraData={this.props.loadingMore}
           scrollEnabled={!this.state.isSwiping}
-          keyboardShouldPersistTaps='always'
+          keyboardShouldPersistTaps="always"
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={this.renderSeparator}
           ListFooterComponent={this.renderFooter}
@@ -161,21 +163,21 @@ export default class Posts extends React.Component {
           onEndReached={this.onEndReached}
           onEndReachedThreshold={0.5}
           renderItem={({ item }) => (
-            <Swipeable 
+            <Swipeable
               rightContent={this.renderRightSwipeContent()}
-              leftContent={this.renderLeftSwipeContent()} 
+              leftContent={this.renderLeftSwipeContent()}
               rightActionActivationDistance={150}
               leftActionActivationDistance={150}
               onRightActionActivate={() => this.setActivated(true)}
               onRightActionRelease={() => this.doUpvote(item.id)}
               onLeftActionActivate={() => this.setActivated(true)}
               onLeftActionRelease={() => this.doSave(item.id)}
-              onSwipeStart={() => this.setState({isSwiping: true})}
-              onSwipeRelease={() => this.setState({isSwiping: false})}
+              onSwipeStart={() => this.setState({ isSwiping: true })}
+              onSwipeRelease={() => this.setState({ isSwiping: false })}
             >
               <ListItem
                 item={item}
-                ref={(ref) => (this.previewRefs[item.id.toString()] = ref)}
+                ref={ref => (this.previewRefs[item.id.toString()] = ref)}
                 onPress={() => this.showPost(item)}
                 onPressIn={() => this.showPostPreview(item)}
                 navigator={this.props.navigator}

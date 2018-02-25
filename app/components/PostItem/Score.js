@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 
 import CustomText from '../CustomText';
 
@@ -16,14 +12,9 @@ export default class Score extends React.PureComponent {
     return (
       <CustomText style={styles.textWrapper}>
         <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            source={require('../../img/arrow.png')}
-          />
+          <Image style={styles.icon} source={require('../../img/arrow.png')} />
         </View>
-        <CustomText>
-          {this.props.score}
-        </CustomText>
+        <CustomText>{this.props.score}</CustomText>
       </CustomText>
     );
   }

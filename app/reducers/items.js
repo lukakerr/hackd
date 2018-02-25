@@ -7,15 +7,18 @@ export const storyType = createReducer('top', {
   },
 });
 
-export const posts = createReducer({}, {
-  [types.SET_POSTS](state, action) {
-    return action.posts;
+export const posts = createReducer(
+  {},
+  {
+    [types.SET_POSTS](state, action) {
+      return action.posts;
+    },
+    // When storyType is set, clear out posts
+    [types.SET_STORY_TYPE](state, action) {
+      return {};
+    },
   },
-  // When storyType is set, clear out posts
-  [types.SET_STORY_TYPE](state, action) {
-    return {};
-  },
-});
+);
 
 export const isLoadingPosts = createReducer(true, {
   // When storyType is set, posts are loading

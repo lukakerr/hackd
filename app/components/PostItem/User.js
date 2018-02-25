@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import CustomText from '../CustomText';
 
@@ -14,11 +11,8 @@ export default class User extends React.PureComponent {
   render() {
     return (
       <CustomText style={[this.props.style, styles.textWrapper]}>
-        <View style={styles.iconView}>
-        </View>
-        <CustomText>
-          {this.props.by}
-        </CustomText>
+        <View style={styles.iconView} />
+        <CustomText>{this.props.by}</CustomText>
       </CustomText>
     );
   }

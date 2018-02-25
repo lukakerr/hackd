@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 export default class Circles extends React.Component {
   constructor(props) {
@@ -12,16 +9,19 @@ export default class Circles extends React.Component {
   render() {
     return (
       <View style={styles.circles}>
-        {Object.keys(this.props.data).map(key =>
-          <View 
+        {Object.keys(this.props.data).map(key => (
+          <View
             key={key}
-            style={[{ 
-              width: 10,
-              height: 10,
-              backgroundColor: this.props.data[key],
-            }, styles.circle]} 
+            style={[
+              {
+                width: 10,
+                height: 10,
+                backgroundColor: this.props.data[key],
+              },
+              styles.circle,
+            ]}
           />
-        )}
+        ))}
       </View>
     );
   }
