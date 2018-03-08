@@ -8,13 +8,17 @@ If you are implementing a new feature, or modifying styles, please replace/add s
 
 ### Prettier
 
-[Prettier](https://github.com/prettier/prettier) is used to keep a consistent code style across the project. Before committing, run `npm run prettier` which will transform your code to fit the projects style.
+[Prettier](https://github.com/prettier/prettier) is used to keep a consistent code style across the project. Before committing, run `npm run prettier` which will list all files that aren't formatted correctly, then rin `npm run prettier:write` to transform your code to fit the projects style.
 
 ### ESLint
 
 [ESLint](https://github.com/eslint/eslint) is used for code linting inside your IDE/text editor. If you don't have ESLint installed in your editor, you should install it - [https://eslint.org/docs/user-guide/integrations](https://eslint.org/docs/user-guide/integrations). 
 
-To find any errors or warnings, either view them in your editor once you've installed the right package, or run `npm run eslint`. Not all errors/warnings can be fixed, and some will be picked up by prettier, so don't worry if you can't fix them.
+To find any errors or warnings, either view them in your editor once you've installed the right package, or run `npm run eslint`. Not all errors/warnings can be fixed, and some will be picked up by Prettier, so don't worry if you can't fix them. To automatically fix some errors/warnings, run `npm run eslint:fix`.
+
+### Prettier & ESLint
+
+To autoamtically format and fix linting errors, run `npm run format`. This runs Prettier, then ESLint. 
 
 ### Lock Files
 
