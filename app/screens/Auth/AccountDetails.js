@@ -1,6 +1,6 @@
 import React from 'react';
 import commonStyles from '../../styles/common';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import TableView from 'react-native-tableview';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';

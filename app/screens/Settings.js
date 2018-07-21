@@ -1,7 +1,6 @@
 import React from 'react';
-import config from '../config/default.json';
 import commonStyles from '../styles/common';
-import { Text, View, StyleSheet, Switch, ActionSheetIOS } from 'react-native';
+import { View, Switch, ActionSheetIOS } from 'react-native';
 import TableView from 'react-native-tableview';
 
 import { connect } from 'react-redux';
@@ -9,9 +8,6 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions';
 
 import CustomText from '../components/CustomText';
-
-import { getUser } from '../helpers/api';
-import { capitalize } from '../helpers/utils';
 
 const { Section, Cell } = TableView;
 

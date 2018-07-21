@@ -1,6 +1,5 @@
 import React from 'react';
 import config from '../config/default.json';
-import commonStyles from '../styles/common';
 import { ActionSheetIOS } from 'react-native';
 
 import { connect } from 'react-redux';

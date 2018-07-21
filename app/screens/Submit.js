@@ -8,7 +8,6 @@ import { ActionCreators } from '../actions';
 import commonStyles from '../styles/common';
 import config from '../config/default.json';
 
-import CustomText from '../components/CustomText';
 import Form from '../components/Form';
 
 class Submit extends React.Component {

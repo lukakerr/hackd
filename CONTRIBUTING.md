@@ -22,7 +22,7 @@ To autoamtically format and fix linting errors, run `npm run format`. This runs 
 
 ### Lock Files
 
-All lock files (`package-lock.json`, `yarn.lock`) should be committed.
+`package-lock.json` should be committed.
 
 ### Dependencies
 

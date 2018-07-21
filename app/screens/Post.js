@@ -1,6 +1,5 @@
 import React from 'react';
 import config from '../config/default.json';
-import commonStyles from '../styles/common';
 import { StyleSheet, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
