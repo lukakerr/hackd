@@ -90,9 +90,7 @@ class Submit extends React.Component {
 
         {this.state.selectedIndex === 1 && (
           <Form
-            inputs={[
-              { placeholder: 'Text', action: this.handleText, multiline: true },
-            ]}
+            inputs={[{ placeholder: 'Text', action: this.handleText, multiline: true }]}
             submit={this.submitText}
             back={this.goToFeed}
             backText="feed"
@@ -121,8 +119,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,

@@ -63,45 +63,29 @@ class Settings extends React.Component {
         >
           <Section label="Comments">
             <Cell style={commonStyles.cell}>
-              <CustomText style={commonStyles.cellText}>
-                Tap to collapse
-              </CustomText>
+              <CustomText style={commonStyles.cellText}>Tap to collapse</CustomText>
               <Switch
                 style={commonStyles.cellSwitch}
                 value={this.props.settings.tapToCollapse}
-                onValueChange={() =>
-                  this.booleanChanged(
-                    'tapToCollapse',
-                    this.props.settings.tapToCollapse,
-                  )
-                }
+                onValueChange={() => this.booleanChanged('tapToCollapse', this.props.settings.tapToCollapse)}
               />
             </Cell>
             <Cell
               style={commonStyles.cell}
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() =>
-                this.navigateTo('hackd.CommentThemes', 'Comment Themes')
-              }
+              onPress={() => this.navigateTo('hackd.CommentThemes', 'Comment Themes')}
             >
-              <CustomText style={commonStyles.cellText}>
-                Comment themes
-              </CustomText>
+              <CustomText style={commonStyles.cellText}>Comment themes</CustomText>
             </Cell>
           </Section>
           <Section label="Posts">
             <Cell style={commonStyles.cell}>
-              <CustomText style={commonStyles.cellText}>
-                Use Safari Reader Mode
-              </CustomText>
+              <CustomText style={commonStyles.cellText}>Use Safari Reader Mode</CustomText>
               <Switch
                 style={commonStyles.cellSwitch}
                 value={this.props.settings.useSafariReaderMode}
                 onValueChange={() =>
-                  this.booleanChanged(
-                    'useSafariReaderMode',
-                    this.props.settings.useSafariReaderMode,
-                  )
+                  this.booleanChanged('useSafariReaderMode', this.props.settings.useSafariReaderMode)
                 }
               />
             </Cell>
@@ -110,13 +94,9 @@ class Settings extends React.Component {
             <Cell
               style={commonStyles.cell}
               accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-              onPress={() =>
-                this.navigateTo('hackd.AppColors', 'Navigator Themes')
-              }
+              onPress={() => this.navigateTo('hackd.AppColors', 'Navigator Themes')}
             >
-              <CustomText style={commonStyles.cellText}>
-                Navigator themes
-              </CustomText>
+              <CustomText style={commonStyles.cellText}>Navigator themes</CustomText>
             </Cell>
           </Section>
         </TableView>
@@ -125,8 +105,7 @@ class Settings extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,

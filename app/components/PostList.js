@@ -21,10 +21,7 @@ export default class Posts extends React.Component {
   }
 
   showPost = post => {
-    const title =
-      post.descendants > -1
-        ? `${post.descendants} comments`
-        : truncate(post.title, 20);
+    const title = post.descendants > -1 ? `${post.descendants} comments` : truncate(post.title, 20);
 
     this.props.navigator.push({
       screen: 'hackd.Post',
@@ -40,10 +37,7 @@ export default class Posts extends React.Component {
       return;
     }
 
-    const title =
-      post.descendants > -1
-        ? `${post.descendants} comments`
-        : truncate(post.title, 20);
+    const title = post.descendants > -1 ? `${post.descendants} comments` : truncate(post.title, 20);
 
     this.props.navigator.push({
       screen: 'hackd.Post',
@@ -91,12 +85,7 @@ export default class Posts extends React.Component {
   );
 
   renderLeftSwipeContent = () => (
-    <SwipeContent
-      backgroundColor={config.colors.green}
-      alignment="left"
-      image={require('../img/save.png')}
-      size={32}
-    />
+    <SwipeContent backgroundColor={config.colors.green} alignment="left" image={require('../img/save.png')} size={32} />
   );
 
   onRefresh = () => {

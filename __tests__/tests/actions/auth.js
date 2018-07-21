@@ -112,10 +112,7 @@ describe('Auth Actions', () => {
       },
     };
 
-    actions.removeIdFromUserAccount(post.id, 'upvotedComments')(
-      dispatch,
-      getState,
-    );
+    actions.removeIdFromUserAccount(post.id, 'upvotedComments')(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'SET_ACCOUNTS_DETAILS',
       accounts: expectedAccounts,

@@ -17,10 +17,7 @@ export default class Comments extends React.PureComponent {
     return (
       <View style={styles.textWrapper}>
         <View style={styles.iconView}>
-          <Image
-            style={styles.icon}
-            source={require('../../img/comment.png')}
-          />
+          <Image style={styles.icon} source={require('../../img/comment.png')} />
         </View>
         <CustomText>{this.props.count > -1 ? this.props.count : 0}</CustomText>
       </View>

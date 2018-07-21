@@ -132,9 +132,7 @@ const login = (username, password) => {
     credentials: 'include',
   })
     .then(response => response.text())
-    .then(responseText => {
-      return !/Bad Login/i.test(responseText);
-    });
+    .then(responseText => !/Bad Login/i.test(responseText));
 };
 
 /**
@@ -226,11 +224,7 @@ const flatten = (comments, commentsArray) => {
   for (const key in comments) {
     const currentComment = comments[key];
 
-    if (
-      comments.hasOwnProperty(key) &&
-      !currentComment.dead &&
-      !currentComment.deleted
-    ) {
+    if (comments.hasOwnProperty(key) && !currentComment.dead && !currentComment.deleted) {
       commentsArray.push(currentComment);
       if (currentComment.kids && currentComment.kids.length > 0) {
         flatten(currentComment.kids, commentsArray);
@@ -248,9 +242,7 @@ const flatten = (comments, commentsArray) => {
  */
 const getComments = commentIds =>
   new Promise((resolve, reject) => {
-    const comments = commentIds.map(id =>
-      getChildComment(id, 0).then(comment => comment),
-    );
+    const comments = commentIds.map(id => getChildComment(id, 0).then(comment => comment));
 
     Promise.all(comments)
       .then(allComments => {
@@ -277,9 +269,7 @@ const getChildComment = (parentId, level) =>
         comment.hidden = false;
 
         if (comment.kids && comment.kids.length > 0) {
-          const results = comment.kids.map(id =>
-            getChildComment(id, level + 1).then(c => c),
-          );
+          const results = comment.kids.map(id => getChildComment(id, level + 1).then(c => c));
 
           Promise.all(results).then(kids => {
             resolve({ ...comment, kids });
@@ -344,15 +334,4 @@ const toggleComments = (comments, id, level) => {
   return comments;
 };
 
-export {
-  getItem,
-  getItems,
-  upvote,
-  unvote,
-  login,
-  comment,
-  getUser,
-  logout,
-  getComments,
-  toggleComments,
-};
+export { getItem, getItems, upvote, unvote, login, comment, getUser, logout, getComments, toggleComments };

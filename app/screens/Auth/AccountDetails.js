@@ -73,30 +73,16 @@ class AccountDetails extends React.Component {
         {this.state.userExists && (
           <View style={styles.gridContainer}>
             <View style={commonStyles.flex}>
-              <CustomText
-                style={[styles.gridContent, styles.gridContentHeader]}
-              >
-                {this.state.karma}
-              </CustomText>
-              <CustomText
-                style={[styles.gridContent, styles.gridContentSubtitle]}
-              >
-                KARMA
-              </CustomText>
+              <CustomText style={[styles.gridContent, styles.gridContentHeader]}>{this.state.karma}</CustomText>
+              <CustomText style={[styles.gridContent, styles.gridContentSubtitle]}>KARMA</CustomText>
             </View>
             <View style={commonStyles.flex}>
-              <CustomText
-                style={[styles.gridContent, styles.gridContentHeader]}
-              >
+              <CustomText style={[styles.gridContent, styles.gridContentHeader]}>
                 {timeAgo.format(new Date(this.state.created * 1000), {
                   flavour: 'tiny',
                 })}
               </CustomText>
-              <CustomText
-                style={[styles.gridContent, styles.gridContentSubtitle]}
-              >
-                AGE
-              </CustomText>
+              <CustomText style={[styles.gridContent, styles.gridContentSubtitle]}>AGE</CustomText>
             </View>
           </View>
         )}
@@ -110,28 +96,19 @@ class AccountDetails extends React.Component {
             <Section label="Account Details">
               <Cell style={commonStyles.cell}>
                 <CustomText style={commonStyles.cellText}>Username</CustomText>
-                <CustomText style={commonStyles.cellValue}>
-                  {this.state.username}
-                </CustomText>
+                <CustomText style={commonStyles.cellValue}>{this.state.username}</CustomText>
               </Cell>
               <Cell
                 style={commonStyles.cell}
-                accessoryType={
-                  TableView.Consts.AccessoryType.DisclosureIndicator
-                }
+                accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
                 onPress={() => this.navigateToSaved()}
               >
                 <CustomText style={commonStyles.cellText}>Saved</CustomText>
               </Cell>
             </Section>
             <Section>
-              <Cell
-                style={commonStyles.cell}
-                onPress={() => this.props.logOut()}
-              >
-                <CustomText style={[commonStyles.cellText, styles.logout]}>
-                  Logout
-                </CustomText>
+              <Cell style={commonStyles.cell} onPress={() => this.props.logOut()}>
+                <CustomText style={[commonStyles.cellText, styles.logout]}>Logout</CustomText>
               </Cell>
             </Section>
           </TableView>
@@ -167,8 +144,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,

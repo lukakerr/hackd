@@ -1,13 +1,7 @@
 import React from 'react';
 import config from '../config/default.json';
 import commonStyles from '../styles/common';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
 
@@ -57,24 +51,14 @@ class Post extends React.Component {
       <ScrollView style={styles.postContainer}>
         <View>
           <View style={styles.headerContainer}>
-            <CustomText style={styles.header}>
-              {this.props.post.title}
-            </CustomText>
+            <CustomText style={styles.header}>{this.props.post.title}</CustomText>
           </View>
           {this.props.post.url && (
-            <TouchableOpacity
-              onPress={() => this.openUrl(this.props.post.url)}
-              activeOpacity={0.8}
-            >
+            <TouchableOpacity onPress={() => this.openUrl(this.props.post.url)} activeOpacity={0.8}>
               <View style={styles.subHeaderContainer}>
-                <CustomText style={styles.subHeader}>
-                  {truncate(this.props.post.url, 35)}
-                </CustomText>
+                <CustomText style={styles.subHeader}>{truncate(this.props.post.url, 35)}</CustomText>
                 <View style={styles.rightArrowContainer}>
-                  <Image
-                    style={styles.rightArrow}
-                    source={require('../img/right.png')}
-                  />
+                  <Image style={styles.rightArrow} source={require('../img/right.png')} />
                 </View>
               </View>
             </TouchableOpacity>
@@ -96,10 +80,7 @@ class Post extends React.Component {
             <Time time={this.props.post.time} />
             <View style={styles.postInfoAction}>
               <View style={styles.postInfoActionText}>
-                <Actions
-                  doUpvote={this.state.doUpvote}
-                  item={this.props.post}
-                />
+                <Actions doUpvote={this.state.doUpvote} item={this.props.post} />
               </View>
             </View>
           </View>
@@ -176,8 +157,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,

@@ -49,16 +49,10 @@ class CommentThemes extends React.Component {
               <Cell
                 key={key}
                 style={styles.cell}
-                accessoryType={
-                  selectedTheme === key
-                    ? TableView.Consts.AccessoryType.Checkmark
-                    : ''
-                }
+                accessoryType={selectedTheme === key ? TableView.Consts.AccessoryType.Checkmark : ''}
                 onPress={() => this.commentThemeChanged(key)}
               >
-                <CustomText style={{ fontSize: 17 }}>
-                  {capitalize(key)}
-                </CustomText>
+                <CustomText style={{ fontSize: 17 }}>{capitalize(key)}</CustomText>
                 <Circles data={config.commentThemes[key]} />
               </Cell>
             ))}
@@ -80,8 +74,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,

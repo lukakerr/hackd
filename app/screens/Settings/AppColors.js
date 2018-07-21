@@ -36,16 +36,10 @@ class AppColors extends React.Component {
               <Cell
                 key={key}
                 style={styles.cell}
-                accessoryType={
-                  appColor == config.appColors[key]
-                    ? TableView.Consts.AccessoryType.Checkmark
-                    : ''
-                }
+                accessoryType={appColor == config.appColors[key] ? TableView.Consts.AccessoryType.Checkmark : ''}
                 onPress={() => this.appColorThemeChanged(config.appColors[key])}
               >
-                <CustomText style={{ fontSize: 17 }}>
-                  {capitalize(key)}
-                </CustomText>
+                <CustomText style={{ fontSize: 17 }}>{capitalize(key)}</CustomText>
                 <Circles data={[config.appColors[key]]} />
               </Cell>
             ))}
@@ -67,8 +61,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,

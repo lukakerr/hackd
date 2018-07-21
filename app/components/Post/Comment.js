@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  AlertIOS,
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, AlertIOS } from 'react-native';
 import PropTypes from 'prop-types';
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
@@ -112,10 +106,7 @@ class Comment extends React.Component {
     unvote(id).then(unvoted => {
       if (!unvoted) {
         this.props.addIdToUserAccount(id, 'upvotedComments');
-        AlertIOS.alert(
-          'Cannot unvote',
-          'There was an error, please try again later.',
-        );
+        AlertIOS.alert('Cannot unvote', 'There was an error, please try again later.');
       }
     });
   };
@@ -124,10 +115,7 @@ class Comment extends React.Component {
     upvote(id).then(upvoted => {
       if (!upvoted) {
         this.props.removeIdFromUserAccount(id, 'upvotedComments');
-        AlertIOS.alert(
-          'Cannot upvote',
-          'There was an error, please try again later.',
-        );
+        AlertIOS.alert('Cannot upvote', 'There was an error, please try again later.');
       }
     });
   };
@@ -136,28 +124,20 @@ class Comment extends React.Component {
     const isUpvoted = this.checkIfUpvoted();
 
     const commentThemeIndex = (this.props.level - 1) % NUM_COLORS;
-    const borderColor = this.props.level > 0 
-      ? config.commentThemes[this.props.settings.commentTheme][commentThemeIndex]
-      : 'transparent';
+    const borderColor =
+      this.props.level > 0 ? config.commentThemes[this.props.settings.commentTheme][commentThemeIndex] : 'transparent';
 
     return (
-      <TouchableOpacity
-        onPress={() => this.toggle(this.props.id, this.props.level)}
-        activeOpacity={0.5}
-      >
+      <TouchableOpacity onPress={() => this.toggle(this.props.id, this.props.level)} activeOpacity={0.5}>
         {!this.props.hidden && (
           <View style={styles.commentBox}>
-            <View
-              style={[
-                styles.commentContainer,
-                { marginLeft: 12 * this.props.level - 10 },
-              ]}
-            >
+            <View style={[styles.commentContainer, { marginLeft: 12 * this.props.level - 10 }]}>
               <View
                 style={[
                   styles.comment,
-                  { borderLeftWidth: this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
-                    borderLeftColor: borderColor
+                  {
+                    borderLeftWidth: this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
+                    borderLeftColor: borderColor,
                   },
                 ]}
               >
@@ -165,16 +145,15 @@ class Comment extends React.Component {
                   <User by={this.props.author} style={styles.userName} />
                   <Time time={this.props.time} />
                   {this.props.user.loggedIn && (
-                    <TouchableOpacity
-                      onPress={this.upvote}
-                      activeOpacity={0.8}
-                      style={styles.iconArrowContainer}
-                    >
+                    <TouchableOpacity onPress={this.upvote} activeOpacity={0.8} style={styles.iconArrowContainer}>
                       <Image
-                        style={[ styles.iconArrow,
-                          { tintColor: isUpvoted ? config.colors.orange : 'black',
+                        style={[
+                          styles.iconArrow,
+                          {
+                            tintColor: isUpvoted ? config.colors.orange : 'black',
                             opacity: isUpvoted ? 1 : 0.6,
-                          }]}
+                          },
+                        ]}
                         source={require('../../img/arrow.png')}
                       />
                     </TouchableOpacity>
@@ -235,8 +214,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   settings: state.settings,

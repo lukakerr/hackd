@@ -111,10 +111,4 @@ const removeFromUserAccount = (accounts, user, id, type) => {
   return newAccounts;
 };
 
-export {
-  validateUserLoggedIn,
-  capitalize,
-  truncate,
-  addToUserAccount,
-  removeFromUserAccount,
-};
+export { validateUserLoggedIn, capitalize, truncate, addToUserAccount, removeFromUserAccount };

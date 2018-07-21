@@ -163,8 +163,7 @@ class Posts extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   storyType: state.storyType,

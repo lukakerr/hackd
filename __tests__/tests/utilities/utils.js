@@ -1,9 +1,4 @@
-import {
-  capitalize,
-  truncate,
-  addToUserAccount,
-  removeFromUserAccount,
-} from '../../../app/helpers/utils';
+import { capitalize, truncate, addToUserAccount, removeFromUserAccount } from '../../../app/helpers/utils';
 
 import { post } from '../../data/api/post';
 import { appUser } from '../../data/api/user';

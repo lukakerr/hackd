@@ -64,9 +64,7 @@ class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <CustomText style={[styles.header, commonStyles.textCenter]}>
-          Login to Hacker News
-        </CustomText>
+        <CustomText style={[styles.header, commonStyles.textCenter]}>Login to Hacker News</CustomText>
 
         <Form
           inputs={[
@@ -103,8 +101,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,

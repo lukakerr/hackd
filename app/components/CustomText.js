@@ -16,10 +16,6 @@ export default class CustomText extends React.PureComponent {
   };
 
   render() {
-    return (
-      <Text style={[this.props.style, commonStyles.text]}>
-        {this.props.children}
-      </Text>
-    );
+    return <Text style={[this.props.style, commonStyles.text]}>{this.props.children}</Text>;
   }
 }

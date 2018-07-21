@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ActionSheetIOS,
-  Share,
-} from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, ActionSheetIOS, Share } from 'react-native';
 import PropTypes from 'prop-types';
 import ReactNativeHaptic from 'react-native-haptic';
 
@@ -133,15 +126,8 @@ class Actions extends React.Component {
     return (
       <View style={styles.textWrapper}>
         <View style={styles.iconView}>
-          <TouchableOpacity
-            onPress={this.showActions}
-            activeOpacity={0.8}
-            style={styles.iconDotsContainer}
-          >
-            <Image
-              style={styles.iconDots}
-              source={require('../../img/dots.png')}
-            />
+          <TouchableOpacity onPress={this.showActions} activeOpacity={0.8} style={styles.iconDotsContainer}>
+            <Image style={styles.iconDots} source={require('../../img/dots.png')} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={this.upvote}
@@ -149,17 +135,12 @@ class Actions extends React.Component {
             style={[
               styles.iconArrowContainer,
               {
-                backgroundColor: isUpvoted
-                  ? config.colors.orange
-                  : 'transparent',
+                backgroundColor: isUpvoted ? config.colors.orange : 'transparent',
               },
             ]}
           >
             <Image
-              style={[
-                styles.iconArrow,
-                { tintColor: isUpvoted ? 'white' : 'black' },
-              ]}
+              style={[styles.iconArrow, { tintColor: isUpvoted ? 'white' : 'black' }]}
               source={require('../../img/arrow.png')}
             />
           </TouchableOpacity>
@@ -204,8 +185,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,

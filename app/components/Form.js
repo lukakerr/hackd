@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 
 import commonStyles from '../styles/common';
 import config from '../config/default.json';
@@ -51,9 +44,7 @@ export default class Form extends React.PureComponent {
                   style={styles.input}
                   key={input.placeholder}
                   multiline={input.multiline ? input.multiline : false}
-                  secureTextEntry={
-                    input.secureTextEntry ? input.secureTextEntry : false
-                  }
+                  secureTextEntry={input.secureTextEntry ? input.secureTextEntry : false}
                   placeholder={input.placeholder}
                   autoCapitalize="none"
                   placeholderTextColor={config.colors.placeholder}
@@ -73,23 +64,15 @@ export default class Form extends React.PureComponent {
             </CustomText>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.backButton}
-            activeOpacity={0.8}
-            onPress={this.back}
-          >
-            <CustomText
-              style={[styles.backButtonText, { color: this.props.color }]}
-            >
+          <TouchableOpacity style={styles.backButton} activeOpacity={0.8} onPress={this.back}>
+            <CustomText style={[styles.backButtonText, { color: this.props.color }]}>
               Back to {this.props.backText}
             </CustomText>
           </TouchableOpacity>
         </View>
 
         <View>
-          <CustomText style={[styles.error, commonStyles.textCenter]}>
-            {this.props.error}
-          </CustomText>
+          <CustomText style={[styles.error, commonStyles.textCenter]}>{this.props.error}</CustomText>
         </View>
 
         <View>

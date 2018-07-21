@@ -14,19 +14,13 @@ class Account extends React.Component {
 
   render() {
     if (this.props.user.loggedIn) {
-      return (
-        <AccountDetails
-          user={this.props.user}
-          navigator={this.props.navigator}
-        />
-      );
+      return <AccountDetails user={this.props.user} navigator={this.props.navigator} />;
     }
     return <Login navigator={this.props.navigator} />;
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(ActionCreators, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
   user: state.user,

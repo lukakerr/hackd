@@ -18,16 +18,10 @@ export default class ListItem extends React.PureComponent {
 
   render() {
     return (
-      <TouchableOpacity
-        onPress={this.onPress}
-        onPressIn={this.onPressIn}
-        activeOpacity={0.8}
-      >
+      <TouchableOpacity onPress={this.onPress} onPressIn={this.onPressIn} activeOpacity={0.8}>
         <View style={styles.listItem}>
           <CustomText styles={styles.listItemSection}>
-            <CustomText style={styles.listItemTitle}>
-              {this.props.item.title}
-            </CustomText>
+            <CustomText style={styles.listItemTitle}>{this.props.item.title}</CustomText>
           </CustomText>
           <View>
             <View style={styles.listItemSubTitle}>
@@ -37,10 +31,7 @@ export default class ListItem extends React.PureComponent {
               <Time time={this.props.item.time} />
               <View style={styles.listItemAction}>
                 <View style={styles.listItemActionText}>
-                  <Actions
-                    doUpvote={false}
-                    item={this.props.item}
-                  />
+                  <Actions doUpvote={false} item={this.props.item} />
                 </View>
               </View>
             </View>

@@ -32,10 +32,7 @@ export default class SwipeContent extends React.PureComponent {
           paddingRight: alignment === 'left' ? 20 : 0,
         }}
       >
-        <Image
-          style={{ width: size, height: size, tintColor: 'white' }}
-          source={image}
-        />
+        <Image style={{ width: size, height: size, tintColor: 'white' }} source={image} />
       </View>
     );
   }
