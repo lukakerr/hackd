@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config/default';
+import config from '../config/default.json';
 import commonStyles from '../styles/common';
 import { Text, View, StyleSheet, Switch, ActionSheetIOS } from 'react-native';
 import TableView from 'react-native-tableview';

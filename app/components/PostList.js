@@ -1,16 +1,10 @@
 import React from 'react';
-import commonStyles from '../styles/common';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  View,
-  FlatList,
-  Image,
-} from 'react-native';
+import { ActivityIndicator, StyleSheet, View, FlatList } from 'react-native';
 import Swipeable from 'react-native-swipeable';
 import ReactNativeHaptic from 'react-native-haptic';
 
-import config from '../config/default';
+import commonStyles from '../styles/common';
+import config from '../config/default.json';
 import { truncate, validateUserLoggedIn } from '../helpers/utils';
 import ListItem from './ListItem';
 import SwipeContent from './PostItem/SwipeContent';
@@ -87,27 +81,23 @@ export default class Posts extends React.Component {
     );
   };
 
-  renderRightSwipeContent = () => {
-    return (
-      <SwipeContent
-        backgroundColor={config.colors.orange}
-        alignment={'right'}
-        image={require('../img/arrow.png')}
-        size={36}
-      />
-    );
-  };
+  renderRightSwipeContent = () => (
+    <SwipeContent
+      backgroundColor={config.colors.orange}
+      alignment="right"
+      image={require('../img/arrow.png')}
+      size={36}
+    />
+  );
 
-  renderLeftSwipeContent = () => {
-    return (
-      <SwipeContent
-        backgroundColor={config.colors.green}
-        alignment={'left'}
-        image={require('../img/save.png')}
-        size={32}
-      />
-    );
-  };
+  renderLeftSwipeContent = () => (
+    <SwipeContent
+      backgroundColor={config.colors.green}
+      alignment="left"
+      image={require('../img/save.png')}
+      size={32}
+    />
+  );
 
   onRefresh = () => {
     this.props.onRefresh();

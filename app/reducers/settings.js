@@ -1,7 +1,7 @@
 import createReducer from '../helpers/createReducer';
 import * as types from '../actions/types';
 
-import config from '../config/default';
+import config from '../config/default.json';
 
 // Default settings
 export const settings = createReducer(

@@ -1,12 +1,19 @@
 import React from 'react';
 import { Text } from 'react-native';
+import PropTypes from 'prop-types';
 
 import commonStyles from '../styles/common';
 
 export default class CustomText extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
+  static defaultProps = {
+    children: null,
+    style: {},
+  };
+
+  static propTypes = {
+    children: PropTypes.any,
+    style: PropTypes.any,
+  };
 
   render() {
     return (

@@ -1,7 +1,14 @@
 import { AlertIOS } from 'react-native';
 
-const validateUserLoggedIn = (user, action) => {
-  if (!user) {
+/**
+ * Validate a user is logged in, if not
+ * show alert
+ * @param  {Boolean} loggedIn Whether the user is logged in
+ * @param  {String}  action   The action to show
+ * @return {Boolean}          Whether the user is logged in
+ */
+const validateUserLoggedIn = (loggedIn, action) => {
+  if (!loggedIn) {
     AlertIOS.alert(`Cannot ${action}`, 'Please login and try again.');
     return false;
   }

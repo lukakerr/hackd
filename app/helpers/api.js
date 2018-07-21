@@ -1,16 +1,15 @@
 import cheerio from 'cheerio-without-node-native';
-import config from '../config/default';
+import config from '../config/default.json';
 
 /**
  * Get item from given ID
  * @param  {String} itemId The ID of the item to fetch
  * @return {Promise}       Returns a promise
  */
-const getItem = itemId => {
-  return fetch(`${config.api}/item/${itemId}.json`)
+const getItem = itemId =>
+  fetch(`${config.api}/item/${itemId}.json`)
     .then(response => response.json())
     .catch(error => error);
-};
 
 /**
  * Given a list of IDs, get each item for that ID
@@ -28,11 +27,7 @@ const getItems = (page, limit, itemIds) => {
   }
 
   // Map each itemId to an Array of Promises
-  const posts = slicedItems.map(item => {
-    return getItem(item).then(post => post);
-  });
-
-  return posts;
+  return slicedItems.map(item => getItem(item).then(post => post));
 };
 
 /**
@@ -40,12 +35,11 @@ const getItems = (page, limit, itemIds) => {
  * @param  {String} username The users username
  * @return {Object}          The users data
  */
-const getUser = username => {
-  return fetch(`${config.api}/user/${username}.json`)
+const getUser = username =>
+  fetch(`${config.api}/user/${username}.json`)
     .then(response => response.json())
     .then(responseJson => responseJson)
     .catch(error => null);
-};
 
 /**
  * Get the URL needed to upvote
@@ -53,8 +47,8 @@ const getUser = username => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the upvote URL
  */
-const getUpvoteUrl = itemId => {
-  return fetch(`${config.base}/item?id=${itemId}`, {
+const getUpvoteUrl = itemId =>
+  fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
   })
@@ -63,7 +57,6 @@ const getUpvoteUrl = itemId => {
       const document = cheerio.load(responseText);
       return document(`#up_${itemId}`).attr('href');
     });
-};
 
 /**
  * Get the URL needed to unvote
@@ -71,8 +64,8 @@ const getUpvoteUrl = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the unvote URL
  */
-const getUnvoteUrl = itemId => {
-  return fetch(`${config.base}/item?id=${itemId}`, {
+const getUnvoteUrl = itemId =>
+  fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
   })
@@ -81,7 +74,6 @@ const getUnvoteUrl = itemId => {
       const document = cheerio.load(responseText);
       return document(`#un_${itemId}`).attr('href');
     });
-};
 
 /**
  * Upvote an item
@@ -89,8 +81,8 @@ const getUnvoteUrl = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if upvoted, else false
  */
-const upvote = itemId => {
-  return getUpvoteUrl(itemId)
+const upvote = itemId =>
+  getUpvoteUrl(itemId)
     .then(upvoteUrl =>
       fetch(`${config.base}/${upvoteUrl}`, {
         mode: 'no-cors',
@@ -100,7 +92,6 @@ const upvote = itemId => {
     .then(response => response.text())
     .then(responseText => true)
     .catch(error => false);
-};
 
 /**
  * Unvote an item
@@ -108,8 +99,8 @@ const upvote = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if unvoted, else false
  */
-const unvote = itemId => {
-  return getUnvoteUrl(itemId)
+const unvote = itemId =>
+  getUnvoteUrl(itemId)
     .then(upvoteUrl =>
       fetch(`${config.base}/${upvoteUrl}`, {
         mode: 'no-cors',
@@ -119,7 +110,6 @@ const unvote = itemId => {
     .then(response => response.text())
     .then(responseText => true)
     .catch(error => false);
-};
 
 /**
  * Login a user
@@ -143,10 +133,7 @@ const login = (username, password) => {
   })
     .then(response => response.text())
     .then(responseText => {
-      if (responseText.match(/Bad Login/i)) {
-        return false;
-      }
-      return true;
+      return !/Bad Login/i.test(responseText);
     });
 };
 
@@ -155,8 +142,8 @@ const login = (username, password) => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the logout URL
  */
-const getLogoutUrl = () => {
-  return fetch(`${config.base}/news`, {
+const getLogoutUrl = () =>
+  fetch(`${config.base}/news`, {
     mode: 'no-cors',
     credentials: 'include',
   })
@@ -165,15 +152,14 @@ const getLogoutUrl = () => {
       const document = cheerio.load(responseText);
       return document('#logout').attr('href');
     });
-};
 
 /**
  * Logout a user
  * @return {Promise}       Returns a promise that
  *                         resolves true if logged out, else false
  */
-const logout = () => {
-  return getLogoutUrl()
+const logout = () =>
+  getLogoutUrl()
     .then(logoutUrl =>
       fetch(`${config.base}/${logoutUrl}`, {
         mode: 'no-cors',
@@ -183,7 +169,6 @@ const logout = () => {
     .then(response => response.text())
     .then(responseText => true)
     .catch(error => false);
-};
 
 /**
  * Get the URL needed to comment
@@ -191,8 +176,8 @@ const logout = () => {
  * @return {Promise}       Returns a promise that
  *                         resolves with the comment URL
  */
-const getCommentUrl = itemId => {
-  return fetch(`${config.base}/item?id=${itemId}`, {
+const getCommentUrl = itemId =>
+  fetch(`${config.base}/item?id=${itemId}`, {
     mode: 'no-cors',
     credentials: 'include',
   })
@@ -201,7 +186,6 @@ const getCommentUrl = itemId => {
       const document = cheerio.load(responseText);
       return document('input[name=hmac]').attr('value');
     });
-};
 
 /**
  * Reply to a story or a comment
@@ -210,8 +194,8 @@ const getCommentUrl = itemId => {
  * @return {Promise}       Returns a promise that
  *                         resolves true if commented, else false
  */
-const comment = (itemId, reply) => {
-  return getCommentUrl(itemId)
+const comment = (itemId, reply) =>
+  getCommentUrl(itemId)
     .then(commentUrl => {
       const headers = new Headers({
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -229,7 +213,6 @@ const comment = (itemId, reply) => {
     .then(response => response.text())
     .then(responseText => true)
     .catch(error => false);
-};
 
 /**
  * Convert nested comments into an array of comments
@@ -240,7 +223,7 @@ const comment = (itemId, reply) => {
  * @return {Object[]}               An array containing all flattened comments
  */
 const flatten = (comments, commentsArray) => {
-  for (var key in comments) {
+  for (const key in comments) {
     const currentComment = comments[key];
 
     if (
@@ -263,13 +246,11 @@ const flatten = (comments, commentsArray) => {
  * @return {Promise}             A promise that resolves with
  *                               all comments
  */
-const getComments = commentIds => {
-  return new Promise((resolve, reject) => {
-    const comments = commentIds.map(id => {
-      return getChildComment(id, 0).then(comment => {
-        return comment;
-      });
-    });
+const getComments = commentIds =>
+  new Promise((resolve, reject) => {
+    const comments = commentIds.map(id =>
+      getChildComment(id, 0).then(comment => comment),
+    );
 
     Promise.all(comments)
       .then(allComments => {
@@ -279,7 +260,6 @@ const getComments = commentIds => {
         reject(error);
       });
   });
-};
 
 /**
  * A recursive function to get child comments of
@@ -288,8 +268,8 @@ const getComments = commentIds => {
  * @param  {Number} level    The level of nesting
  * @return {Promise}         A promise containing all child comments
  */
-const getChildComment = (parentId, level) => {
-  return new Promise((resolve, reject) => {
+const getChildComment = (parentId, level) =>
+  new Promise((resolve, reject) => {
     getItem(parentId)
       .then(comment => {
         comment.level = level;
@@ -297,11 +277,9 @@ const getChildComment = (parentId, level) => {
         comment.hidden = false;
 
         if (comment.kids && comment.kids.length > 0) {
-          const results = comment.kids.map(id => {
-            return getChildComment(id, level + 1).then(c => {
-              return c;
-            });
-          });
+          const results = comment.kids.map(id =>
+            getChildComment(id, level + 1).then(c => c),
+          );
 
           Promise.all(results).then(kids => {
             resolve({ ...comment, kids });
@@ -314,7 +292,6 @@ const getChildComment = (parentId, level) => {
         reject(error);
       });
   });
-};
 
 /**
  * Toggles comment visibility when a comment

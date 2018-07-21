@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions';
 
 import commonStyles from '../styles/common';
-import config from '../config/default';
+import config from '../config/default.json';
 
 import CustomText from '../components/CustomText';
 import Form from '../components/Form';
@@ -98,7 +98,7 @@ class Submit extends React.Component {
             backText="feed"
             error={this.state.error}
             loading={this.state.loading}
-            scroll={true}
+            scroll
             color={this.props.settings.appColor}
           />
         )}

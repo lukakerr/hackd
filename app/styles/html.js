@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import config from '../config/default';
+import config from '../config/default.json';
 
 export default StyleSheet.create({
   body: {

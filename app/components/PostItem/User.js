@@ -1,19 +1,24 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 import CustomText from '../CustomText';
 
 export default class User extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
+  static defaultProps = {
+    by: '[empty]',
+  };
+
+  static propTypes = {
+    by: PropTypes.string,
+  };
 
   render() {
     return (
-      <CustomText style={[this.props.style, styles.textWrapper]}>
+      <View style={[this.props.style, styles.textWrapper]}>
         <View style={styles.iconView} />
         <CustomText>{this.props.by}</CustomText>
-      </CustomText>
+      </View>
     );
   }
 }
@@ -22,10 +27,10 @@ const styles = StyleSheet.create({
   iconView: {
     width: 4,
     height: 18,
-    paddingTop: 5,
   },
   textWrapper: {
     fontSize: 14,
     marginRight: 4,
+    flexDirection: 'row',
   },
 });

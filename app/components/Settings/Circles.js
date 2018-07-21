@@ -1,10 +1,15 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
-export default class Circles extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+export default class Circles extends React.PureComponent {
+  static defaultProps = {
+    data: {},
+  };
+
+  static propTypes = {
+    data: PropTypes.object,
+  };
 
   render() {
     return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 import TableView from 'react-native-tableview';
 import ReactNativeHaptic from 'react-native-haptic';
@@ -7,18 +8,26 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
-import config from '../../config/default';
+import config from '../../config/default.json';
 import commonStyles from '../../styles/common';
 import { capitalize } from '../../helpers/utils';
 import CustomText from '../../components/CustomText';
 import Circles from '../../components/Settings/Circles';
 
-const { Section, Item, Cell } = TableView;
+const { Section, Cell } = TableView;
 
 class CommentThemes extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  static defaultProps = {
+    settings: {
+      commentTheme: 'raw',
+    },
+    changeSetting: null,
+  };
+
+  static propTypes = {
+    settings: PropTypes.object,
+    changeSetting: PropTypes.func,
+  };
 
   commentThemeChanged = theme => {
     ReactNativeHaptic.generate('selection');
@@ -41,7 +50,7 @@ class CommentThemes extends React.Component {
                 key={key}
                 style={styles.cell}
                 accessoryType={
-                  selectedTheme == key
+                  selectedTheme === key
                     ? TableView.Consts.AccessoryType.Checkmark
                     : ''
                 }

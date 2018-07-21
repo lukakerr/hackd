@@ -5,34 +5,39 @@ import {
   Image,
   TouchableOpacity,
   ActionSheetIOS,
-  AlertIOS,
   Share,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import ReactNativeHaptic from 'react-native-haptic';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
-import config from '../../config/default';
+import config from '../../config/default.json';
 import { validateUserLoggedIn } from '../../helpers/utils';
-import { upvote } from '../../helpers/api';
-
 import CustomText from '../CustomText';
 
 class Actions extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      upvoted: false,
-    };
-  }
+  static defaultProps = {
+    doUpvote: false,
+    upvotePost: null,
+    savePost: null,
+    user: {},
+    accounts: {},
+    item: {},
+    settings: {},
+  };
 
-  componentDidMount() {
-    this.setState({
-      upvoted: this.checkIfUpvoted(),
-    });
-  }
+  static propTypes = {
+    doUpvote: PropTypes.any,
+    upvotePost: PropTypes.func,
+    savePost: PropTypes.func,
+    user: PropTypes.object,
+    accounts: PropTypes.object,
+    item: PropTypes.object,
+    settings: PropTypes.object,
+  };
 
   componentWillReceiveProps(nextProps) {
     if (this.props.doUpvote !== nextProps.doUpvote) {
@@ -41,14 +46,12 @@ class Actions extends React.Component {
   }
 
   checkIfUpvoted = () => {
-    if (this.props.user.loggedIn) {
-      if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].upvoted) {
-          if (
-            this.props.accounts[this.props.user.username].upvoted.indexOf(
-              this.props.item.id,
-            ) !== -1
-          ) {
+    const { accounts, user, item } = this.props;
+
+    if (user.loggedIn) {
+      if (accounts[user.username]) {
+        if (accounts[user.username].upvoted) {
+          if (accounts[user.username].upvoted.indexOf(item.id) !== -1) {
             return true;
           }
         }
@@ -61,14 +64,12 @@ class Actions extends React.Component {
   showActions = () => {
     let saveOption = 'Save';
 
-    if (this.props.user.loggedIn) {
-      if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].saved) {
-          if (
-            this.props.accounts[this.props.user.username].saved.indexOf(
-              this.props.item.id,
-            ) !== -1
-          ) {
+    const { accounts, user, item } = this.props;
+
+    if (user.loggedIn) {
+      if (accounts[user.username]) {
+        if (accounts[user.username].saved) {
+          if (accounts[user.username].saved.indexOf(item.id) !== -1) {
             saveOption = 'Unsave';
           }
         }
@@ -85,7 +86,6 @@ class Actions extends React.Component {
         cancelButtonIndex: 0,
       },
       buttonIndex => {
-        const selectedAction = OPTIONS[buttonIndex].toLowerCase();
         const { loggedIn } = this.props.user;
 
         // If 'Cancel' not pressed
@@ -131,7 +131,7 @@ class Actions extends React.Component {
   render() {
     const isUpvoted = this.checkIfUpvoted();
     return (
-      <CustomText style={styles.textWrapper}>
+      <View style={styles.textWrapper}>
         <View style={styles.iconView}>
           <TouchableOpacity
             onPress={this.showActions}
@@ -164,7 +164,7 @@ class Actions extends React.Component {
             />
           </TouchableOpacity>
         </View>
-      </CustomText>
+      </View>
     );
   }
 }

@@ -1,4 +1,3 @@
-import * as types from '../../../app/actions/types';
 import * as actions from '../../../app/actions/auth';
 
 import { appUser } from '../../data/api/user';

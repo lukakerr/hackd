@@ -7,19 +7,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../../actions';
 
-import config from '../../config/default';
+import config from '../../config/default.json';
 import commonStyles from '../../styles/common';
 import { capitalize } from '../../helpers/utils';
 import CustomText from '../../components/CustomText';
 import Circles from '../../components/Settings/Circles';
 
-const { Section, Item, Cell } = TableView;
+const { Section, Cell } = TableView;
 
 class AppColors extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   appColorThemeChanged = color => {
     ReactNativeHaptic.generate('selection');
     this.props.changeSetting('appColor', color);

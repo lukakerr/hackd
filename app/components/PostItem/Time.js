@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
+import PropTypes from 'prop-types';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
@@ -9,13 +10,17 @@ TimeAgo.locale(en);
 const timeAgo = new TimeAgo('en-US');
 
 export default class Time extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
+  static defaultProps = {
+    time: 0,
+  };
+
+  static propTypes = {
+    time: PropTypes.number,
+  };
 
   render() {
     return (
-      <CustomText style={styles.textWrapper}>
+      <View style={styles.textWrapper}>
         <View style={styles.iconView}>
           <Image style={styles.icon} source={require('../../img/clock.png')} />
         </View>
@@ -24,7 +29,7 @@ export default class Time extends React.PureComponent {
             flavour: 'tiny',
           })}
         </CustomText>
-      </CustomText>
+      </View>
     );
   }
 }
@@ -38,11 +43,11 @@ const styles = StyleSheet.create({
   iconView: {
     width: 18,
     height: 18,
-    paddingTop: 5.5,
   },
   textWrapper: {
     fontSize: 14,
     marginLeft: 4,
     opacity: 0.6,
+    flexDirection: 'row',
   },
 });

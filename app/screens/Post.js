@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config/default';
+import config from '../config/default.json';
 import commonStyles from '../styles/common';
 import {
   StyleSheet,
@@ -105,9 +105,7 @@ class Post extends React.Component {
           </View>
         </View>
 
-        <View>
-          <AllComments post={this.props.post} settings={this.props.settings} />
-        </View>
+        <AllComments post={this.props.post} settings={this.props.settings} />
       </ScrollView>
     );
   }
@@ -159,10 +157,9 @@ const styles = StyleSheet.create({
   },
   postInfo: {
     marginTop: 5,
-    marginBottom: 10,
-    paddingBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: config.colors.gray,
+    height: 36,
   },
   postInfoDetails: {
     flexDirection: 'row',
@@ -171,6 +168,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   postInfoAction: {
+    marginTop: -8,
     flexGrow: 1,
   },
   postInfoActionText: {

@@ -1,7 +1,5 @@
 import React from 'react';
-import config from '../config/default';
-import commonStyles from '../styles/common';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 import Score from './PostItem/Score';
 import Comments from './PostItem/Comments';
@@ -10,10 +8,6 @@ import Time from './PostItem/Time';
 import Actions from './PostItem/Actions';
 
 export default class ListItem extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   onPress = () => {
     this.props.onPress();
   };
@@ -43,7 +37,10 @@ export default class ListItem extends React.PureComponent {
               <Time time={this.props.item.time} />
               <View style={styles.listItemAction}>
                 <View style={styles.listItemActionText}>
-                  <Actions item={this.props.item} />
+                  <Actions
+                    doUpvote={false}
+                    item={this.props.item}
+                  />
                 </View>
               </View>
             </View>
@@ -73,10 +70,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginLeft: -3,
-    paddingTop: 5,
+    paddingTop: 10,
     paddingBottom: 5,
   },
   listItemAction: {
+    marginTop: -8,
     flexGrow: 1,
   },
   listItemActionText: {

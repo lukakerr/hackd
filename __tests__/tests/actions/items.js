@@ -1,4 +1,3 @@
-import * as types from '../../../app/actions/types';
 import * as actions from '../../../app/actions/items';
 
 import { posts } from '../../data/api/post';

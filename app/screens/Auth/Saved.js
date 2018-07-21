@@ -39,9 +39,7 @@ export default class Saved extends React.Component {
           refreshing: false,
         });
       })
-      .catch(e => {
-        return;
-      });
+      .catch(e => {});
   };
 
   handleRefresh = () => {
@@ -70,9 +68,7 @@ export default class Saved extends React.Component {
         navigator={this.props.navigator}
         refreshing={this.state.refreshing}
         onRefresh={() => this.handleRefresh()}
-        onEndReached={() => {
-          return;
-        }}
+        onEndReached={() => {}}
       />
     );
   }

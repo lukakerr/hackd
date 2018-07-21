@@ -6,6 +6,7 @@ import {
   Image,
   AlertIOS,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
 import ReactNativeHaptic from 'react-native-haptic';
@@ -16,34 +17,59 @@ import { ActionCreators } from '../../actions';
 
 import { upvote, unvote } from '../../helpers/api';
 import htmlStyles from '../../styles/html';
-import config from '../../config/default';
+import config from '../../config/default.json';
 import User from '../PostItem/User';
 import Time from '../PostItem/Time';
-import CustomText from '../CustomText';
 
 const NUM_COLORS = 5;
 const COMMENT_BORDER_WIDTH = 2;
 
 class Comment extends React.Component {
+  static defaultProps = {
+    toggle: null,
+    removeIdFromUserAccount: null,
+    addIdToUserAccount: null,
+    settings: {
+      tapToCollapse: true,
+      useSafariReaderMode: false,
+      commentTheme: 'raw',
+      appColor: config.colors.blue,
+    },
+    user: {},
+    accounts: {},
+    level: 0,
+    hidden: false,
+    author: '',
+    time: 0,
+    content: '',
+    open: true,
+  };
+
+  static propTypes = {
+    toggle: PropTypes.func,
+    removeIdFromUserAccount: PropTypes.func,
+    addIdToUserAccount: PropTypes.func,
+    settings: PropTypes.object,
+    user: PropTypes.object,
+    accounts: PropTypes.object,
+    level: PropTypes.number,
+    hidden: PropTypes.bool,
+    author: PropTypes.string,
+    time: PropTypes.number,
+    content: PropTypes.string,
+    open: PropTypes.bool,
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      upvoted: false,
-    };
     this.toggle = this.toggle.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({
-      upvoted: this.checkIfUpvoted(),
-    });
-  }
-
   openUrl = url => {
-    const readerMode = this.props.settings.useSafariReaderMode;
+    const { useSafariReaderMode } = this.props.settings;
     SafariView.show({
       url,
-      readerMode,
+      useSafariReaderMode,
     });
   };
 
@@ -52,14 +78,12 @@ class Comment extends React.Component {
   };
 
   checkIfUpvoted = () => {
-    if (this.props.user.loggedIn) {
-      if (this.props.accounts[this.props.user.username]) {
-        if (this.props.accounts[this.props.user.username].upvotedComments) {
-          if (
-            this.props.accounts[
-              this.props.user.username
-            ].upvotedComments.indexOf(this.props.id) !== -1
-          ) {
+    const { accounts, user, id } = this.props;
+
+    if (user.loggedIn) {
+      if (accounts[user.username]) {
+        if (accounts[user.username].upvotedComments) {
+          if (accounts[user.username].upvotedComments.indexOf(id) !== -1) {
             return true;
           }
         }
@@ -70,21 +94,14 @@ class Comment extends React.Component {
   };
 
   upvote = () => {
-    const id = this.props.id;
+    const { id } = this.props;
 
     // Already upvoted, lets unvote it
     if (this.checkIfUpvoted()) {
-      this.setState({
-        upvoted: true,
-      });
       this.props.removeIdFromUserAccount(id, 'upvotedComments');
       this.unvoteComment(id);
     } else {
       // Otherwise lets upvote it
-      this.setState({
-        upvoted: true,
-      });
-
       this.props.addIdToUserAccount(id, 'upvotedComments');
       this.upvoteComment(id);
     }
@@ -95,9 +112,6 @@ class Comment extends React.Component {
     unvote(id).then(unvoted => {
       if (!unvoted) {
         this.props.addIdToUserAccount(id, 'upvotedComments');
-        this.setState({
-          upvoted: true,
-        });
         AlertIOS.alert(
           'Cannot unvote',
           'There was an error, please try again later.',
@@ -110,9 +124,6 @@ class Comment extends React.Component {
     upvote(id).then(upvoted => {
       if (!upvoted) {
         this.props.removeIdFromUserAccount(id, 'upvotedComments');
-        this.setState({
-          upvoted: false,
-        });
         AlertIOS.alert(
           'Cannot upvote',
           'There was an error, please try again later.',
@@ -123,6 +134,12 @@ class Comment extends React.Component {
 
   render() {
     const isUpvoted = this.checkIfUpvoted();
+
+    const commentThemeIndex = (this.props.level - 1) % NUM_COLORS;
+    const borderColor = this.props.level > 0 
+      ? config.commentThemes[this.props.settings.commentTheme][commentThemeIndex]
+      : 'transparent';
+
     return (
       <TouchableOpacity
         onPress={() => this.toggle(this.props.id, this.props.level)}
@@ -139,15 +156,8 @@ class Comment extends React.Component {
               <View
                 style={[
                   styles.comment,
-                  {
-                    borderLeftWidth:
-                      this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
-                    borderLeftColor:
-                      this.props.level > 0
-                        ? config.commentThemes[
-                            this.props.settings.commentTheme
-                          ][this.props.level - 1 % NUM_COLORS]
-                        : 'transparent',
+                  { borderLeftWidth: this.props.level > 0 ? COMMENT_BORDER_WIDTH : 0,
+                    borderLeftColor: borderColor
                   },
                 ]}
               >
@@ -161,15 +171,10 @@ class Comment extends React.Component {
                       style={styles.iconArrowContainer}
                     >
                       <Image
-                        style={[
-                          styles.iconArrow,
-                          {
-                            tintColor: isUpvoted
-                              ? config.colors.orange
-                              : 'black',
+                        style={[ styles.iconArrow,
+                          { tintColor: isUpvoted ? config.colors.orange : 'black',
                             opacity: isUpvoted ? 1 : 0.6,
-                          },
-                        ]}
+                          }]}
                         source={require('../../img/arrow.png')}
                       />
                     </TouchableOpacity>
@@ -177,6 +182,7 @@ class Comment extends React.Component {
                 </View>
                 {this.props.open && (
                   <HTMLView
+                    style={styles.content}
                     value={`<body>${this.props.content}</body>`}
                     stylesheet={htmlStyles}
                     onLinkPress={url => this.openUrl(url)}
@@ -194,8 +200,8 @@ class Comment extends React.Component {
 const styles = StyleSheet.create({
   commentBox: {
     marginLeft: -2,
-    marginBottom: 8,
-    paddingBottom: 8,
+    paddingTop: 6,
+    paddingBottom: 6,
   },
   commentContainer: {
     paddingBottom: 10,
@@ -208,8 +214,9 @@ const styles = StyleSheet.create({
   commentInfo: {
     flexDirection: 'row',
     marginLeft: -4,
-    marginTop: -6,
-    paddingBottom: 6,
+  },
+  content: {
+    marginTop: 6,
   },
   userName: {
     opacity: 0.9,
@@ -218,10 +225,9 @@ const styles = StyleSheet.create({
   iconArrowContainer: {
     height: 20,
     width: 20,
-    marginTop: 1,
-    padding: 2,
     borderRadius: 5,
-    marginLeft: 3,
+    marginLeft: 4,
+    marginTop: -2,
   },
   iconArrow: {
     width: 20,

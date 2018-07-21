@@ -1,17 +1,27 @@
 import React from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Comment from './Comment';
-import CustomText from '../CustomText';
-import commonStyles from '../../styles/common';
 import { getComments, toggleComments } from '../../helpers/api';
 
 export default class AllComments extends React.Component {
+  static defaultProps = {
+    post: {},
+    settings: {
+      tapToCollapse: false,
+    },
+  };
+
+  static propTypes = {
+    post: PropTypes.object,
+    settings: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       comments: null,
-      error: null,
       loading: true,
       loadingMoreComments: false,
       refreshComments: false,
@@ -20,18 +30,18 @@ export default class AllComments extends React.Component {
   }
 
   componentDidMount() {
-    this._mounted = true;
+    this.mounted = true;
     this.fetchComments();
-  }
-
-  componentWillUnmount() {
-    this._mounted = false;
   }
 
   componentWillReceiveProps() {
     this.setState({
       refreshComments: !this.state.refreshComments,
     });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   fetchComments = () => {
@@ -52,17 +62,17 @@ export default class AllComments extends React.Component {
             // Get replies for current top level comment
             getComments([kids[i]])
               .then(comments => {
-                let newComments = this.state.comments || [];
+                const newComments = this.state.comments || [];
                 newComments.push(...comments);
 
                 let loadingMoreComments = true;
 
                 // Last comment finished loading
-                if (i == kids.length - 1) {
+                if (i === kids.length - 1) {
                   loadingMoreComments = false;
                 }
 
-                if (this._mounted) {
+                if (this.mounted) {
                   this.setState(
                     {
                       comments: newComments,
@@ -78,10 +88,9 @@ export default class AllComments extends React.Component {
                 }
               })
               .catch(error => {
-                if (this._mounted) {
+                if (this.mounted) {
                   this.setState(
                     {
-                      error,
                       loading: false,
                     },
                     () => {
@@ -126,7 +135,7 @@ export default class AllComments extends React.Component {
           renderItem={({ item }) => (
             <Comment
               id={item.id}
-              level={parseInt(item.level)}
+              level={parseInt(item.level, 10)}
               content={item.text}
               author={item.by}
               time={item.time}
@@ -148,7 +157,8 @@ export default class AllComments extends React.Component {
 
 const styles = StyleSheet.create({
   allComments: {
-    marginTop: 10,
+    marginTop: 4,
+    paddingBottom: 20,
   },
   loading: {
     marginTop: 20,

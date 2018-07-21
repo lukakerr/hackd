@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import commonStyles from '../styles/common';
-import config from '../config/default';
+import config from '../config/default.json';
 
 import CustomText from './CustomText';
 

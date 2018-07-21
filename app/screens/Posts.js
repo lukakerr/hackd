@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../config/default';
+import config from '../config/default.json';
 import commonStyles from '../styles/common';
 import { ActionSheetIOS } from 'react-native';
 
@@ -102,13 +102,9 @@ class Posts extends React.Component {
               loadingMorePosts: false,
             });
           })
-          .catch(e => {
-            return;
-          });
+          .catch(e => {});
       })
-      .catch(error => {
-        return;
-      });
+      .catch(error => {});
   };
 
   handleRefresh = () => {
