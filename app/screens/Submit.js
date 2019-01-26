@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet, SegmentedControlIOS } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -8,11 +9,27 @@ import { ActionCreators } from '../actions';
 import commonStyles from '../styles/common';
 import config from '../config/default.json';
 
+import Login from './Auth/Login';
 import Form from '../components/Form';
 
 class Submit extends React.Component {
+  static navigatorStyle = {
+    navBarNoBorder: true,
+  };
+
+  static propTypes = {
+    user: PropTypes.shape({
+      loggedIn: PropTypes.bool
+    }).isRequired,
+    navigator: PropTypes.object.isRequired,
+    settings: PropTypes.shape({
+      appColor: PropTypes.string
+    }).isRequired,
+  };
+
   constructor(props) {
     super(props);
+
     this.state = {
       selectedIndex: 0,
       title: '',
@@ -22,10 +39,6 @@ class Submit extends React.Component {
       loading: false,
     };
   }
-
-  static navigatorStyle = {
-    navBarNoBorder: true,
-  };
 
   handleTitle = title => {
     this.setState({ title, error: null });
@@ -56,14 +69,26 @@ class Submit extends React.Component {
   };
 
   render() {
+    const {
+      user,
+      navigator,
+      settings,
+    } = this.props;
+
+    const { selectedIndex, loading, error } = this.state;
+
+    if (!user.loggedIn) {
+      return <Login navigator={navigator} />;
+    }
+
     return (
       <View style={[commonStyles.flex, commonStyles.backgroundWhite]}>
         <View style={styles.segmentedControlContainer}>
           <SegmentedControlIOS
             style={styles.segmentedControl}
-            tintColor={this.props.settings.appColor}
+            tintColor={settings.appColor}
             values={['Link', 'Text']}
-            selectedIndex={this.state.selectedIndex}
+            selectedIndex={selectedIndex}
             onChange={event => {
               this.setState({
                 selectedIndex: event.nativeEvent.selectedSegmentIndex,
@@ -72,7 +97,7 @@ class Submit extends React.Component {
           />
         </View>
 
-        {this.state.selectedIndex === 0 && (
+        {selectedIndex === 0 && (
           <Form
             inputs={[
               { placeholder: 'Title', action: this.handleTitle },
@@ -81,22 +106,22 @@ class Submit extends React.Component {
             submit={this.submitUrl}
             back={this.goToFeed}
             backText="feed"
-            error={this.state.error}
-            loading={this.state.loading}
-            color={this.props.settings.appColor}
+            error={error}
+            loading={loading}
+            color={settings.appColor}
           />
         )}
 
-        {this.state.selectedIndex === 1 && (
+        {selectedIndex === 1 && (
           <Form
             inputs={[{ placeholder: 'Text', action: this.handleText, multiline: true }]}
             submit={this.submitText}
             back={this.goToFeed}
             backText="feed"
-            error={this.state.error}
-            loading={this.state.loading}
+            error={error}
+            loading={loading}
             scroll
-            color={this.props.settings.appColor}
+            color={settings.appColor}
           />
         )}
       </View>
@@ -121,6 +146,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
 
 const mapStateToProps = state => ({
+  user: state.user,
   settings: state.settings,
 });
 

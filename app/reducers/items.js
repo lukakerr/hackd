@@ -8,7 +8,7 @@ export const storyType = createReducer('top', {
 });
 
 export const posts = createReducer(
-  {},
+  [],
   {
     [types.SET_POSTS](state, action) {
       return action.posts;

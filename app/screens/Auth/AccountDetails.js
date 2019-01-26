@@ -1,14 +1,14 @@
 import React from 'react';
-import commonStyles from '../../styles/common';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import TableView from 'react-native-tableview';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import commonStyles from '../../styles/common';
 import { ActionCreators } from '../../actions';
-
 import { getUser } from '../../helpers/api';
 import CustomText from '../../components/CustomText';
 
@@ -18,8 +18,18 @@ TimeAgo.locale(en);
 const timeAgo = new TimeAgo('en-US');
 
 class AccountDetails extends React.Component {
+  static propTypes = {
+    user: PropTypes.shape({
+      username: PropTypes.string
+    }).isRequired,
+    logOut: PropTypes.func.isRequired,
+    accounts: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
+
     this.state = {
       username: this.props.user.username,
       created: null,
@@ -35,7 +45,8 @@ class AccountDetails extends React.Component {
   }
 
   getUserDetails = () => {
-    const username = this.props.user.username;
+    const { username } = this.props.user;
+
     getUser(username).then(userDetails => {
       if (userDetails === null) {
         return;
@@ -54,9 +65,9 @@ class AccountDetails extends React.Component {
   };
 
   navigateToSaved = () => {
-    const saved = this.props.accounts[this.props.user.username]
-      ? this.props.accounts[this.props.user.username].saved
-      : [];
+    const { accounts, user: { username } } = this.props;
+
+    const saved = accounts[username] ? accounts[username].saved : [];
 
     this.props.navigator.push({
       screen: 'hackd.Saved',
@@ -68,19 +79,23 @@ class AccountDetails extends React.Component {
   };
 
   render() {
+    const { userExists, karma, created, username } = this.state;
+
+    const createdDate = timeAgo.format(new Date(created * 1000), {
+      flavour: 'tiny',
+    });
+
     return (
       <View style={commonStyles.flex}>
-        {this.state.userExists && (
+        {userExists && (
           <View style={styles.gridContainer}>
             <View style={commonStyles.flex}>
-              <CustomText style={[styles.gridContent, styles.gridContentHeader]}>{this.state.karma}</CustomText>
+              <CustomText style={[styles.gridContent, styles.gridContentHeader]}>{karma}</CustomText>
               <CustomText style={[styles.gridContent, styles.gridContentSubtitle]}>KARMA</CustomText>
             </View>
             <View style={commonStyles.flex}>
               <CustomText style={[styles.gridContent, styles.gridContentHeader]}>
-                {timeAgo.format(new Date(this.state.created * 1000), {
-                  flavour: 'tiny',
-                })}
+                {createdDate}
               </CustomText>
               <CustomText style={[styles.gridContent, styles.gridContentSubtitle]}>AGE</CustomText>
             </View>
@@ -96,18 +111,18 @@ class AccountDetails extends React.Component {
             <Section label="Account Details">
               <Cell style={commonStyles.cell}>
                 <CustomText style={commonStyles.cellText}>Username</CustomText>
-                <CustomText style={commonStyles.cellValue}>{this.state.username}</CustomText>
+                <CustomText style={commonStyles.cellValue}>{username}</CustomText>
               </Cell>
               <Cell
                 style={commonStyles.cell}
                 accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-                onPress={() => this.navigateToSaved()}
+                onPress={this.navigateToSaved}
               >
                 <CustomText style={commonStyles.cellText}>Saved</CustomText>
               </Cell>
             </Section>
             <Section>
-              <Cell style={commonStyles.cell} onPress={() => this.props.logOut()}>
+              <Cell style={commonStyles.cell} onPress={this.props.logOut}>
                 <CustomText style={[commonStyles.cellText, styles.logout]}>Logout</CustomText>
               </Cell>
             </Section>

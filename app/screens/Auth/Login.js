@@ -1,16 +1,24 @@
 import React from 'react';
-import commonStyles from '../../styles/common';
 import { View, StyleSheet } from 'react-native';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ActionCreators } from '../../actions';
+import PropTypes from 'prop-types';
 
-import CustomText from '../../components/CustomText';
+import commonStyles from '../../styles/common';
+import { ActionCreators } from '../../actions';
 import Form from '../../components/Form';
 import { login } from '../../helpers/api';
+import CustomText from '../../components/CustomText';
 
 class Login extends React.Component {
+  static propTypes = {
+    login: PropTypes.func.isRequired,
+    navigator: PropTypes.object.isRequired,
+    settings: PropTypes.shape({
+      appColor: PropTypes.string
+    }).isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -62,26 +70,34 @@ class Login extends React.Component {
   };
 
   render() {
+    const loginInputs = [
+      {
+        placeholder: 'Username',
+        action: this.handleUsername
+      },
+      {
+        placeholder: 'Password',
+        action: this.handlePassword,
+        secureTextEntry: true,
+      },
+    ];
+
+    const { settings } = this.props;
+    const { error, loading } = this.state;
+
     return (
       <View style={styles.container}>
         <CustomText style={[styles.header, commonStyles.textCenter]}>Login to Hacker News</CustomText>
 
         <Form
-          inputs={[
-            { placeholder: 'Username', action: this.handleUsername },
-            {
-              placeholder: 'Password',
-              action: this.handlePassword,
-              secureTextEntry: true,
-            },
-          ]}
+          inputs={loginInputs}
           submit={this.logIn}
           submitText="Login"
           back={this.goToFeed}
           backText="feed"
-          error={this.state.error}
-          loading={this.state.loading}
-          color={this.props.settings.appColor}
+          error={error}
+          loading={loading}
+          color={settings.appColor}
         />
       </View>
     );

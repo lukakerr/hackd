@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import TableView from 'react-native-tableview';
 import ReactNativeHaptic from 'react-native-haptic';
 
@@ -16,13 +17,23 @@ import Circles from '../../components/Settings/Circles';
 const { Section, Cell } = TableView;
 
 class AppColors extends React.Component {
+  static propTypes = {
+    changeSetting: PropTypes.func.isRequired,
+    settings: PropTypes.shape({
+      appColor: PropTypes.string.isRequired
+    }).isRequired
+  };
+
   appColorThemeChanged = color => {
     ReactNativeHaptic.generate('selection');
     this.props.changeSetting('appColor', color);
   };
 
   render() {
-    const appColor = this.props.settings.appColor;
+    const { appColor } = this.props.settings;
+
+    const appColorKeys = Object.keys(config.appColors);
+
     return (
       <View style={commonStyles.flex}>
         <TableView
@@ -32,15 +43,15 @@ class AppColors extends React.Component {
           tableViewCellStyle={TableView.Consts.CellStyle.Value1}
         >
           <Section label="Themes">
-            {Object.keys(config.appColors).map(key => (
+            {appColorKeys.map(key => (
               <Cell
                 key={key}
                 style={styles.cell}
-                accessoryType={appColor == config.appColors[key] ? TableView.Consts.AccessoryType.Checkmark : ''}
+                accessoryType={appColor === config.appColors[key] ? TableView.Consts.AccessoryType.Checkmark : ''}
                 onPress={() => this.appColorThemeChanged(config.appColors[key])}
               >
                 <CustomText style={{ fontSize: 17 }}>{capitalize(key)}</CustomText>
-                <Circles data={[config.appColors[key]]} />
+                <Circles data={{[key]: config.appColors[key]}} />
               </Cell>
             ))}
           </Section>

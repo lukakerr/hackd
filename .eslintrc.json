@@ -39,7 +39,7 @@
       "globalReturn": true
     },
     "sourceType": "module"
-  }, 
+  },
 
   "extends": [
     "airbnb",
@@ -51,9 +51,8 @@
     "strict": 0,
     "arrow-parens": 0,
     "no-param-reassign": 0,
+    "no-use-before-define": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }
-
-// https://eslint.org/docs/rules/

@@ -1,15 +1,16 @@
 import React from 'react';
-import config from '../config/default.json';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import SafariView from 'react-native-safari-view';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ActionCreators } from '../actions';
+import PropTypes from 'prop-types';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 
+import config from '../config/default.json';
+import { ActionCreators } from '../actions';
 import htmlStyles from '../styles/html';
 import { truncate } from '../helpers/utils';
+
 import CustomText from '../components/CustomText';
 import Score from '../components/PostItem/Score';
 import Comments from '../components/PostItem/Comments';
@@ -18,30 +19,49 @@ import Time from '../components/PostItem/Time';
 import Actions from '../components/PostItem/Actions';
 import AllComments from '../components/Post/AllComments';
 
+const RIGHT_ARROW = require('../img/right.png');
+
 class Post extends React.Component {
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+    settings: PropTypes.shape({
+      useSafariReaderMode: PropTypes.bool,
+    }).isRequired,
+    post: PropTypes.shape({
+      title: PropTypes.string,
+      url: PropTypes.string,
+      by: PropTypes.string,
+      text: PropTypes.string,
+      score: PropTypes.number,
+      descendants: PropTypes.number,
+      time: PropTypes.number
+    }).isRequired,
+  }
+
   constructor(props) {
     super(props);
+
     this.state = {
       doUpvote: false,
     };
+
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   onNavigatorEvent(event) {
-    if (event.type === 'PreviewActionPress') {
-      if (event.id === 'action-upvote') {
-        this.setState({
-          doUpvote: true,
-        });
-      }
+    if (event.type === 'PreviewActionPress' && event.id === 'action-upvote') {
+      this.setState({
+        doUpvote: true,
+      });
     }
   }
 
   openUrl = url => {
-    const readerMode = this.props.settings.useSafariReaderMode;
+    const { useSafariReaderMode } = this.props.settings;
+
     SafariView.show({
       url,
-      readerMode,
+      readerMode: useSafariReaderMode,
     });
   };
 
@@ -57,7 +77,7 @@ class Post extends React.Component {
               <View style={styles.subHeaderContainer}>
                 <CustomText style={styles.subHeader}>{truncate(this.props.post.url, 35)}</CustomText>
                 <View style={styles.rightArrowContainer}>
-                  <Image style={styles.rightArrow} source={require('../img/right.png')} />
+                  <Image style={styles.rightArrow} source={RIGHT_ARROW} />
                 </View>
               </View>
             </TouchableOpacity>

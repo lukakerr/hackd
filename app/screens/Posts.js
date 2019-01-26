@@ -1,9 +1,10 @@
 import React from 'react';
-import config from '../config/default.json';
-import { ActionSheetIOS } from 'react-native';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import { ActionSheetIOS } from 'react-native';
+
+import config from '../config/default.json';
 import { ActionCreators } from '../actions';
 
 import PostList from '../components/PostList';
@@ -12,36 +13,46 @@ import { capitalize } from '../helpers/utils';
 
 const MAX_NUM_POSTS = 15 * 10;
 
-class Posts extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoadingInitially: true,
-      page: 1,
-      limit: 15,
-      refreshing: false,
-      loadingMorePosts: false,
-    };
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-    this.upvotePost = this.upvotePost.bind(this);
-    this.savePost = this.savePost.bind(this);
-  }
+const LIST = require('../img/list.png');
 
+class Posts extends React.Component {
   static navigatorButtons = {
     rightButtons: [
       {
-        icon: require('../img/list.png'),
+        icon: LIST,
         id: 'selectFeed',
       },
     ],
   };
 
-  onNavigatorEvent(event) {
-    if (event.type == 'NavBarButtonPress') {
-      if (event.id == 'selectFeed') {
-        this.selectFeed();
-      }
-    }
+  static propTypes = {
+    posts: PropTypes.array.isRequired,
+    navigator: PropTypes.object.isRequired,
+    storyType: PropTypes.string.isRequired,
+    setPosts: PropTypes.func.isRequired,
+    savePost: PropTypes.func.isRequired,
+    upvotePost: PropTypes.func.isRequired,
+    setStoryType: PropTypes.func.isRequired,
+    isLoadingPosts: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
+    settings: PropTypes.shape({
+      appColor: PropTypes.string
+    }).isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      page: 1,
+      limit: 15,
+      refreshing: false,
+      loadingMorePosts: false,
+    };
+
+    this.savePost = this.savePost.bind(this);
+    this.upvotePost = this.upvotePost.bind(this);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   componentDidMount() {
@@ -51,11 +62,18 @@ class Posts extends React.Component {
     });
   }
 
+  onNavigatorEvent(event) {
+    if (event.type === 'NavBarButtonPress' && event.id === 'selectFeed') {
+      this.selectFeed();
+    }
+  }
+
   // Called when a user clicks the right header button
   // The storyType is updated in the store
   // And the posts are reloaded
   selectFeed = () => {
     const OPTIONS = ['Cancel', 'Top', 'New', 'Best', 'Ask', 'Show', 'Jobs'];
+
     ActionSheetIOS.showActionSheetWithOptions(
       {
         title: 'Select a feed',
@@ -80,7 +98,7 @@ class Posts extends React.Component {
 
   // Get posts based on storyType
   makeRequest = () => {
-    let storyType = this.props.storyType;
+    let { storyType } = this.props;
     const { page, limit } = this.state;
 
     if (storyType === 'jobs') {
@@ -101,21 +119,16 @@ class Posts extends React.Component {
               loadingMorePosts: false,
             });
           })
-          .catch(e => {});
+          .catch();
       })
-      .catch(error => {});
+      .catch();
   };
 
   handleRefresh = () => {
-    this.setState(
-      {
-        page: 1,
-        refreshing: true,
-      },
-      () => {
-        this.makeRequest();
-      },
-    );
+    this.setState({
+      page: 1,
+      refreshing: true,
+    }, this.makeRequest);
   };
 
   handleEndReached = () => {
@@ -125,15 +138,10 @@ class Posts extends React.Component {
       return;
     }
 
-    this.setState(
-      {
-        page: page + 1,
-        loadingMorePosts: true,
-      },
-      () => {
-        this.makeRequest();
-      },
-    );
+    this.setState({
+      page: page + 1,
+      loadingMorePosts: true,
+    }, this.makeRequest);
   };
 
   upvotePost = id => {
@@ -145,16 +153,25 @@ class Posts extends React.Component {
   };
 
   render() {
+    const {
+      posts,
+      isLoadingPosts,
+      navigator,
+      user
+    } = this.props;
+
+    const { loadingMorePosts, refreshing } = this.state;
+
     return (
       <PostList
-        data={this.props.posts}
-        isLoadingPosts={this.props.isLoadingPosts}
-        loadingMore={this.state.loadingMorePosts}
-        navigator={this.props.navigator}
-        refreshing={this.state.refreshing}
-        user={this.props.user}
-        onRefresh={() => this.handleRefresh()}
-        onEndReached={() => this.handleEndReached()}
+        data={posts}
+        isLoadingPosts={isLoadingPosts}
+        loadingMore={loadingMorePosts}
+        navigator={navigator}
+        refreshing={refreshing}
+        user={user}
+        onRefresh={this.handleRefresh}
+        onEndReached={this.handleEndReached}
         upvotePost={this.upvotePost}
         savePost={this.savePost}
       />
